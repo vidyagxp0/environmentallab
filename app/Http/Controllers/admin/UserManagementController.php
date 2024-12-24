@@ -202,7 +202,7 @@ class UserManagementController extends Controller
                         $validation2->action_name = 'Create';
                         $validation2->save();
                     }
-                
+
                     // Check if email is provided
                     if (!empty($request->email)) {
                         $validation2 = new AdminLoginAuditTrail();
@@ -218,16 +218,16 @@ class UserManagementController extends Controller
                         $validation2->action_name = 'Create';
                         $validation2->save();
                     }
-                
+
                     // Check if department is provided
                     if (!empty($request->departmentid)) {
                         $departmentName = Department::where('id', $request->departmentid)->value('name');
-                
+
                         if (!$departmentName) {
                             \Log::error('Department not found for ID: ' . $request->departmentid);
                             $departmentName = 'Unknown';
                         }
-                
+
                         $validation2 = new AdminLoginAuditTrail();
                         $validation2->adminAudit_id = $user->id;
                         $validation2->previous = "Null";
@@ -241,16 +241,16 @@ class UserManagementController extends Controller
                         $validation2->action_name = 'Create';
                         $validation2->save();
                     }
-                
+
                     // Check if role is provided
                     if (!empty($usertableRole)) {
                         $roleNames = DB::table('role_groups')
                             ->whereIn('id', explode(',', $usertableRole))
                             ->pluck('name')
                             ->toArray();
-                
+
                         $roleNamesString = implode(', ', $roleNames);
-                
+
                         $validation2 = new AdminLoginAuditTrail();
                         $validation2->adminAudit_id = $user->id;
                         $validation2->previous = "Null";
@@ -265,7 +265,7 @@ class UserManagementController extends Controller
                         $validation2->save();
                     }
                 }
-                
+
 
 
                 toastr()->success('User added successfully');
@@ -371,10 +371,10 @@ class UserManagementController extends Controller
                 $validation2->previous = $lastUser->name;
                 $validation2->current = $request->name;
                 $validation2->activity_type = 'Name';
-                $validation2->user_id = Auth::user()->id;
-                $validation2->user_name = Auth::user()->name;
-                $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_name = auth()->user()?->name;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+
                 $validation2->change_to =   "Not Applicable";
                 $validation2->change_from = $lastUser->status;
                 if (is_null($lastUser->name) || $lastUser->name === '') {
@@ -391,10 +391,10 @@ class UserManagementController extends Controller
                 $validation2->previous = $lastUser->email;
                 $validation2->current = $request->email;
                 $validation2->activity_type = 'Email';
-                $validation2->user_id = Auth::user()->id;
-                $validation2->user_email = Auth::user()->email;
-                $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_email = auth()->user()?->email;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+
                 $validation2->change_to =   "Not Applicable";
                 $validation2->change_from = $lastUser->status;
                 if (is_null($lastUser->email) || $lastUser->email === '') {
@@ -407,9 +407,9 @@ class UserManagementController extends Controller
 
             if ($lastUser->departmentid != $request->departmentid) {
                 $currentDepartmentName = Department::where('id', $request->departmentid)->value('name');
-                
+
                 $previousDepartmentName = Department::where('id', $lastUser->departmentid)->value('name');
-                
+
                 if (!$currentDepartmentName) {
                     \Log::error('Department not found for ID: ' . $request->departmentid);
                     $currentDepartmentName = 'Unknown';
@@ -418,15 +418,15 @@ class UserManagementController extends Controller
                     \Log::error('Department not found for ID: ' . $lastUser->departmentid);
                     $previousDepartmentName = 'Unknown';
                 }
-            
+
                 $validation2 = new AdminLoginAuditTrail();
                 $validation2->adminAudit_id = $user->id;
                 $validation2->previous = $previousDepartmentName;
                 $validation2->current = $currentDepartmentName;
                 $validation2->activity_type = 'Department';
-                $validation2->user_id = Auth::user()->id;
-                $validation2->user_name = Auth::user()->name;
-                $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_name = auth()->user()?->name;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
                 $validation2->change_to = $currentDepartmentName;
                 $validation2->change_from = $previousDepartmentName;
                 if (is_null($previousDepartmentName->email) || $previousDepartmentName->email === '') {
@@ -443,40 +443,40 @@ class UserManagementController extends Controller
                     ->pluck('name')
                     ->toArray();
                 $oldRoleNamesString = implode(', ', $oldRoleNames);
-            
+
                 $newRoleNames = DB::table('role_groups')
                     ->whereIn('id', explode(',', $request->role))
                     ->pluck('name')
                     ->toArray();
                 $newRoleNamesString = implode(', ', $newRoleNames);
-            
+
                 if (empty($oldRoleNamesString)) {
                     $oldRoleNamesString = 'Null';
                 }
                 if (empty($newRoleNamesString)) {
                     $newRoleNamesString = 'Unknown';
                 }
-            
+
                 $validation2 = new AdminLoginAuditTrail();
                 $validation2->adminAudit_id = $user->id;
                 $validation2->previous = $oldRoleNamesString;
                 $validation2->current = $newRoleNamesString;
-                $validation2->activity_type = 'Roles'; 
-                $validation2->user_id = Auth::user()->id;
-                $validation2->user_name = Auth::user()->name;
-                $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $validation2->activity_type = 'Roles';
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_name = auth()->user()?->name;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
                 $validation2->change_to = "Not Applicable";
                 $validation2->change_from = $lastUser->status;
-            
+
                 if (is_null($lastUser->role) || $lastUser->role === '') {
                     $validation2->action_name = 'New';
                 } else {
                     $validation2->action_name = 'Update';
                 }
-            
+
                 $validation2->save();
             }
-            
+
                 toastr()->success('Update successfully');
                 return redirect()->route('user_management.index');
             } else {
