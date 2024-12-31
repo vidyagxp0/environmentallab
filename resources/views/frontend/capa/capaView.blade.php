@@ -83,7 +83,7 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('CapaAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                       
+
                         @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'CAPA', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
@@ -226,7 +226,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number">Record Number</label>
                                                 <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '1' }}">
-                                     
+
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -515,9 +515,9 @@
                                                                 $recordValue =
                                                                     Helpers::getDivisionName($new->division_id) .
                                                                     '/CAPA/' .
-                                                                    date('Y') .
+                                                                    $new->created_at?->format('Y').
                                                                     '/' .
-                                                                    Helpers::recordFormat($new->record);
+                                                                    Helpers::recordFormat($new->record_number->record_number);
                                                                 $selected = in_array(
                                                                     $recordValue,
                                                                     explode(',', $data->capa_related_record),
@@ -567,9 +567,9 @@
                                                                 $recordValue =
                                                                     Helpers::getDivisionName($new->division_id) .
                                                                     '/RCA/' .
-                                                                    date('Y') .
+                                                                    $new->created_at?->format('Y') .
                                                                     '/' .
-                                                                    Helpers::recordFormat($new->record);
+                                                                    Helpers::recordFormat($new->record_number?->record_number);
                                                                 $selected = in_array(
                                                                     $recordValue,
                                                                     explode(',', $data->rca_related_record),
@@ -686,7 +686,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                            
+
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -1658,7 +1658,7 @@
                                             <div class="static">{{ $data->plan_approved_by }}</div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Plan Approved On">Plan Approved On</label>
@@ -1676,7 +1676,7 @@
                                             <div class="static">{{ $data->more_info_req_by}}</div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Plan Approved On">More Information Required On</label>

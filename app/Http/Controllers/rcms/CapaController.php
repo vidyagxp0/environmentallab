@@ -33,8 +33,8 @@ class CapaController extends Controller
     public function capa()
     {
         $cft = [];
-        $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
-        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -313,7 +313,7 @@ class CapaController extends Controller
             // $history->save();
         //}
 
-        
+
         $history = new CapaAuditTrial();
         $history->capa_id = $capa->id;
         $history->activity_type = 'Record Number';
@@ -338,7 +338,7 @@ class CapaController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $capa->status;
             $history->save();
-        } 
+        }
 
         // if (!empty($capa->record_number)) {
             // $history = new CapaAuditTrial();
@@ -1007,7 +1007,7 @@ class CapaController extends Controller
             }
             $capa->capa_attachment = json_encode($files);
         }
-        
+
         // if (!empty($request->closure_attachment)) {
         //     $files = json_decode($capa->existing_attach_files_e, true) ? json_decode($capa->existing_attach_files_e, true) : null;
         //     if ($request->hasfile('closure_attachment')) {
@@ -1019,7 +1019,7 @@ class CapaController extends Controller
         //     }
         //     $capa->closure_attachment = json_encode($files);
         // }
-        
+
         $files = is_array($request->existing_attach_files_e) ? $request->existing_attach_files_e : null;
 
         if (!empty($request->closure_attachment)) {
@@ -1690,8 +1690,8 @@ class CapaController extends Controller
         $revised_date = "";
         $data = Capa::find($id);
         //dd($data);
-        $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
-        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
         $revised_date = Extension::where('parent_id', $id)->where('parent_type', "Capa")->value('revised_date');
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -1735,7 +1735,7 @@ class CapaController extends Controller
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-               
+
                 $list = Helpers::getHODUserList($capa->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -1792,9 +1792,9 @@ class CapaController extends Controller
             }
 
 
-         
-           
-                
+
+
+
 
             if ($capa->stage == 2) {
                 $capa->stage = "3";
@@ -1845,7 +1845,7 @@ class CapaController extends Controller
                 }
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
-                    
+
                     if (!empty($email)) {
                         try {
                             info('Sending mail to', [$email]);
@@ -1966,8 +1966,8 @@ class CapaController extends Controller
                     $history->save();
             }
 
-           
-             
+
+
             $list = Helpers::getInitiatorUserList($capa->division_id);
             $userIds = collect($list)->pluck('user_id')->toArray();
             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2014,7 +2014,7 @@ class CapaController extends Controller
                 }
                 // }
             }
-             
+
             $capa->update();
             toastr()->success('Document Sent');
             return back();
@@ -2050,7 +2050,7 @@ class CapaController extends Controller
             $history->stage = 'QA More Info Required';
             $history->save();
             $capa->update();
-            
+
             $list = Helpers::getHODUserList($capa->division_id);
             $userIds = collect($list)->pluck('user_id')->toArray();
             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2206,7 +2206,7 @@ class CapaController extends Controller
                                  $message->to($email)
                                  ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
                                 );
-    
+
                         } catch (\Exception $e) {
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
