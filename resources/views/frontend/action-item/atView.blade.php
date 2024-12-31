@@ -154,7 +154,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                            value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ Helpers::recordFormat($data->record_number?->record_number) }}">
                                         {{-- <div class="static"></div> --}}
                                     </div>
                                 </div>
@@ -248,7 +248,7 @@
                                                 @foreach ($old_record as $new)
                                                     <option
                                                         value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
-                                                        {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                        {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ $new->created_at?->format('Y') }}/{{ Helpers::recordFormat($new->record_number?->record_number) }}
                                                     </option>
                                                    {{-- <option value="{{ Helpers::getDivisionName($new->id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}"
                                                             {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>

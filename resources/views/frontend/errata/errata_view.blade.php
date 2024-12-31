@@ -399,7 +399,7 @@
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}"
                                                     {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ $new->created_at?->format('Y') }}/{{ str_pad($new->record_number?->record_number, 4, '0', STR_PAD_LEFT) }}
                                                     {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
                                                 </option>
                                             @endforeach
@@ -418,7 +418,7 @@
                                     <div class="group-input">
                                         <label for="reference_record">Reference Documents</label>
                                         <input  type="text" name="reference" maxlength="255" value="{{ $showdatas->reference }}">
-                                        
+
 
                                     </div>
                                 </div>
@@ -504,7 +504,7 @@ $users = DB::table('users')->get();
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>  
+                                </div>
 
                                 <!-- <div class="col-md-6">
                                 <div class="group-input">
@@ -528,7 +528,7 @@ $users = DB::table('users')->get();
                                     QA reviewer <span class="text-danger"></span>
                                     </label>
                                     <select id="select-state" placeholder="Select..." name="qa_reviewer">
-                                        <option value="">Select a value</option> 
+                                        <option value="">Select a value</option>
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($showdatas->qa_reviewer == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
@@ -603,7 +603,7 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
 
-                                
+
 
 
 
@@ -2041,9 +2041,9 @@ $users = DB::table('users')->get();
                             <div class="row">
 
 
-                                
-                        
-                                    
+
+
+
 
 
                                     <div class="col-lg-12 new-date-data-field">
@@ -2058,7 +2058,7 @@ $users = DB::table('users')->get();
                                         oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
                                 </div>
                             </div>
-                        
+
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">

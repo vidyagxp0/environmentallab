@@ -58,7 +58,7 @@ class CCController extends Controller
                 $record_number = '0001';
             }
         }
-        
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -113,7 +113,7 @@ class CCController extends Controller
         //     'short_description' => 'required|unique:open_stages,short_description',
         //     'due_date' => 'required',
         // ]);
-        
+
         $openState = new CC();
         $openState->form_type = "CC";
         $openState->division_id = $request->division_id;
@@ -138,7 +138,7 @@ class CCController extends Controller
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
-        $openState->other_comment = $request->other_comment; 
+        $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
 
         $openState->type_chnage = $request->type_chnage;
@@ -171,7 +171,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments;
         $openState->cft_attchament = json_encode($request->cft_attchament);
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -215,11 +215,11 @@ class CCController extends Controller
             }
             $openState->in_attachment = json_encode($files);
         }
- 
+
         $openState->status = 'Opened';
         $openState->stage = 1;
         $openState->save();
- 
+
         // Retrieve the current counter value
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
@@ -265,7 +265,7 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                
+
                     $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -315,7 +315,7 @@ class CCController extends Controller
         //      toastr()->warning('CFT reviewers can not be empty');
         //      return back();
         //  }
-        
+
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
         if (!empty($request->additional_attachments)) {
@@ -534,7 +534,7 @@ class CCController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
         }
-        
+
         if(!empty($openState->assign_to)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
@@ -733,7 +733,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->proposed_change)){            
+        if(!empty($request->proposed_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $docdetail->id;
             $history->activity_type = 'Proposed Change';
@@ -747,7 +747,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->reason_change)){            
+        if(!empty($request->reason_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $docdetail->id;
             $history->activity_type = 'Reason for Change';
@@ -761,7 +761,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->other_comment)){            
+        if(!empty($request->other_comment)){
             $history = new RcmDocHistory;
             $history->cc_id = $docdetail->id;
             $history->activity_type = 'Any Other Comments';
@@ -775,7 +775,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->supervisor_comment)){            
+        if(!empty($request->supervisor_comment)){
             $history = new RcmDocHistory;
             $history->cc_id = $docdetail->id;
             $history->activity_type = 'Supervisor Comments';
@@ -788,11 +788,11 @@ class CCController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
         }
-        
-        
+
+
         /********* QA Review ********/
 
-        if(!empty($request->type_chnage)){            
+        if(!empty($request->type_chnage)){
             $history = new RcmDocHistory;
             $history->cc_id = $review->id;
             $history->activity_type = 'Type of Change';
@@ -806,7 +806,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->qa_comments)){            
+        if(!empty($request->qa_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $review->id;
             $history->activity_type = 'QA Review Comments';
@@ -820,7 +820,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($review->related_records)){            
+        if(!empty($review->related_records)){
             $history = new RcmDocHistory;
             $history->cc_id = $review->id;
             $history->activity_type = 'Related Records';
@@ -832,8 +832,8 @@ class CCController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->save();
-        }     
-        
+        }
+
         if(!empty($request->qa_head)){
             $history = new RcmDocHistory;
             $history->cc_id = $review->id;
@@ -861,7 +861,7 @@ class CCController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->save();
-        }        
+        }
 
         if (!empty($request->qa_eval_attach)){
             $history = new RcmDocHistory;
@@ -904,7 +904,7 @@ class CCController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
         }
-        
+
         /********* Comments *********/
         if(!empty($request->cft_comments)){
             $history = new RcmDocHistory;
@@ -1107,7 +1107,7 @@ class CCController extends Controller
             $history->cc_id = $assessment->id;
             $history->activity_type = 'Occurrence';
             $history->previous = "Null";
-           
+
             if($request->Occurance == 1){
                 $history->current = "Very Likely";
             } elseif($request->Occurance == 2){
@@ -1133,7 +1133,7 @@ class CCController extends Controller
             $history->cc_id = $assessment->id;
             $history->activity_type = 'Detection';
             $history->previous = "Null";
-            
+
             if($request->Detection == 2){
                 $history->current = "Likely";
             } elseif($request->Detection == 3){
@@ -1237,7 +1237,7 @@ class CCController extends Controller
             $history->save();
         }
 
-       
+
         /******** Change Closure ********/
         if(!empty($request->qa_closure_comments)){
             $history = new RcmDocHistory;
@@ -1309,7 +1309,7 @@ class CCController extends Controller
         $due_date_extension = $data->due_date_extension;
 
         DocumentService::update_qms_numbers();
-    
+
         return view('frontend.change-control.CCview', compact(
             'data',
             'docdetail',
@@ -1331,7 +1331,7 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-   
+
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
 
@@ -1358,7 +1358,7 @@ class CCController extends Controller
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
-        $openState->other_comment = $request->other_comment; 
+        $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         // $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
@@ -1372,7 +1372,7 @@ class CCController extends Controller
         $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        
+
         //  if ($request->Microbiology_Person) {
         //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
 
@@ -1392,7 +1392,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments;
         // $openState->cft_attchament = json_encode($request->cft_attchament);
         // $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -1538,7 +1538,7 @@ class CCController extends Controller
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
         $info->Microbiology = $request->Microbiology;
-        
+
         //  if ($request->Microbiology_Person) {
         //      $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
         //      $cftReviewerIds = explode(',', $info->Microbiology_Person);
@@ -1753,7 +1753,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->assign_to != $request->assign_to) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2167,7 +2167,7 @@ class CCController extends Controller
 
 
 // Ensure both values are not null before comparing them
-if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbiology_Person)) && 
+if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbiology_Person)) &&
     ($lastDocument->Microbiology_Person != implode(',', (array)$request->Microbiology_Person))) {
 
     // Retrieving last CFT reviewer names
@@ -2410,7 +2410,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Severity';
-            
+
             if($lastassessment->severity == 1){
                 $history->previous = "Negligible";
             } elseif($lastassessment->severity == 2){
@@ -2446,7 +2446,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Occurrence';
-            
+
             if($lastassessment->Occurance == 1){
                 $history->previous = "Very Likely";
             } elseif($lastassessment->Occurance == 2){
@@ -2654,7 +2654,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "HOD Review";
-                    
+
                     $history = new RcmDocHistory();
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -2667,7 +2667,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Submit';
                     $history->save();
-                    
+
                     $list = Helpers::getHODUserList($changeControl->division_id);
                     $userIds = collect($list)->pluck('user_id')->toArray();
                     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2723,7 +2723,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                     $history->stage_id = $changeControl->stage;
                     $history->status = $changeControl->status;
                     $history->save();
-                    
+
                     // $history = new CCStageHistory();
                     // $history->type = "Activity-log";
                     // $history->doc_id = $id;
@@ -2752,7 +2752,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'HOD Review Complete';
                                 $history->save();
-                                
+
                                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
                                 $userIds = collect($list)->pluck('user_id')->toArray();
                                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2793,12 +2793,12 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                                              $message->to($email)
                                              ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed"); }
                                             );
-            
+
                                     } catch (\Exception $e) {
                                         \Log::error('Mail failed to send: ' . $e->getMessage());
                                     }
                                 }
-                            }   
+                            }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2811,7 +2811,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                     toastr()->success('Document Sent');
                     return back();
             }
-            
+
             if ($changeControl->stage == 3) {
                    $changeControl->stage = "4";
                     $changeControl->status = "CFT/SME/QA Review";
@@ -2827,7 +2827,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Send to CFT/SME/QA Review';
                         $history->save();
-                        
+
                         $list = Helpers::getCFTUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2868,12 +2868,12 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                                      $message->to($email)
                                      ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to CFT/SME/QA Review Performed"); }
                                     );
-    
+
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                    }  
+                    }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2896,7 +2896,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             //              if($u->q_m_s_divisions_id == $changeControl->division_id){
             //                  $email = Helpers::getInitiatorEmail($u->user_id);
             //                  if ($email !== null) {
-                          
+
             //                    Mail::send(
             //                        'mail.view-mail',
             //                         ['data' => $changeControl],
@@ -2906,7 +2906,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             //                     }
             //                   );
             //                 }
-            //      } 
+            //      }
             //       }
             //          $changeControl->update();
             //         $history = new CCStageHistory();
@@ -2999,7 +2999,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Review Complete';
                     $history->save();
-                    
+
                     $list = Helpers::getHODUserList($changeControl->division_id);
                     $userIds = collect($list)->pluck('user_id')->toArray();
                     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3045,8 +3045,8 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                             \Log::error('Mail failed to send: ' . $e->getMessage());
                         }
                     }
-                } 
-                
+                }
+
                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3092,7 +3092,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            }  
+            }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3140,7 +3140,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'Implemented';
                             $history->save();
-                            
+
                             $list = Helpers::getHODUserList($changeControl->division_id);
                             $userIds = collect($list)->pluck('user_id')->toArray();
                             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3181,12 +3181,12 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                                          $message->to($email)
                                          ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
-                        } 
+                        }
 
                      $list = Helpers::getInitiatorUserList($changeControl->division_id);
                             $userIds = collect($list)->pluck('user_id')->toArray();
@@ -3228,12 +3228,12 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                                          $message->to($email)
                                          ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
-                        } 
+                        }
 
                      $list = Helpers::getCFTUserList($changeControl->division_id);
                             $userIds = collect($list)->pluck('user_id')->toArray();
@@ -3275,13 +3275,13 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                                          $message->to($email)
                                          ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
-                        } 
-                        
+                        }
+
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -3310,7 +3310,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
-                
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3323,7 +3323,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancel';
                 $history->save();
-                
+
                 $list = Helpers::getHODUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3369,7 +3369,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            } 
+            }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3382,11 +3382,11 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
-                
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3399,7 +3399,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->save();
-                
+
                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3445,8 +3445,8 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            } 
-            
+            }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3462,7 +3462,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
                 $changeControl->status = "HOD Review";
-                
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3475,7 +3475,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->save();
-                
+
                 $list = Helpers::getHODUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3521,9 +3521,9 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            } 
+            }
 
-            
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3539,7 +3539,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "2";
                 $changeControl->status = "HOD Review";
-                
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3552,7 +3552,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Request More Info';
                 $history->save();
-                
+
                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3598,8 +3598,8 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            } 
-            
+            }
+
              $list = Helpers::getHODUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3645,8 +3645,8 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            }  
-            
+            }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3689,11 +3689,11 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             $lastDocument = CC::find($id);
             $openState = CC::find($id);
 
-            if ($changeControl->stage == 3) 
+            if ($changeControl->stage == 3)
             {
                 $changeControl->stage = "5";
                 $changeControl->status = "Pending Change Implementation";
-                
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3706,7 +3706,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'CFT/SME/QA Review Not Required';
                 $history->save();
-                
+
                 $list = Helpers::getHODUserList($changeControl->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -3714,7 +3714,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $userId = $users->pluck('name')->implode(',');
                 if($userId)
                 {
-                    try 
+                    try
                     {
                         $notification = new RcmDocHistory();
                         $notification->cc_id = $id;
@@ -3733,18 +3733,18 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         $notification->role_name = "Initiator";
                         $notification->save();
                         // dd($history);
-                    } 
+                    }
                     catch (\Throwable $e)
                     {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-             foreach ($list as $u) 
+             foreach ($list as $u)
              {
                 $email = Helpers::getAllUserEmail($u->user_id);
-                if (!empty($email)) 
+                if (!empty($email))
                 {
-                    try 
+                    try
                     {
                         info('Sending mail to', [$email]);
                         Mail::send(
@@ -3755,8 +3755,8 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                              ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
                             );
 
-                    } 
-                    catch (\Exception $e) 
+                    }
+                    catch (\Exception $e)
                     {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
@@ -3770,7 +3770,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $userId = $users->pluck('name')->implode(',');
                 if($userId)
                 {
-                    try 
+                    try
                     {
                         $notification = new RcmDocHistory();
                         $notification->cc_id = $id;
@@ -3789,18 +3789,18 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                         $notification->role_name = "Initiator";
                         $notification->save();
                         // dd($history);
-                    } 
+                    }
                     catch (\Throwable $e)
                     {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-            foreach ($list as $u) 
+            foreach ($list as $u)
             {
                 $email = Helpers::getAllUserEmail($u->user_id);
-                if (!empty($email)) 
+                if (!empty($email))
                 {
-                    try 
+                    try
                     {
                         info('Sending mail to', [$email]);
                         Mail::send(
@@ -3811,14 +3811,14 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                              ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
                             );
 
-                    } 
-                    catch (\Exception $e) 
+                    }
+                    catch (\Exception $e)
                     {
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
             }
-            
+
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Change-Control";
@@ -3830,21 +3830,21 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             $history->save();
             toastr()->success('Document Sent');
             return back();}
-            
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
-   
 
-    public function stagecancel(Request $request, $id) 
+
+    public function stagecancel(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
 
- 
+
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->update();
@@ -3881,7 +3881,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
         $parent_initiator_id = CC::where('id', $id)->value('initiator_id');
         $parent_intiation_date = CC::where('id', $id)->value('intiation_date');
         $parent_short_description = CC::where('id', $id)->value('short_description');
-        $old_record = CC::select('id', 'division_id', 'record')->get();
+        $old_record = CC::select('id', 'division_id', 'record', 'created_at')->get();
 
         if($request->revision == "Action-Item"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
@@ -3894,7 +3894,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
         if($request->revision == "New Document"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
             return redirect()->route('documents.create');
-            
+
         }
         else{
             toastr()->warning('Not Working');

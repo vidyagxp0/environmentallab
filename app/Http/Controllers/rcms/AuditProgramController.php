@@ -28,7 +28,7 @@ class AuditProgramController extends Controller
 
     public function auditprogram()
     {
-        $old_record = AuditProgram::select('id', 'division_id', 'record')->get();
+        $old_record = AuditProgram::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -431,7 +431,7 @@ class AuditProgramController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-        
+
         if (!empty($data->related_url)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -578,7 +578,7 @@ class AuditProgramController extends Controller
         $data->type = $request->type;
         $data->year = $request->year;
         $data->Quarter = $request->Quarter;
-        $data->description = $request->description; 
+        $data->description = $request->description;
         $data->comments = $request->comments;
         $data->related_url = $request->related_url;
         $data->url_description = $request->url_description;
@@ -757,7 +757,7 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->type != $data->type || !empty($request->type_comment)) {
 
             $history = new AuditProgramAuditTrial();
@@ -828,7 +828,7 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-    
+
         if ($lastDocument->related_url != $data->related_url || !empty($request->related_url_comment)) {
 
             $history = new AuditProgramAuditTrial();
@@ -972,12 +972,13 @@ class AuditProgramController extends Controller
         $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
         $data->stateArr = json_decode($stateList->getBody(), true);
         $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
-        $data->cityArr = json_decode($cityList->getBody(), true); 
+        $data->cityArr = json_decode($cityList->getBody(), true);
         $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
         $data->countryArr = json_decode($countryList->getBody(), true);
- 
+        $old_record = AuditProgram::select('id', 'division_id', 'record', 'created_at')->get();
 
-        return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid', 'startdate', 'enddate'));
+
+        return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid', 'startdate', 'enddate', 'old_record'));
     }
 
 
@@ -1004,9 +1005,9 @@ class AuditProgramController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->stage = "Submitted";
                     $history->save();
-                    
+
                     $list = Helpers::getAuditManagerUserList($changeControl->division_id);
-                    
+
                     $userIds = collect($list)->pluck('user_id')->toArray();
                     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                     $userIdNew = $users->pluck('id')->implode(',');
@@ -1163,14 +1164,14 @@ class AuditProgramController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                             // }
                         }
-               
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1284,11 +1285,11 @@ class AuditProgramController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
-        $capa_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
-        $cc_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
-        $rca_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
-        $action_items_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
+        $capa_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
+        $cc_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
+        $rca_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
+        $action_items_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
 
 
 
@@ -1324,7 +1325,7 @@ class AuditProgramController extends Controller
         if($AuditProgramGrid->end_date){
             $enddate = unserialize($AuditProgramGrid->end_date);
         }
-        
+
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');

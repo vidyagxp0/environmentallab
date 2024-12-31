@@ -31,7 +31,7 @@ class AuditeeController extends Controller
 
     public function external_audit()
     {
-        $old_record = Auditee::select('id', 'division_id', 'record')->get();
+        $old_record = Auditee::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -1080,7 +1080,7 @@ class AuditeeController extends Controller
     public function show($id)
     {
 
-        $old_record = Auditee::select('id', 'division_id', 'record')->get();
+        $old_record = Auditee::select('id', 'division_id', 'record', 'created_at')->get();
         $data = Auditee::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -2959,7 +2959,7 @@ class AuditeeController extends Controller
         $parent_id = $id;
         $parent_division_id = $cc->division_id;
         $parent_type = "Internal Audit";
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -2973,7 +2973,7 @@ class AuditeeController extends Controller
         $hod = User::get();
         $pre = CC::all();
     // $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
-        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
 
         // if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
 

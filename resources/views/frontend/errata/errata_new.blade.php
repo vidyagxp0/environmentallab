@@ -8,7 +8,7 @@
         header {
             display: none;
         }
-      
+
     </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -307,7 +307,7 @@
                                             {{-- <option value="">--Select---</option> --}}
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ $new->created_at?->format('Y') }}/{{ str_pad($new->record_number?->record_number, 4, '0', STR_PAD_LEFT) }}
                                                     {{-- {{ Helpers::recordFormat($new->record) }} --}}
                                                 </option>
                                             @endforeach
@@ -379,7 +379,7 @@
 </script>
 
 
-                                
+
 
                                 @php
         $users = DB::table('users')->get();
@@ -1849,7 +1849,7 @@
                                         oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
                                 </div>
                             </div>
-                        
+
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">

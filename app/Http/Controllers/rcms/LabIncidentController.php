@@ -677,7 +677,7 @@ class LabIncidentController extends Controller
         toastr()->success('Record is created Successfully');
 
         return redirect('rcms/qms-dashboard');
-    
+
     }
     public function updateLabIncident(request $request, $id)
     {
@@ -785,8 +785,8 @@ class LabIncidentController extends Controller
             }
         }
         $data->Inv_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
-  
-        
+
+
         $files = is_array($request->existing_attach_files_capa) ? $request->existing_attach_files_capa : null;
         if (!empty($request->CAPA_Attachment)) {
             if ($data->CAPA_Attachment) {
@@ -805,7 +805,7 @@ class LabIncidentController extends Controller
             }
         }
         $data->CAPA_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
-        
+
         $files = is_array($request->existing_attach_files_QA) ? $request->existing_attach_files_QA : null;
         if (!empty($request->QA_Head_Attachment)) {
             if ($data->QA_Head_Attachment) {
@@ -881,7 +881,7 @@ class LabIncidentController extends Controller
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
-        
+
         if ($lastDocument->assign_to != $request->assign_to) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
@@ -1309,7 +1309,7 @@ class LabIncidentController extends Controller
 
         DocumentService::update_qms_numbers();
         toastr()->success('Record is updated Successfully');
-        return back();    
+        return back();
     }
 
     public function LabIncidentShow($id)
@@ -1326,8 +1326,8 @@ class LabIncidentController extends Controller
         $cft = [];
         $parent_id = $id;
         $parent_type = "Capa";
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
-        $rca_old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
+        $rca_old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -1377,11 +1377,11 @@ class LabIncidentController extends Controller
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
-                      
+
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1391,7 +1391,7 @@ class LabIncidentController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
 
                 $list = Helpers::getHODUserList($changeControl->division_id);
@@ -1429,7 +1429,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -1476,7 +1476,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -1510,7 +1510,7 @@ class LabIncidentController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl ->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl ],
@@ -1520,7 +1520,7 @@ class LabIncidentController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
 
                 $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
@@ -1563,7 +1563,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Incident Review Completed Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -1597,7 +1597,7 @@ class LabIncidentController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1607,7 +1607,7 @@ class LabIncidentController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
 
                 $list = Helpers::getHODUserList($changeControl->division_id);
@@ -1650,14 +1650,14 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Investigation Completed Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1688,7 +1688,7 @@ class LabIncidentController extends Controller
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending QA Review";
                 $changeControl->review_completed_by = Auth::user()->name;
-                $changeControl->review_completed_on = Carbon::now()->format('d-M-Y'); 
+                $changeControl->review_completed_on = Carbon::now()->format('d-M-Y');
 
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
@@ -1701,13 +1701,13 @@ class LabIncidentController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Review Completed';
-                $history->save();  
+                $history->save();
             //  $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -1717,8 +1717,8 @@ class LabIncidentController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
-            //   } 
+            //      }
+            //   }
 
             $list = Helpers::getQAUserList($changeControl->division_id);
             $userIds = collect($list)->pluck('user_id')->toArray();
@@ -1760,13 +1760,13 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Completed Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                         }
-                        
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1878,7 +1878,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -1925,7 +1925,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -1962,7 +1962,7 @@ class LabIncidentController extends Controller
                 //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1972,7 +1972,7 @@ class LabIncidentController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2010,7 +2010,7 @@ class LabIncidentController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Request More Info";
                         $history->save();
-                        
+
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2051,7 +2051,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2066,7 +2066,7 @@ class LabIncidentController extends Controller
                 $history->stage_id = $changeControl->stage;
                 $history->status = $changeControl->status;
                 $history->save();
-      
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -2119,7 +2119,7 @@ class LabIncidentController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Further Investigation Required";
                         $history->save();
-                        
+
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
                          $userIds = collect($list)->pluck('user_id')->toArray();
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2160,7 +2160,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2195,7 +2195,7 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        
+
                         foreach ($list as $u) {
                             $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
@@ -2208,7 +2208,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2255,7 +2255,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2368,7 +2368,7 @@ class LabIncidentController extends Controller
                         $history->origin_state = "Pending Incident Review";
                         $history->stage = "Cancelled";
                         $history->save();
-                        
+
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2409,7 +2409,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2456,7 +2456,7 @@ class LabIncidentController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }

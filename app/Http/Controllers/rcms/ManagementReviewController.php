@@ -2611,7 +2611,7 @@ class ManagementReviewController extends Controller
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
+        $old_record = ManagementReview::select('id', 'division_id', 'record', 'created_at')->get();
         $management = ManagementReview::find($id);
         session()->put('division', $management->division_id);
         return view('frontend.forms.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','old_record'));

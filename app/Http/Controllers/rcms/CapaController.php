@@ -2318,7 +2318,7 @@ class CapaController extends Controller
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
         }
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
 

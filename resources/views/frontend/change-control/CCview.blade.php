@@ -877,7 +877,7 @@
                                                     <textarea name="qa_review_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Related Records">Related Records</label>
@@ -891,9 +891,9 @@
                                                                     $recordValue =
                                                                         Helpers::getDivisionName($new->division_id) .
                                                                         '/CC/' .
-                                                                        date('Y') .
+                                                                        $new->created_at?->format('Y') .
                                                                         '/' .
-                                                                        Helpers::recordFormat($new->record_number->record_number);
+                                                                        Helpers::recordFormat($new->record_number?->record_number);
                                                                     $selected = in_array(
                                                                         $recordValue,
                                                                         explode(',', $data->related_records),
@@ -1704,7 +1704,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                       
+
                                                         <div class="col-lg-6 new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <label for="effective-check-date">Effectiveness Check Creation Date</label>
@@ -1741,7 +1741,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> 
+                                                <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     {{ $due_date_extension }}</textarea>
                                             </div>
                                         </div>

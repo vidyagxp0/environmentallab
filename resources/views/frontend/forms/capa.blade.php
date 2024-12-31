@@ -426,8 +426,8 @@
 
                                             @foreach ($old_record as $new)
                                                 <option
-                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . $new->created_at?->format('Y') . '/' . Helpers::recordFormat($new->record_number?->record_number) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . $new->created_at?->format('Y') . '/' . Helpers::recordFormat($new->record_number?->record_number) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -457,8 +457,8 @@
 
                                             @foreach ($rca_old_record as $new)
                                                 <option
-                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/RCA/' . $new->created_at?->format('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/RCA/' . $new->created_at?->format('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>

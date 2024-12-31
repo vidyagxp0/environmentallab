@@ -31,11 +31,11 @@ class InternalauditController extends Controller
 {
     public function internal_audit()
     {
-        $old_record = InternalAudit::select('id', 'division_id', 'record', 'short_description')->get();
-        $capa_old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
-        $action_items_old_record = ActionItem::select('id', 'division_id', 'record', 'short_description')->get();
-        $cc_old_record = CC::select('id', 'division_id', 'record', 'short_description')->get();
-        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $old_record = InternalAudit::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $capa_old_record = Capa::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $action_items_old_record = ActionItem::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $cc_old_record = CC::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -2300,11 +2300,11 @@ class InternalauditController extends Controller
 
     public function internalAuditShow($id)
     {
-        $old_record = InternalAudit::select('id', 'division_id', 'record', 'short_description')->get();
-        $capa_old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
-        $action_items_old_record = ActionItem::select('id', 'division_id', 'record', 'short_description')->get();
-        $cc_old_record = CC::select('id', 'division_id', 'record', 'short_description')->get();
-        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $old_record = InternalAudit::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $capa_old_record = Capa::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $action_items_old_record = ActionItem::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $cc_old_record = CC::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
         $data = InternalAudit::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -2399,7 +2399,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Schedule Audit Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2498,7 +2498,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Audit Preparation Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2575,7 +2575,7 @@ class InternalauditController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -2589,7 +2589,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2769,7 +2769,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -2959,7 +2959,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -3011,7 +3011,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -3049,7 +3049,7 @@ class InternalauditController extends Controller
                             $history->stage = "Cancelled";
                             $history->save();
 
-                            
+
                         $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
                         // dd($list);
                         foreach ($list as $u) {
@@ -3064,7 +3064,7 @@ class InternalauditController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
@@ -3132,7 +3132,7 @@ class InternalauditController extends Controller
         //         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
         //         return view('frontend.forms.observation', compact('record_number','parent_division_id' ,'due_date', 'parent_id', 'parent_type'));
         //     }
-           
+
         // }
 
         public function internal_audit_child(Request $request, $id)
@@ -3142,7 +3142,7 @@ class InternalauditController extends Controller
             $parent_id = $id;
             $parent_division_id = $cc->division_id;
             $parent_type = "Internal Audit";
-            $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
@@ -3156,23 +3156,23 @@ class InternalauditController extends Controller
             $hod = User::get();
             $pre = CC::all();
         // $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
-            $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+            $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
 
             // if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-            
+
             if ($request->revision == "Observation-child") {
                 $old_record = ActionItem::all();
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.forms.observation', compact('record_number','old_record','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-    
+
             }
-           
-    
+
+
             if ($request->revision == "capa-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft'));
             }
-          
+
         }
     public static function singleReport($id)
     {

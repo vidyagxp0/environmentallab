@@ -2563,14 +2563,14 @@ class ObservationController extends Controller
         $cft = [];
         $parent_id = $id;
         $parent_type = "Capa";
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
-        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description', 'created_at')->get();
         $parent_division = Observation::where('id',$id)->value('division_id');
 
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);

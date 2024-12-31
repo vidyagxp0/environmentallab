@@ -13,4 +13,15 @@ class ActionItem extends Model
     {
         return $this->morphOne(QmsRecordNumber::class, 'recordable');
     }
+
+
+    public function getRecordNumberAttribute($value)
+    {
+        if ($this->relationLoaded('record_number')) {
+            return optional($this->getRelationValue('record_number'))->record_number ?: $value;
+        }
+
+        $related = $this->record_number()->first();
+        return $related;
+    }
 }

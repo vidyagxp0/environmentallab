@@ -21,7 +21,7 @@ class ErrataController extends Controller
 {
     public function index()
     {
-        $old_record = errata::select('id', 'division_id', 'record')->get();
+        $old_record = errata::select('id', 'division_id', 'record', 'created_at')->get();
         // $showdata = errata::find($id);
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -494,11 +494,12 @@ class ErrataController extends Controller
         $showdata = errata::find($id);
 
         // dd($showdata);
+        $old_record = errata::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $errata_id = $id;
         $grid_Data = ErrataGrid::where(['e_id' => $errata_id, 'identifier' => 'details'])->first();
-        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number'));
+        return view('frontend.errata.errata_view', compact('showdata', 'grid_Data', 'errata_id', 'record_number', 'old_record'));
     }
 
     public function stageChange(Request $request, $id)

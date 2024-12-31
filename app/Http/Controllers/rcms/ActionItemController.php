@@ -33,7 +33,7 @@ class ActionItemController extends Controller
 
     public function showAction()
     {
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $old_record = ActionItem::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -58,7 +58,7 @@ class ActionItemController extends Controller
     {
 
         $document = ActionItem::all();
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $old_record = ActionItem::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -486,7 +486,7 @@ class ActionItemController extends Controller
     public function show($id)
     {
 
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $old_record = ActionItem::select('id', 'division_id', 'record', 'created_at')->get();
         $data = ActionItem::find($id);
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);

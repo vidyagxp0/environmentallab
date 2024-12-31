@@ -160,7 +160,7 @@
                                             @foreach ($cft as $data)
                                             @if(Helpers::checkUserRolesMicrobiology_Person($data))
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endif    
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -263,10 +263,10 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars" class="text-primary">255 </span><span class="text-primary"> characters remaining</span>
-                                      
+
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
@@ -336,7 +336,7 @@
                                         <div class="ai_text">AI Suggested option</div>
                                     </div>
                                 </div> --}}
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="nature-change">Nature Of Change</label>
@@ -521,8 +521,8 @@
                                             placeholder="Select Reference Records">
                                             @foreach ($pre as $new)
                                                 <option
-                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/CC/' . $new->created_at?->format('Y') . '/' . Helpers::recordFormat($new->record_number?->record_number) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/CC/' . $new->created_at?->format('Y') . '/' . Helpers::recordFormat($new->record_number?->record_number) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -649,7 +649,7 @@
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            <option value="">-- Select --</option> 
+                                            <option value="">-- Select --</option>
                                             @foreach ($cft as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -1071,7 +1071,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                        <div class="calenderauditee">                                     
+                                        <div class="calenderauditee">
                                         <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="effective_check_date" value=""
                                         class="hide-input"
@@ -1150,19 +1150,19 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Cancelled On</label>
-                                     <div class="static">12-12-2032</div>  
+                                     <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Information Required By</label>
-                                          <div class="static">Piyush Sahu</div>  
+                                          <div class="static">Piyush Sahu</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Information Required On</label>
-                                          <div class="static">12-12-2032</div> 
+                                          <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                  <div class="col-lg-6">
@@ -1180,13 +1180,13 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Information Req. By</label>
-                                        <div class="static">Piyush Sahu</div> 
+                                        <div class="static">Piyush Sahu</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Information Req. On</label>
-                                         <div class="static">12-12-2032</div> 
+                                         <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                 {{-- <div class="col-lg-6">
@@ -1198,19 +1198,19 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA Review Completed On</label>
-                                        <div class="static">12-12-2032</div> 
+                                        <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Info Req. By</label>
-                                         <div class="static">Piyush Sahu</div> 
+                                         <div class="static">Piyush Sahu</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Info Req. On</label>
-                                         <div class="static">12-12-2032</div> 
+                                         <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-6">
@@ -1252,25 +1252,25 @@
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Change Implemented By</label>
-                                        <div class="static">Piyush Sahu</div> 
+                                        <div class="static">Piyush Sahu</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Change Implemented On</label>
-                                        <div class="static">12-12-2032</div> 
+                                        <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA More Information Required By</label>
-                                         <div class="static">Piyush Sahu</div> 
+                                         <div class="static">Piyush Sahu</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA More Information Required On</label>
-                                        <div class="static">12-12-2032</div> 
+                                        <div class="static">12-12-2032</div>
                                     </div>
                                 </div> --}}
                                 <div class="col-lg-6">
@@ -1284,7 +1284,7 @@
                                         <label for="submitted">Implemented On</label>
                                         {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" value="save" name="submit" class="saveButton">Save</button>
