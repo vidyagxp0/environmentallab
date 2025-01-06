@@ -411,6 +411,16 @@
             text-align: left;
         }
 
+        #isPasted {
+            table-layout: fixed;
+            width: 650px!important;
+        }
+
+        #isPasted > tbody > tr > td > p{
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
     </style>
 
 </head>
