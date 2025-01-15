@@ -56,7 +56,7 @@ class Helpers
 
     public static function isRevised($data)
     {
-        if($data  >= 5){
+        if($data  >= 9){
             return 'disabled';
         }else{
             return  '';
@@ -1068,6 +1068,6 @@ public static function getInitiatorGroupFullName($shortName)
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '19', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
         }
     }
-    
+
 
 }

@@ -325,41 +325,41 @@ class DocumentController extends Controller
 
         $new = new SetDivision;
         $new->process_id = $request->process_id;
-        
+
         $checkDivision = QMSProcess::where('id', $request->process_id)->pluck('division_id')->first();
         // dd($checkDivision);
         $new->division_id = $checkDivision;
         $new->user_id = Auth::user()->id;
         // $new->save();
-        
+
         $qms_process = QmsProcess::where([
             'division_id' => $checkDivision,
             'process_name' => 'New Document'
             ])->first();
-            
+
             // return $qms_process;
-            
+
             $reviewer_users = UserRole::where([
                 'q_m_s_divisions_id' => $checkDivision,
                 'q_m_s_processes_id' => $qms_process->id,
                 'q_m_s_roles_id' => 2
                 ])->select('user_id')->distinct()->get();
-                
+
                 $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
-                
+
                 $reviewer = User::whereIn('id', $reviewer_ids)->get();
-                
+
                 $approver_users = UserRole::where([
                     'q_m_s_divisions_id' => $checkDivision,
                     'q_m_s_processes_id' => $qms_process->id,
                     'q_m_s_roles_id' => 1
                     ])->select('user_id')->distinct()->get();
-                    
+
                     $approver_ids = $approver_users->pluck('user_id')->toArray();
-                    
+
                     $approvers = User::whereIn('id', $approver_ids)->get();
-                    
-                    
+
+
                     // return $reviewer_users;
                     // return $checkDivision;
                     // dd(QMSDivision::where('id', $checkDivision)->value('name'));
@@ -2062,12 +2062,12 @@ class DocumentController extends Controller
     //     $document = Document::find($id);
     //     $requestedMajor = (int)$request->major;
     //     $requestedMinor = (int)$request->minor;
-    
+
     //     if ($requestedMinor > 9) {
     //         $requestedMajor += 1;
     //         $requestedMinor = 1;
     //     }
-    
+
     //     $revisionExists = Document::where([
     //         'document_type_id' => $document->document_type_id,
     //         'document_number' => $document->document_number,
@@ -2174,114 +2174,79 @@ class DocumentController extends Controller
 
 
     public function revision(Request $request, $id)
-    {
-        $document = Document::find($id);
-        $requestedMajor = (int)$document->major;
-        $requestedMinor = (int)$document->minor;
-    
-        // Check if Minor is less than 9
-        if ($requestedMinor < 9) {
-            $requestedMinor += 1;
-        } else {
-            $requestedMinor = 1;
-            $requestedMajor += 1;
-        }
-    
-        // Check if a revision already exists in database
-        $revisionExists = Document::where([
-            'document_type_id' => $document->document_type_id,
-            'document_number' => $document->document_number,
-            'major' => $requestedMajor,
-            'minor' => $requestedMinor
-        ])->first();
+{
+    $document = Document::find($id);
 
-        if ($revisionExists) {
-            toastr()->error('Same version of document is already revised!!');
-            return redirect()->back();
-        } else {
-            $document->revision = 'Yes';
-            $document->revision_policy = $request->revision;
-            $document->update();
-            $newdoc = new Document();
-            $newdoc->originator_id = $document->originator_id;
-            $newdoc->division_id = $document->division_id;
-            $newdoc->process_id = $document->process_id;
-            $newdoc->revised = 'Yes';
-            $newdoc->revised_doc = $document->id;
-            $newdoc->document_name = $document->document_name;
-            $newdoc->major = $requestedMajor;
-            $newdoc->minor = $requestedMinor;
-            $newdoc->sop_type = $request->sop_type;
-            $newdoc->short_description = $document->short_description;
-            $newdoc->due_dateDoc = $document->due_dateDoc;
-            $newdoc->description = $document->description;
-            $newdoc->notify_to = json_encode($document->notify_to);
-            $newdoc->reference_record = $document->reference_record;
-            $newdoc->department_id = $document->department_id;
-            $newdoc->document_type_id = $document->document_type_id;
-            $newdoc->document_subtype_id = $document->document_subtype_id;
-            $newdoc->document_language_id = $document->document_language_id;
-            $newdoc->keywords = $document->keywords;
-            $newdoc->effective_date = $document->effective_date;
-            $newdoc->next_review_date = $document->next_review_date;
-            $newdoc->review_period = $document->review_period;
-            $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
-            $newdoc->attach_effective_docuement = $document->attach_effective_docuement;
-            $newdoc->approvers = $document->approvers;
-            $newdoc->reviewers = $document->reviewers;
-            $newdoc->approver_group = $document->approver_group;
-            $newdoc->reviewers_group = $document->reviewers_group;
-            $newdoc->revision_summary = $document->revision_summary;
-            $newdoc->training_required = $document->training_required;
-            $newdoc->trainer = $request->trainer;
-            $newdoc->document_number = $document->document_number;
-            $newdoc->comments = $request->comments;
-            //$newdoc->purpose = $request->purpose;
-            $newdoc->stage = 1;
-            $newdoc->status = Stage::where('id', 1)->value('name');
-            $newdoc->save();
+    if (!$document) {
+        toastr()->error('Document not found!');
+        return redirect()->back();
+    }
 
-            $doc_content = new DocumentContent();
-            $doc_content->document_id = $newdoc->id;
-            $doc_content->purpose = $doc_content->purpose;
-            $doc_content->scope = $doc_content->scope;
-            $doc_content->responsibility = $doc_content->responsibility;
-            $doc_content->abbreviation = $doc_content->abbreviation;
-            $doc_content->defination = $doc_content->defination;
-            $doc_content->materials_and_equipments = $doc_content->materials_and_equipments;
-            $doc_content->procedure = $doc_content->procedure;
-            $doc_content->reporting = $doc_content->reporting;
-            $doc_content->references = $doc_content->references;
-            $doc_content->ann = $doc_content->ann;
-            $doc_content->distribution = $doc_content->distribution;
-            $doc_content->save();
+    $requestedMajor = (int)$document->major;
+    $requestedMinor = (int)$document->minor;
 
-            if ($document->training_required == 'yes') {
-                $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-                if (! empty($docTrain)) {
-                    $trainning = new DocumentTraining();
-                    $trainning->document_id = $newdoc->id;
-                    $trainning->trainer = $docTrain->trainer;
-                    $trainning->cbt = $docTrain->cbt;
-                    $trainning->type = $docTrain->type;
-                    $trainning->comments = $docTrain->comments;
-                    $trainning->save();
-                }
+    // Increment minor version or roll over to next major version
+    if ($requestedMinor < 9) {
+        $requestedMinor += 1;
+    } else {
+        $requestedMinor = 1;
+        $requestedMajor += 1;
+    }
 
-            }
+    $revisionExists = Document::where([
+        'document_type_id' => $document->document_type_id,
+        'document_number' => $document->document_number,
+        'major' => $requestedMajor,
+        'minor' => $requestedMinor
+    ])->first();
 
-            $annexure = Annexure::where('document_id', $id)->first();
-            $new_annexure = new Annexure();
-            $new_annexure->document_id = $newdoc->id;
-            $new_annexure->sno = $annexure->sno;
-            $new_annexure->annexure_no = $annexure->annexure_no;
-            $new_annexure->annexure_title = $annexure->annexure_title;
-            $new_annexure->save();
+    if ($revisionExists) {
+        toastr()->error('A document with this version already exists!');
+        return redirect()->back();
+    }
 
-            DocumentService::update_document_numbers();
+    $document->revision = 'Yes';
+    $document->revision_policy = $request->revision;
+    $document->update();
 
-            toastr()->success('Document is revised, you can change the body!!');
-            return redirect()->route('documents.edit', $newdoc->id);
+    $newdoc = $document->replicate();
+    $newdoc->revised = 'Yes';
+    $newdoc->revised_doc = $document->id;
+    $newdoc->major = $requestedMajor;
+    $newdoc->minor = $requestedMinor;
+    $newdoc->trainer = $request->trainer;
+    $newdoc->comments = $request->comment;
+    $newdoc->stage = 1;
+    $newdoc->status = Stage::where('id', 1)->value('name');
+    $newdoc->save();
+
+    $docContent = DocumentContent::where('document_id', $document->id)->first();
+    if ($docContent) {
+        $newDocContent = $docContent->replicate();
+        $newDocContent->document_id = $newdoc->id;
+        $newDocContent->save();
+    }
+
+    $annexure = Annexure::where('document_id', $document->id)->first();
+    if ($annexure) {
+        $newAnnexure = $annexure->replicate();
+        $newAnnexure->document_id = $newdoc->id;
+        $newAnnexure->save();
+    }
+
+    if ($document->training_required == 'yes') {
+        $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+        if ($docTrain) {
+            $newTraining = $docTrain->replicate();
+            $newTraining->document_id = $newdoc->id;
+            $newTraining->save();
         }
     }
+
+    DocumentService::update_document_numbers();
+
+    toastr()->success('Document has been revised successfully! You can now edit the content.');
+    return redirect()->route('documents.edit', $newdoc->id);
+}
+
 }

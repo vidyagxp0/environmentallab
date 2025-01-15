@@ -230,18 +230,12 @@
                                     <label for="sop_type">SOP Type</label>
                                     <select name="sop_type" {{Helpers::isRevised($document->stage)}} >
                                         <option  value="0">-- Select --</option>
-                                        <option @if ($document->sop_type =='Chemistry SOP') selected @endif
-                                            value="Chemistry SOP">Chemistry SOP</option>
-                                            <option @if ($document->sop_type =='Instrument SOP') selected @endif
-                                                value="Instrument SOP">Instrument SOP</option>
-                                                <option @if ($document->sop_type =='Analytical SOP') selected @endif
-                                                    value="Analytical SOP">Analytical SOP</option>
-                                                    <option @if ($document->sop_type =='Microbiology SOP') selected @endif
-                                                        value="Microbiology SOP">Microbiology SOP</option>
-                                                        <option @if ($document->sop_type =='Quality Policies') selected @endif
-                                                            value="Quality Policies">Quality Policies</option>
-                                                            <option @if ($document->sop_type =='Others') selected @endif
-                                                                value="Others">Others</option>
+                                        <option value="Chemistry SOP" @if ($document->sop_type == 'Chemistry SOP') selected @endif>Chemistry SOP</option>
+                                        <option value="Instrument SOP" @if ($document->sop_type == 'Instrument SOP') selected @endif>Instrument SOP</option>
+                                        <option value="Analytical SOP" @if ($document->sop_type == 'Analytical SOP') selected @endif>Analytical SOP</option>
+                                        <option value="Microbiology SOP" @if ($document->sop_type == 'Microbiology SOP') selected @endif>Microbiology SOP</option>
+                                        <option value="Quality Policies" @if ($document->sop_type == 'Quality Policies') selected @endif>Quality Policies</option>
+                                        <option value="Others" @if ($document->sop_type == 'Others') selected @endif>Others</option>
                                     </select>
                                     @foreach ($history as $tempHistory)
                                     @if (
@@ -291,17 +285,17 @@
                                     </div> --}}
                                     <div class="calenderauditee">
                                         <!-- Display the date in DD-MMM-YYYY format -->
-                                        <input type="text" id="due_dateDoc" 
-                                               value="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}" 
+                                        <input type="text" id="due_dateDoc"
+                                               value="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}"
                                                placeholder="DD-MMM-YYYY" readonly/>
-                                    
+
                                         <!-- Hidden date input for form submission -->
-                                        <input type="date" name="due_dateDoc" 
-                                               value="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}" 
+                                        <input type="date" name="due_dateDoc"
+                                               value="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"
                                                readonly {{ Helpers::isRevised($document->stage) }}
-                                               class="hide-input" 
+                                               class="hide-input"
                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                               min="{{ \Carbon\Carbon::today()->format('Y-m-d') }}" 
+                                               min="{{ \Carbon\Carbon::today()->format('Y-m-d') }}"
                                                oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
