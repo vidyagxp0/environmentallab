@@ -330,8 +330,8 @@
             $(this).closest('div.row').remove();
         })
 
-        
-       
+
+
 
         $('#Definitionbtnadd').click(function(e) {
 
@@ -401,14 +401,14 @@
             var closestSingleBlock = $(this).closest('.singleResponsibilityBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleResponsibilityBlock', '.subSingleResponsibilityBlock');
-            
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subSingleResponsibilityBlock">' + html + '</div>');
             }
         });
-        
+
         $(document).on('click', '.subAbbreviationAdd', function(e) {
             e.preventDefault();
             subAbbreviationAdd = Math.round(Math.random() * 10000);
@@ -418,14 +418,14 @@
             var closestSingleBlock = $(this).closest('.singleAbbreviationBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleAbbreviationBlock', '.subSingleAbbreviationBlock');
-            
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subSingleAbbreviationBlock">' + html + '</div>');
             }
         });
-        
+
         $(document).on('click', '.subDefinitionAdd', function(e) {
             e.preventDefault();
             subDefinitionAdd = Math.round(Math.random() * 10000);
@@ -435,14 +435,14 @@
             var closestSingleBlock = $(this).closest('.singleDefinitionBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleDefinitionBlock', '.subSingleDefinitionBlock');
-            
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subSingleDefinitionBlock">' + html + '</div>');
             }
         });
-        
+
         $(document).on('click', '.subReferencesAdd', function(e) {
             e.preventDefault();
             subReferencesAdd = Math.round(Math.random() * 10000);
@@ -452,14 +452,14 @@
             var closestSingleBlock = $(this).closest('.singleReferencesBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferencesBlock', '.subSingleReferencesBlock');
-            
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subSingleReferencesBlock">' + html + '</div>');
             }
         });
-        
+
         $(document).on('click', '.subAnnexureAdd', function(e) {
             e.preventDefault();
             subAnnexureAdd = Math.round(Math.random() * 10000);
@@ -469,14 +469,14 @@
             var closestSingleBlock = $(this).closest('.singleAnnexureBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleAnnexureBlock', '.subSingleAnnexureBlock');
-            
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subSingleAnnexureBlock">' + html + '</div>');
             }
         });
-        
+
         $(document).on('click', '.subReportingAdd', function(e) {
             e.preventDefault();
             subReportingAdd = Math.round(Math.random() * 10000);
@@ -486,7 +486,7 @@
             var closestSingleBlock = $(this).closest('.singleReportingBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleReportingBlock', '.subSingleReportingBlock');
-            
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
@@ -527,10 +527,10 @@
             `<div class="singleAnnexureBlock">
                 <div class="resrow row">
                     <div class="col-10">
-                        <textarea name="ann[]" class="myclassname"></textarea> 
+                        <textarea name="ann[]" class="myclassname"></textarea>
                     </div>
-                    <div class="col-sm-1"> 
-                        <button class="btn btn-dark subAnnexureAdd">+</button> 
+                    <div class="col-sm-1">
+                        <button class="btn btn-dark subAnnexureAdd">+</button>
                     </div>
                     <div class="col-1">
                         <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -796,7 +796,7 @@
 
 
         $("#query").on("change", function() {
-            
+
             var value = $(this).val().toLowerCase();
             if(value!==''){
                 $("#searchTable tr").filter(function() {
@@ -808,11 +808,11 @@
                     }else{
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     }
-                });  
-            
+                });
+
             }else{
                 var selectedText = $("#scope option:selected").val();
-                                
+
                 if(selectedText!==''){
                     $("#searchTable tr").filter(function() {
                         $(this).toggle(true)
@@ -824,15 +824,15 @@
                         $(this).toggle(true)
                     });
                 }
-                
+
             }
         });
 
         $("#scope").on("change", function() {
-           
+
             var value = $(this).val().toLowerCase();
             if(value!==''){
-                
+
                 $("#searchTable tr").filter(function() {
                     $(this).toggle(true)
                     var selectedText = $("#query option:selected").val();
@@ -840,28 +840,28 @@
                         $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
                     }else{
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    } 
+                    }
                 });
 
-                
+
             }else{
-                
+
                 $("#searchTable tr").filter(function() {
                     $(this).toggle(true)
                 });
                 var selectedText = $("#query option:selected").val();
-                 
+
                 if(selectedText!==''){
                     $("#searchTable tr").filter(function() {
                         $(this).toggle(true)
                         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
                     });
                 }
-                    
-                
-            }    
+
+
+            }
         });
-        
+
         $('#annexurebtnadd').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html =
@@ -1443,12 +1443,12 @@
     }
 
     $('#review_period').change(function() {
-        console.log('change')        
+        console.log('change')
         calculateNextReviewDate()
     })
 
     $('input[name=effective_date]').change(function() {
-        console.log('change')        
+        console.log('change')
         calculateNextReviewDate()
     })
 </script>
