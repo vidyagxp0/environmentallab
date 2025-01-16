@@ -2174,79 +2174,119 @@ class DocumentController extends Controller
 
 
     public function revision(Request $request, $id)
-{
-    $document = Document::find($id);
+    {
+        $document = Document::find($id);
 
-    if (!$document) {
-        toastr()->error('Document not found!');
-        return redirect()->back();
-    }
-
-    $requestedMajor = (int)$document->major;
-    $requestedMinor = (int)$document->minor;
-
-    // Increment minor version or roll over to next major version
-    if ($requestedMinor < 9) {
-        $requestedMinor += 1;
-    } else {
-        $requestedMinor = 1;
-        $requestedMajor += 1;
-    }
-
-    $revisionExists = Document::where([
-        'document_type_id' => $document->document_type_id,
-        'document_number' => $document->document_number,
-        'major' => $requestedMajor,
-        'minor' => $requestedMinor
-    ])->first();
-
-    if ($revisionExists) {
-        toastr()->error('A document with this version already exists!');
-        return redirect()->back();
-    }
-
-    $document->revision = 'Yes';
-    $document->revision_policy = $request->revision;
-    $document->update();
-
-    $newdoc = $document->replicate();
-    $newdoc->revised = 'Yes';
-    $newdoc->revised_doc = $document->id;
-    $newdoc->major = $requestedMajor;
-    $newdoc->minor = $requestedMinor;
-    $newdoc->trainer = $request->trainer;
-    $newdoc->comments = $request->comment;
-    $newdoc->stage = 1;
-    $newdoc->status = Stage::where('id', 1)->value('name');
-    $newdoc->save();
-
-    $docContent = DocumentContent::where('document_id', $document->id)->first();
-    if ($docContent) {
-        $newDocContent = $docContent->replicate();
-        $newDocContent->document_id = $newdoc->id;
-        $newDocContent->save();
-    }
-
-    $annexure = Annexure::where('document_id', $document->id)->first();
-    if ($annexure) {
-        $newAnnexure = $annexure->replicate();
-        $newAnnexure->document_id = $newdoc->id;
-        $newAnnexure->save();
-    }
-
-    if ($document->training_required == 'yes') {
-        $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-        if ($docTrain) {
-            $newTraining = $docTrain->replicate();
-            $newTraining->document_id = $newdoc->id;
-            $newTraining->save();
+        if (!$document) {
+            toastr()->error('Document not found!');
+            return redirect()->back();
         }
+
+        $requestedMajor = (int)$document->major;
+        $requestedMinor = (int)$document->minor;
+
+        // Increment minor version or roll over to next major version
+        if ($requestedMinor < 9) {
+            $requestedMinor += 1;
+        } else {
+            $requestedMinor = 1;
+            $requestedMajor += 1;
+        }
+
+        $revisionExists = Document::where([
+            'document_type_id' => $document->document_type_id,
+            'document_number' => $document->document_number,
+            'major' => $requestedMajor,
+            'minor' => $requestedMinor
+        ])->first();
+
+        if ($revisionExists) {
+            toastr()->error('A document with this version already exists!');
+            return redirect()->back();
+        }
+
+        $document->revision = 'Yes';
+        $document->revision_policy = $request->revision;
+        $document->update();
+
+        $newdoc = $document->replicate();
+        $newdoc->revised = 'Yes';
+        $newdoc->revised_doc = $document->id;
+        $newdoc->major = $requestedMajor;
+        $newdoc->minor = $requestedMinor;
+        $newdoc->trainer = $request->trainer;
+        $newdoc->comments = $request->comment;
+        $newdoc->stage = 1;
+        $newdoc->status = Stage::where('id', 1)->value('name');
+        $newdoc->save();
+
+        $docContent = DocumentContent::where('document_id', $document->id)->first();
+        if ($docContent) {
+            $newDocContent = $docContent->replicate();
+            $newDocContent->document_id = $newdoc->id;
+            $newDocContent->save();
+        }
+
+        $annexure = Annexure::where('document_id', $document->id)->first();
+        if ($annexure) {
+            $newAnnexure = $annexure->replicate();
+            $newAnnexure->document_id = $newdoc->id;
+            $newAnnexure->save();
+        }
+
+        if ($document->training_required == 'yes') {
+            $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+            if ($docTrain) {
+                $newTraining = $docTrain->replicate();
+                $newTraining->document_id = $newdoc->id;
+                $newTraining->save();
+            }
+        }
+
+        DocumentService::update_document_numbers();
+
+        toastr()->success('Document has been revised successfully! You can now edit the content.');
+        return redirect()->route('documents.edit', $newdoc->id);
     }
 
-    DocumentService::update_document_numbers();
+    public function exportPdf()
+    {
 
-    toastr()->success('Document has been revised successfully! You can now edit the content.');
-    return redirect()->route('documents.edit', $newdoc->id);
-}
+        $documents = DB::table('documents')
+        ->leftJoin('document_types', 'documents.document_type_id', '=', 'document_types.id')
+        ->leftJoin('users', 'documents.originator_id', '=', 'users.id')
+        ->select(
+            'documents.*',
+            'document_types.name as document_type_name',
+            'users.name as originator_name'
+        )
+        ->orderByDesc('documents.id')
+        ->get();
+
+        $data = [
+            'documents' => $documents,
+        ];
+
+        $pdf = Pdf::loadView('frontend.documents.export_record', $data);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(1,"Multiply");');
+
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($width, $height) {
+            $text = $pageNumber . " of " . $pageCount;
+            $font = $fontMetrics->getFont("Helvetica", "bold");
+            $size = 12;
+            $color = [0, 0, 0];
+            $canvas->text($width - 120, $height - 38, $text, $font, $size, $color);
+        });
+
+        return $pdf->download('DMS_dashboard_data.pdf');
+    }
+
+
 
 }

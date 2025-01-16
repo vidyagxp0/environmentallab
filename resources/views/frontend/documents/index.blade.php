@@ -8,7 +8,7 @@
         <div class="dashboard-container">
             <div class="row">
 
-                
+
                 <div class="col-xl-12 col-lg-12">
                     <div class="document-left-block">
                         <div class="inner-block create-block">
@@ -50,17 +50,17 @@
                                             </div>
                                             <div class="right">
                                                 <label for="status">Status</label>
-                                                <select name="status" class="filterSelect"> 
+                                                <select name="status" class="filterSelect">
                                                     <option value="">All</option>
                                                     @if (isset($documentStatus))
                                                         @php
                                                             $uniqueStatus = $documentStatus->pluck('status')->unique();
                                                         @endphp
                                                         @foreach ($uniqueStatus as $status)
-                                                            <option value="{{ $status }}">{{ $status }}</option> 
+                                                            <option value="{{ $status }}">{{ $status }}</option>
                                                         @endforeach
                                                     @endif
-                                                    
+
                                                 </select>
                                             </div>
                                         </div>
@@ -70,7 +70,7 @@
                                             <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                                         </div> --}}
                                     </div>
-    
+
                                     <div class="filter-block">
                                         <div class="drop-filter-block">
                                             <div class="icon">
@@ -88,10 +88,10 @@
                                             </div>
                                         </div>
                                     </div>
-    
-    
-    
-    
+
+
+
+
                                     <div class="filter-block">
                                         <div class="drop-filter-block">
                                             <div class="icon">
@@ -109,7 +109,7 @@
                                             </div>
                                         </div>
                                     </div>
-    
+
                                     <div class="filter-block">
                                         <div class="drop-filter-block">
                                             <div class="icon">
@@ -128,8 +128,12 @@
                                         </div>
                                     </div>
                                 </div>
-    
-                           
+
+                                <div style="display: flex; justify-content: flex-end; margin:0 20px 10px; 0">
+                                    <a href="{{ route('dashboard.export-pdf') }}" class="btn btn-primary" style="margin-left: 20px;">Export</a>
+                                </div>
+
+
                             <div class="loadingRecords">
                                 <p>Fetching records...</p>
                             </div>
@@ -139,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 {{-- <div class="col-xl-3 col-lg-3">
                         <div class="document-right-block">
                             <div class="inner-block recent-record">
@@ -263,7 +267,7 @@
                         @php
                             $pro = DB::table('q_m_s_processes')
                                 ->where('division_id', $temp->division_id)
-                                ->where('process_name', 'New Document')  
+                                ->where('process_name', 'New Document')
                                 ->get();
                         @endphp
 
@@ -313,7 +317,7 @@
 
         $('.filterSelect').change(function() {
             try {
-                updateRecords()            
+                updateRecords()
             } catch (err) {
             console.log("Error", err.message);
             }
