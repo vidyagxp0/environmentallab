@@ -99,7 +99,7 @@ window.addEventListener("popstate", function(event) {
         </div>
     </div>
     <script>
-    var timer2 = "2:00"; // Set the initial time to 10 minutes
+    var timer2 = "19:59"; // Set the initial time to 10 minutes
     var interval = setInterval(function() {
         var timer = timer2.split(':');
         var minutes = parseInt(timer[0], 10);
