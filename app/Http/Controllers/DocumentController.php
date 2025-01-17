@@ -269,7 +269,12 @@ class DocumentController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 2)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-        $trainer = User::get();
+        $trainer = DB::table('users')
+                        ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                        ->where('user_roles.q_m_s_roles_id', 6)
+                        ->select('users.*')
+                        ->distinct() // Ensure unique users
+                        ->get();
 
         // $approvers = DB::table('user_roles')
         // ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -412,7 +417,12 @@ class DocumentController extends Controller
 
                         // dd($reviewer, $approvers);
 
-        $trainer = User::get();
+                        $trainer = DB::table('users')
+                        ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                        ->where('user_roles.q_m_s_roles_id', 6)
+                        ->select('users.*')
+                        ->distinct() // Ensure unique users
+                        ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         // Retrieve the current counter value
@@ -720,7 +730,12 @@ class DocumentController extends Controller
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
         $document['division'] = QMSDivision::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
-        $trainer = User::get();
+        $trainer = DB::table('users')
+                        ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                        ->where('user_roles.q_m_s_roles_id', 6)
+                        ->select('users.*')
+                        ->distinct() // Ensure unique users
+                        ->get();
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
         $history = [];
         $documentsubTypes = DocumentSubtype::all();

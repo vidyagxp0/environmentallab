@@ -7,7 +7,7 @@
 
 
     @php
-        $trainingCompleted = DB::table('training_statuses')->where(['sop_id' => $sopId, 'user_id' => Auth::user()->id, 'status' => 'Complete'])->latest()->first();
+        $trainingCompleted = DB::table('training_statuses')->where(['sop_id' => $sopId, 'training_id' => $trainning->trainner_id,  'user_id' => Auth::user()->id, 'status' => 'Complete'])->latest()->first();
         $trainees = explode(',', $trainning->trainees);
         // dd(!in_array(auth()->user()->id, explode(',', $trainning->trainees)));
         // dd(!in_array(auth()->user()->id, explode(',', $trainning->trainees)) || !$trainingCompleted);
@@ -19,7 +19,7 @@
         <div class="container-fluid">
 
             <div class="inner-block">
-                <div class="main-head"> 
+                <div class="main-head">
                     Training Details
                 </div>
                 <div class="inner-block-content">
@@ -71,13 +71,13 @@
                         <a href="{{ route('TMS.index') }}">Already Completed</a>
                     @else
                         <a href="{{ route('TMS.index') }}">Continue Later</a>
-    
-                        <a href="{{ url('training', $sopId) }}">Start Training</a>
+
+                        <a href="{{ url('training', $sopId) }}/{{ $trainning->trainner_id }}">Start Training</a>
                     @endif
                 </div>
             @endif
 
         </div>
     </div>
-    
+
 @endsection

@@ -45,13 +45,13 @@ class TMSController extends Controller
                         $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
                         $temp->major = $temp->training->major;
                         $temp->minor = $temp->training->minor;
-                    }  
+                    }
                 }
             }
 
             $all_trainings = $documents;
-            
-            $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->orderByDesc('id')->get();
+
+            $due = DocumentTraining::where('trainer',Auth::user()->id)->orderByDesc('id')->get();
             if(!empty($due)){
                 foreach($due as $temp){
                 $temp->training = Document::find($temp->document_id);
@@ -62,7 +62,7 @@ class TMSController extends Controller
                 $temp->division_name = Helpers::getDivisionName($temp->training->id);
                 }
             }
-           
+
             }
 
             $pending = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Pending")->orderByDesc('id')->get();
@@ -77,8 +77,8 @@ class TMSController extends Controller
                 $temp->division_name = Helpers::getDivisionName($temp->training->id);
                  }
             }
-            
-            
+
+
             }
 
             $complete = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Complete")->orderByDesc('id')->get();
@@ -111,7 +111,7 @@ class TMSController extends Controller
             }
            }
            }
-          
+
            if(count($train)>0){
             foreach($train as $temp){
                 $explode = explode(',',$temp->sops);
@@ -172,7 +172,7 @@ class TMSController extends Controller
 
         }
     }
-    public function create(){ 
+    public function create(){
         if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18) || Helpers::checkRoles(3)){
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
@@ -194,7 +194,7 @@ class TMSController extends Controller
                     $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
                 }
             }
-           
+
             $users = User::where('role', '!=', 6)->get();
 
             foreach($users as $data){
@@ -204,7 +204,7 @@ class TMSController extends Controller
             return view('frontend.TMS.create-training',compact('due','users','quize', 'traineesPerson'));
         }else{
             abort(404);
-        } 
+        }
     }
     public function store(Request $request){
         if(Helpers::checkRoles(6 ) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
@@ -240,7 +240,7 @@ class TMSController extends Controller
                 }
                 // Save the file paths in the database
                 $training->training_attachment = json_encode($files);
-            }            
+            }
 
             $training->save();
             $TrainingHistory = new TrainingHistory();
@@ -257,10 +257,10 @@ class TMSController extends Controller
 
 
             foreach($request->sops as $data){
-                $sop =  DocumentTraining::where('document_id',$data)->first();
-                $sop->status = "Assigned";
-                $sop->training_plan = $training->id;
-                $sop->update();
+                // $sop =  DocumentTraining::where('document_id',$data)->first();
+                // $sop->status = "Assigned";
+                // $sop->training_plan = $training->id;
+                // $sop->update();
                 $history = new DocumentHistory();
                 $history->document_id = $data;
                 $history->activity_type = "Training Assigned";
@@ -305,9 +305,9 @@ class TMSController extends Controller
                 $trainning = Training::find($id);
                 $trainning->trainer = User::find($trainning->trainner_id);
                 if(!empty($trainning->trainer)){
-                    return view('frontend.TMS.document-view',compact('trainning','sopId', 'doc'));  
+                    return view('frontend.TMS.document-view',compact('trainning','sopId', 'doc'));
                 }
-                
+
             }
             $trainning = Training::where('trainner_id',Auth::user()->id)->get();
             return view('frontend.TMS.manage-training',compact('trainning', 'doc'));
@@ -318,15 +318,15 @@ class TMSController extends Controller
             return view('frontend.TMS.document-view',compact('trainning','sopId', 'doc'));
         }
     }
-    public function training($id){
+    public function training($id, $trainingId){
 
        $document = Document::find($id);
        $document_training = DocumentTraining::where('document_id',$id)->first();
-       $training = Training::find($document_training->training_plan);
+       $training = Training::find($trainingId);
        $countAudit = TrainingAudit::where('trainee_id',Auth::user()->id)->where('sop_id',$id)->count();
        $audit = new TrainingAudit();
        $audit->trainee_id = Auth::user()->id;
-       $audit->training_id = $document_training->training_plan;
+       $audit->training_id = $trainingId;
        $audit->sop_id = $id;
        $audit->save();
        if($countAudit <= 2000 ){
@@ -380,13 +380,13 @@ class TMSController extends Controller
 
 
     //    }
-    // Quiz Question SHOW 
-    }   
-    public function trainingQuestion($id)
+    // Quiz Question SHOW
+    }
+    public function trainingQuestion($id, $trainingId)
 {
     $document = Document::find($id);
     $document_training = DocumentTraining::where('document_id', $id)->first();
-    $training = Training::find($document_training->training_plan);
+    $training = Training::find($trainingId);
 
     if ($training->training_plan_type == "Read & Understand with Questions") {
         $quize = Quize::find($training->quize);
@@ -398,7 +398,7 @@ class TMSController extends Controller
             $question->id = $i + 1;
             $json_option = unserialize($question->options);
             $options = [];
-            
+
             if (!empty($json_option)) {
                 // If the question has options, set it as a multiple-choice question
                 $question->type = 'multiple-choice';
@@ -424,31 +424,31 @@ class TMSController extends Controller
         // Convert the array into a JSON string to pass to the frontend
         $data_array = json_encode($array);
 
-        return view('frontend.TMS.example', compact('document', 'data_array', 'quize'));
+        return view('frontend.TMS.example', compact('document', 'data_array', 'quize', 'training'));
     } else {
         toastr()->error('Training not specified');
         return back();
     }
 }
 
-    
+
     // public function trainingSubmitData(Request $request,$id){
-         
+
 
     // }
     public function trainingStatus(Request $request,$id){
 
         if(Auth::user()->email == $request->email && Hash::check($request->password,Auth::user()->password)){
             $document = DocumentTraining::where('document_id',$id)->first();
-            $document->train = Training::find($document->training_plan);
+            $document->train = Training::find($request->training_id);
             $trainingStatus = new TrainingStatus();
             $trainingStatus->user_id = Auth::user()->id;
             $trainingStatus->sop_id = $id;
-            $trainingStatus->training_id = $document->training_plan;
+            $trainingStatus->training_id = $request->training_id;
             $trainingStatus->status = "Complete";
             $trainingStatus->save();
             $TrainingHistory = new TrainingHistory();
-            $TrainingHistory->plan_id =  $document->training_plan;
+            $TrainingHistory->plan_id =  $request->training_id;
             $TrainingHistory->sop_id =  $id;
             $TrainingHistory->activity_type = "Training Complete by " . Auth::user()->name;
             $TrainingHistory->previous = "Assigned";
@@ -470,7 +470,7 @@ class TMSController extends Controller
             $history->origin_state = "Pending-Training";
             $history->save();
             $criteria = $this->effective($id);
-            if(count(TrainingStatus::where('sop_id',$id)->where('training_id',$document->training_plan)->where('status',"Complete")->get()) >= $criteria){
+            if(count(TrainingStatus::where('sop_id',$id)->where('training_id',$request->training_id)->where('status',"Complete")->get()) >= $criteria){
                 $document = DocumentTraining::where('document_id',$id)->first();
                 $document->status = "Complete";
                 $document->update();
@@ -486,7 +486,7 @@ class TMSController extends Controller
                 $history->origin_state = "Pending-Training";
                 $history->save();
                 $TrainingHistory = new TrainingHistory();
-                $TrainingHistory->plan_id =  $document->training_plan;
+                $TrainingHistory->plan_id =  $request->training_id;
                 $TrainingHistory->sop_id =  $id;
                 $TrainingHistory->activity_type = "Training Complete for one Document ";
                 $TrainingHistory->previous = "Assigned";
@@ -511,7 +511,7 @@ class TMSController extends Controller
                 } catch (\Exception $e) {
                     // log
                 }
-                
+
                 try {
                     Mail::send('mail.effective', ['document' => $document],
                     function ($message) use ($user_data) {
@@ -522,7 +522,7 @@ class TMSController extends Controller
                     // log
                 }
 
-                $doc = Training::find($document->training_plan);
+                $doc = Training::find($request->training_id);
                 $sop = explode(',',$doc->sops);
 
                 if(count($sop) > 0){
@@ -532,7 +532,7 @@ class TMSController extends Controller
                         array_push($trainingArray,$documentTrain);
                     }
                     if(count($trainingArray) == count($sop)){
-                        $document->train = Training::find($document->training_plan);
+                        $document->train = Training::find($request->training_id);
                         $document->train->status = "Complete";
                         $document->train->update();
                         $user = User::find($document->train->trainner_id);
@@ -544,10 +544,10 @@ class TMSController extends Controller
 
                               });
                         } catch (\Exception $e) {
-                            // 
+                            //
                         }
                               $TrainingHistory = new TrainingHistory();
-                              $TrainingHistory->plan_id =  $document->training_plan;
+                              $TrainingHistory->plan_id =  $request->training_id;
                               $TrainingHistory->sop_id =  $document->train->sops;
                               $TrainingHistory->activity_type = "Training Complete for all SOPs";
                               $TrainingHistory->previous = "Assigned";
@@ -572,7 +572,7 @@ class TMSController extends Controller
 
                     });
                  } catch (\Exception $e) {
-                    // 
+                    //
                  }
                   toastr()->success('Training Complete Successfully !!');
                   return redirect()->route('TMS.index');
@@ -665,7 +665,7 @@ class TMSController extends Controller
             }
             if (!empty ($request->training_attachment)) {
                 $files = [];
-                
+
                 if ($training->training_attachment) {
                     $files = is_array(json_decode($training->training_attachment)) ? $training->training_attachment : [];
                 }
@@ -847,7 +847,7 @@ class TMSController extends Controller
 
                         });
                     } catch (\Exception $e) {
-                        // 
+                        //
                     }
                 }
            }
@@ -927,12 +927,12 @@ class TMSController extends Controller
                     }
                 }
                 elseif($question->type == "Single Selection Questions"){
-                    
+
                     foreach($json_answer as $key => $value){
                         foreach($options as $key1 => $option){
                             if($key1 == $value){
                               $answers = intval($value);
-                              
+
                             }
                         }
 
@@ -961,22 +961,22 @@ class TMSController extends Controller
             toastr()->error('Training plan not found');
             return back();
         }
-        
+
         // Extract SOP IDs from the comma-separated string
         $sopIds = explode(',', $training->sops);
         $userIds = explode(',', $training->trainees);
-        
+
         // Query SOP records
         $sops = Document::whereIn('id', $sopIds)->get();
         $trainingUsers = User::whereIn('id', $userIds)->get();
 
         // dd($trainingUsers);
-        
+
         // Query Training Status records for the given training ID and SOP IDs
         $trainingStatus = TrainingStatus::where('training_id', $id)
                                          ->whereIn('sop_id', $sopIds)
                                          ->get();
 
         return view('frontend.TMS.training-overall-status',compact('trainingStatus','sops','training','trainingUsers'));
-    } 
+    }
 }

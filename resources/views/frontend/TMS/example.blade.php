@@ -99,6 +99,8 @@
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" name="email" required>
+                            <input hidden type="text" name="training_id" value="{{$training->id}}">
+
                         </div>
                         <div class="group-input">
                             <label for="password">Password</label>
@@ -134,21 +136,7 @@
         var userAnswers = [];
 
 // Local Serve
-// fetch("{{ url('example',$document->id) }}")
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     quizData = data;
-//     loadQuestion();
-//   })
-//   .catch(function(error) {
-//     console.log('Error fetching quiz data:', error);
-//   });
-
-  // Live serve api https
-
-fetch("{{ url()->secure('example', $document->id) }}")
+fetch("{{ url('example',$document->id) }}")
   .then(function(response) {
     return response.json();
   })
@@ -159,6 +147,20 @@ fetch("{{ url()->secure('example', $document->id) }}")
   .catch(function(error) {
     console.log('Error fetching quiz data:', error);
   });
+
+  // Live serve api https
+
+// fetch("{{ url()->secure('example', $document->id) }}")
+//   .then(function(response) {
+//     return response.json();
+//   })
+//   .then(function(data) {
+//     quizData = data;
+//     loadQuestion();
+//   })
+//   .catch(function(error) {
+//     console.log('Error fetching quiz data:', error);
+//   });
 
 function loadQuestion() {
   var question = quizData[currentQuestion];

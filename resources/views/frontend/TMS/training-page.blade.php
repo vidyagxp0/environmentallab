@@ -27,7 +27,7 @@ window.addEventListener("popstate", function(event) {
                     <button id="complete-training" class="d-none" style="padding: 10px 20px;" data-bs-toggle="modal" data-bs-target="#trainee-sign">Complete Training</button>
                     @endif
                     @if($training->training_plan_type == "Read & Understand with Questions")
-                    <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion',$document->id) }}';">Continue with Question</button>
+                    <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion', $document->id) }}/{{ $trainning->trainner_id }}';">Continue with Question</button>
 
                     @endif
                 </div>
@@ -79,6 +79,7 @@ window.addEventListener("popstate", function(event) {
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" name="email" required>
+                            <input hidden type="text" name="training_id" value="{{$training->id}}">
                         </div>
                         <div class="group-input">
                             <label for="password">Password</label>
@@ -98,7 +99,7 @@ window.addEventListener("popstate", function(event) {
         </div>
     </div>
     <script>
-    var timer2 = "20:00"; // Set the initial time to 10 minutes
+    var timer2 = "2:00"; // Set the initial time to 10 minutes
     var interval = setInterval(function() {
         var timer = timer2.split(':');
         var minutes = parseInt(timer[0], 10);
@@ -124,6 +125,6 @@ window.addEventListener("popstate", function(event) {
     }, 1000);
 </script>
 
-      
+
 
 @endsection

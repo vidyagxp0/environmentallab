@@ -8,7 +8,7 @@
         toastr()->error($error);
         @endphp
         @endforeach
-    @endif  
+    @endif
     {{-- ======================================
                 CREATING TRAINING
     ======================================= --}}
@@ -69,7 +69,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <div class="col-6">
                                 <div class="group-input" id="classroomTrainingBlock" style="display: none">
                                     <label for="classRoom_trainingName">Class Room Trainer <span class="text-danger">*</span></label>
@@ -94,14 +94,14 @@
                                     // Add elements with class 'facility-name' to inputsToToggle
                                     var facilityNameInputs = document.getElementsByClassName('assessment_required');
                                     var facilityNameInputs1 = document.getElementsByClassName('classRoom_training');
-                                    
+
                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                         inputsToToggle.push(facilityNameInputs[i]);
                                     }
                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                         inputsToToggle.push(facilityNameInputs1[i]);
                                     }
-                                                                    
+
                                     selectField.addEventListener('change', function () {
                                         var isRequired = this.value === 'Classroom Training';
 
@@ -118,7 +118,7 @@
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
                                   var AssessmentQuiz = document.getElementById("AssessmentQuiz");
                                   var multiSelectField1 = document.getElementById("assessmentBlock");
-                                
+
                                   if (selectedValue === "Classroom Training") {
                                     multiSelectField.style.display = "block";
                                     multiSelectField1.style.display = "block";
@@ -142,12 +142,12 @@
 
                                         // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('assessment_required');
-                                        
+
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
                                         }
 
-                                                                        
+
                                         selectField.addEventListener('change', function () {
                                             var isRequired = this.value === 'Classroom Training';
 
@@ -167,7 +167,7 @@
                                     <input type="datetime-local" name="training_start_date">
                                 </div>
                             </div> --}}
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
@@ -175,7 +175,7 @@
                                 </div>
                             </div>
 
-                             
+
                             <script>
                                 $(document).ready(function () {
                                     $(".add_training_attachment").click(function(){
@@ -189,9 +189,9 @@
                                         let files = input.files;
                                         for (let i = 0; i < files.length; i++) {
                                             let div = document.createElement('div');
-                                            div.className = 'attachment-item'; 
+                                            div.className = 'attachment-item';
                                             div.innerHTML = files[i].name;
-                            
+
                                             let viewLink = document.createElement("a");
                                             viewLink.href = URL.createObjectURL(files[i]);
                                             viewLink.textContent = "</View>";
@@ -199,24 +199,24 @@
                                                 e.preventDefault();
                                                 window.open(viewLink.href,'_blank');
                                             });
-                            
-                                          
+
+
                                             let removeButton = document.createElement("a");
                                             removeButton.className = 'remove-button';
                                             removeButton.textContent = "</Remove>";
                                             removeButton.addEventListener('click', function() {
                                                 div.remove();
-                                                input.value = ''; 
+                                                input.value = '';
                                             });
 
                                             console.log(removeButton)
-                            
+
                                             div.appendChild(viewLink);
                                             div.appendChild(removeButton);
                                             block.appendChild(div);
                                         }
                                     }
-                                    
+
                             </script>
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -236,7 +236,7 @@
                                 function toggleAssessmentQuiz() {
                                   var selectedValue = document.getElementById("assessment_required").value;
                                   var AssessmentQuiz = document.getElementById("AssessmentQuiz");
-                                
+
                                   if (selectedValue === "yes") {
                                     AssessmentQuiz.style.display = "block";
                                   } else {
@@ -245,7 +245,7 @@
 
                                 }
                             </script>
-                           
+
                             <div class="col-12" id="AssessmentQuiz" style="display: none">
                                 <div class="group-input">
                                     <label for="quize">Quizz <span class="text-danger">*</span></label>
@@ -264,7 +264,7 @@
                             <script>
                                 $(document).ready(function() {
                                     $('#quizz').hide();
-                            
+
                                     $('[name="classRoom_training[]"]').change(function() {
                                         if ($(this).val() === 'yes') {
                                             $('#quizz').show();
@@ -285,7 +285,7 @@
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Status </label>
-                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >                
+                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >
                                         <option value="active"> Active</option>
                                         <option value="inactive"> Inactive</option>
                                     </select>
@@ -344,13 +344,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
+
                                             @foreach ($due as $temp)
                                             @if ($temp->root_document)
-                                                    @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
+                                                    @if ($temp->trainer == auth()->id() && ($temp->root_document->status == 'Under-Training' || $temp->root_document->status == 'Effective' || $temp->root_document->status == 'Training-Complete'))
                                                         <tr>
                                                             <td class="text-center">
-                                                                <input 
+                                                                <input
                                                                 class="select-sop-js"
                                                                 data-id="{{ $temp->root_document->id }}"
                                                                 type="checkbox" id="sopData" name="sops[]" value="{{ $temp->document_id }}">
@@ -360,7 +360,7 @@
                                                                     $temp1 = DB::table('document_types')
                                                                         ->where('name', $temp->document_type_name)
                                                                         ->value('typecode');
-                                                                    @endphp        
+                                                                    @endphp
                                                             <td>{{ $temp->division_name }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
                                                                 000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/R{{ $temp->major}}.{{$temp->minor}}</td>
                                                             <td>
@@ -374,7 +374,7 @@
                                                     @elseif($temp->root_document->status == 'Effective')
                                                         <tr>
                                                             <td class="text-center">
-                                                                <input 
+                                                                <input
                                                                 class="select-sop-js"
                                                                 data-id="{{ $temp->root_document->id }}"
                                                                 type="checkbox" id="sopData" name="sops[]" value="{{ $temp->document_id }}">
@@ -384,7 +384,7 @@
                                                                     $temp1 = DB::table('document_types')
                                                                         ->where('name', $temp->document_type_name)
                                                                         ->value('typecode');
-                                                                    @endphp        
+                                                                    @endphp
                                                             <td>{{ $temp->division_name }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
                                                                 000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/R{{ $temp->major}}.{{$temp->minor}}</td>
                                                             <td>
@@ -507,11 +507,11 @@
             if (isChecked) {
                 let sopId = $(this).data('id');
                 getUrl = `${getUrl}/${sopId}`;
-             
+
                 $('#fetchUserBlock').show();
 
                 try {
-                    
+
                     const res = await axios.get(getUrl);
 
                     if (res.data.status == 'ok') {
@@ -576,7 +576,7 @@
     </script>
       <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training' 
+            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
         });
     </script>
 @endsection

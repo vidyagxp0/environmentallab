@@ -586,9 +586,7 @@
                                         <select name="trainer">
                                             <option value="" selected>Enter your Selection</option>
                                             @foreach ($trainer as $temp)
-                                            @if(Helpers::checkUserRolestrainer($temp))
                                                 <option value="{{ $temp->id }}">{{ $temp->name }}</option>
-                                            @endif
                                             @endforeach
                                         </select>
                                     </div>

@@ -129,37 +129,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($documents as $temp)
-                                    @if(!empty($temp->training) && $temp->training?->stage >=6)
-                                            @php
-                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first();
-                                                    if ($trainingPlan) {
-                                                        $traineesCount = count(explode(',', $trainingPlan->trainees));
-                                                        $sopsCount = count(explode(',', $trainingPlan->sops));
-                                                    }
-                                            @endphp
-                                            @if($trainingPlan)
-                                                <tr>
+                                    @php
+                                        $Usertraining = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
+                                    @endphp
+                                    @foreach ($Usertraining as $temp)
+                                        @php
+                                            // Calculate total number of trainees and effective criteria
+                                            $trainees = explode(',', $temp->trainees);
+                                            $traineesCount = count($trainees);
 
-                                                    <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
-                                                    {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
-                                                        000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
-                                                    <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
-                                                    <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
-                                                    <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
-                                                    <td>{{ $temp->status }}</td>
+                                            $effectiveCriteria = $temp->effective_criteria;
 
-                                                    {{-- <td>
-                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>
-                                                    </td> --}}
-                                                    <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                            // Count completed trainees
+                                            $completedTrainees = DB::table('training_statuses')
+                                                ->whereIn('user_id', $trainees) // Match trainees from the plan
+                                                ->where('training_id', $temp->id)
+                                                ->where('status', 'Complete')
+                                                ->count();
 
-                                                </tr>
-                                            @endif
+                                            // Calculate completion percentage
+                                            $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
 
-                                        @endif
+                                            // Determine status based on criteria
+                                            $status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
+                                        @endphp
+
+                                        <tr>
+                                            <td>{{ $temp->traning_plan_name }}</td>
+                                            <td>{{ count(explode(',', $temp->sops)) }}</td>
+                                            <td>{{ $effectiveCriteria }}</td>
+                                            <td>{{ $traineesCount }}</td>
+                                            <td>{{ $status }}</td>
+                                            <td><a href="{{ url('training-overall-status', $temp->id) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                        </tr>
                                     @endforeach
-
 
                                 </tbody>
                             </table>
@@ -181,7 +184,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="searchTable">
-                                    @foreach ($documents2 as $temp)
+                                    {{-- @foreach ($documents2 as $temp)
                                     @php
                                         $trainingStatusCheck = DB::table('training_statuses')
                                             ->where([
@@ -190,6 +193,7 @@
                                             'training_id' => $temp->traningstatus->training_plan,
                                             'status' => 'Complete'
                                             ])->first();
+
                                     @endphp
                                         <tr>
                                             <td>{{ $temp->sop_no }}</td>
@@ -197,7 +201,7 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}</td>
+                                            <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
                                             @if($temp->traningstatus->status == 'Complete')
                                             <th>{{$temp->traningstatus->status}}</th>
                                             @else
@@ -205,7 +209,67 @@
                                                 class="fa-solid fa-eye"></i></a></td>
                                             @endif
                                         </tr>
+                                    @endforeach --}}
+
+                                    @php
+                                        $userId = Auth::user()->id;
+                                        $AssignedTrainings = DB::table('trainings')
+                                            ->whereRaw("FIND_IN_SET(?, trainees)", [$userId])
+                                            ->get();
+
+                                    @endphp
+                                    @foreach ($AssignedTrainings as $temp)
+                                    @php
+                                    // Calculate total number of trainees and effective criteria
+                                    $trainees = explode(',', $temp->trainees);
+                                            $traineesCount = count($trainees);
+
+                                            $effectiveCriteria = $temp->effective_criteria;
+
+                                            // Count completed trainees
+                                            $completedTrainees = DB::table('training_statuses')
+                                                ->whereIn('user_id', $trainees) // Match trainees from the plan
+                                                ->where('training_id', $temp->id)
+                                                ->where('status', 'Complete')
+                                                ->count();
+
+                                            // Calculate completion percentage
+                                            $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
+
+                                            // Determine status based on criteria
+                                            $status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
+
+
+                                        $sops = explode(',', $temp->sops);
+                                        $document = DB::table('documents')
+                                            ->whereIn('id', $sops) // Assuming 'id' is the column you want to match in the `documents` table
+                                            ->first();
+                                        // dd($document);
+                                        $trainingStatusCheck = DB::table('training_statuses')
+                                        ->whereIn('sop_id', $sops)
+                                            ->where([
+                                            'user_id' => Auth::user()->id,
+                                            'training_id' => $temp->id,
+                                            'status' => 'Complete'
+                                            ])->first();
+
+                                    @endphp
+                                        <tr>
+                                            <td>{{ $document ? $document->sop_no : '-' }}</td>
+                                            <td>{{ $document ? $document->document_name : '-'}}</td>
+                                            <td>{{ $status }}</td>
+                                            <td>Document</td>
+                                            <td>{{ \Carbon\Carbon::parse($temp->training_end_date)->format('d M Y h:i') }}</td>
+                                            <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
+                                            @if($trainingStatusCheck)
+                                            <th>Complete</th>
+                                            @else
+                                            <td><a href="{{ url('TMS-details', $temp->id) }}/{{ $temp->sops }}"><i
+                                                class="fa-solid fa-eye"></i></a></td>
+                                            @endif
+                                        </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
                         </div>

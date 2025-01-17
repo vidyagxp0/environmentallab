@@ -1614,11 +1614,9 @@
                                     <select name="trainer" {{Helpers::isRevised($document->stage)}} >
                                         <option value="" selected>Enter your Selection</option>
                                         @foreach ($trainer as $temp)
-                                        @if(Helpers::checkUserRolestrainer($temp))
                                             <option value="{{ $temp->id }}"
                                                 @if (!empty($trainingDoc)) @if ($trainingDoc->trainer == $temp->id) selected @endif
                                                 @endif>{{ $temp->name }}</option>
-                                        @endif
                                         @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)

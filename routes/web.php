@@ -109,8 +109,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
     Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
-    Route::get('training/{id}/', [TMSController::class, 'training']);
-    Route::get('trainingQuestion/{id}/', [TMSController::class, 'trainingQuestion']);
+    Route::get('training/{id}/{training_id}', [TMSController::class, 'training']);
+    Route::get('trainingQuestion/{id}/{training_id}', [TMSController::class, 'trainingQuestion']);
     Route::get('training-notification/{id}', [TMSController::class, 'notification']);
     Route::post('trainingComplete/{id}', [TMSController::class, 'trainingStatus']);
     Route::get('training-overall-status/{id}', [TMSController::class, 'trainingOverallStatus']);
