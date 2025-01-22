@@ -87,6 +87,7 @@
             <form method="POST" action="{{ route('documents.update', $document->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <input hidden type="text" name="type" value="{{$type}}">
 
                 {{-- <textarea id="editor"><h1>Test</h1></textarea>
                 <script>

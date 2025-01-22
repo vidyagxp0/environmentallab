@@ -50,14 +50,14 @@
                                             ->where(['user_id' => auth()->id(), 'q_m_s_divisions_id' => $doc->division_id])
                                             ->pluck('q_m_s_roles_id')
                                             ->toArray();
-                                            
+
                                             $stagesToHide = [
                                                 'Obsolete'
                                             ];
-                                            
+
                                             // Check if the stage is in the stagesToHide array
                                             $hideRecord = in_array($doc->status, $stagesToHide);
-                                            
+
                                             // dd($hideRecord);
                                             // Check if the user has one of the allowed roles
                                             $userHasAllowedRole = in_array(19, $userRoles);
@@ -111,8 +111,9 @@
                                 </a>
 
                                 @if ($doc->status != 'Obsolete')
-                                    <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
-                                    
+                                    {{-- <a href="{{ route('documents.edit', $doc->id) }}">Edit</a> --}}
+                                    <a href="{{ route('documents.editWithType', ['id' => $doc->id, 'type' => 'doc']) }}">Edit</a>
+
                                 @endif
 
                                 <!--<form-->

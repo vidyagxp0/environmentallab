@@ -71,6 +71,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::post('division/change/{id}', [OpenStageController::class, 'division'])->name('division_change');
     Route::get('send-notification/{id}', [OpenStageController::class, 'notification']);
     Route::resource('documents', DocumentController::class);
+    Route::get('documents/{id}/edit/{type}', [DocumentController::class, 'edit'])->name('documents.editWithType');
     Route::post('revision/{id}', [DocumentController::class, 'revision']);
     Route::get('/documentExportPDF', [DocumentController::class, 'documentExportPDF'])->name('documentExportPDF');
     Route::get('/documentExportEXCEL', [DocumentController::class, 'documentExportEXCEL'])->name('documentExportEXCEL');

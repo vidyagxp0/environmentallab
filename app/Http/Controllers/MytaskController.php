@@ -21,151 +21,211 @@ use Helpers;
 
 class MytaskController extends Controller
 {
+    // public function index()
+    // {
+
+
+    //         $array1 = [];
+    //         $array2 = [];
+    //         $document = Document::where('stage', '>=', 2)->orWhere('stage','>=','4')->orderByDesc('id')->get();
+
+    //         foreach ($document as $data) {
+    //             $data->originator_name = User::where('id', $data->originator_id)->value('name');
+    //             if ($data->approver_group) {
+    //                 $datauser = explode(',', $data->approver_group);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
+    //                     $ids = explode(',', $group);
+    //                     for ($j = 0; $j < count($ids); $j++) {
+    //                         if ($ids[$j] == Auth::user()->id) {
+    //                             array_push($array1, $data);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             if ($data->approvers) {
+    //                 $datauser = explode(',', $data->approvers);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     if ($datauser[$i] == Auth::user()->id) {
+    //                         array_push($array2, $data);
+    //                     }
+    //                 }
+    //             }
+    //             if ($data->reviewers_group) {
+    //                 $datauser = explode(',', $data->reviewers_group);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
+    //                     $ids = explode(',', $group);
+    //                     for ($j = 0; $j < count($ids); $j++) {
+    //                         if ($ids[$j] == Auth::user()->id) {
+    //                             array_push($array1, $data);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             if ($data->reviewers) {
+    //                 $datauser = explode(',', $data->reviewers);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     if ($datauser[$i] == Auth::user()->id) {
+    //                         array_push($array2, $data);
+    //                         // echo "<pre>";
+    //                         // print_r($array2);
+    //                         // die;
+
+    //                     }
+    //                 }
+    //             }
+
+    //         }
+    //         $arrayTask = array_unique(array_merge($array1, $array2));
+    //         foreach ($arrayTask as $temp) {
+    //             $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
+    //             ->value('name');
+    //         }
+    //         $task = $this->paginate($arrayTask);
+    //         return view('frontend.tasks', ['task' => $task]);
+
+
+    //     if (Helpers::checkRoles(2)) {
+    //         $array1 = [];
+    //         $array2 = [];
+    //         $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
+
+    //         foreach ($document as $data) {
+    //             $data->originator_name = User::where('id', $data->originator_id)->value('name');
+
+    //             if ($data->reviewers_group) {
+    //                 $datauser = explode(',', $data->reviewers_group);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
+    //                     $ids = explode(',', $group);
+    //                     for ($j = 0; $j < count($ids); $j++) {
+    //                         if ($ids[$j] == Auth::user()->id) {
+    //                             array_push($array1, $data);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             if ($data->reviewers) {
+    //                 $datauser = explode(',', $data->reviewers);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     if ($datauser[$i] == Auth::user()->id) {
+    //                         array_push($array2, $data);
+    //                         // echo "<pre>";
+    //                         // print_r($array2);
+    //                         // die;
+
+    //                     }
+    //                 }
+    //             }
+
+    //         }
+    //         $arrayTask = array_unique(array_merge($array1, $array2));
+    //         foreach ($arrayTask as $temp) {
+    //             $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
+    //             ->value('name');
+    //         }
+    //         $task = $this->paginate($arrayTask);
+    //         return view('frontend.tasks', ['task' => $task]);
+    //     }
+
+    //     if (Helpers::checkRoles(1)) {
+    //         $array1 = [];
+    //         $array2 = [];
+    //         $document = Document::where('stage', '>=', 4)->orderByDesc('id')->get();
+    //         foreach ($document as $data) {
+    //             $data->originator_name = User::where('id', $data->originator_id)
+    //             ->value('name');
+    //             if ($data->approver_group) {
+    //                 $datauser = explode(',', $data->approver_group);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
+    //                     $ids = explode(',', $group);
+    //                     for ($j = 0; $j < count($ids); $j++) {
+    //                         if ($ids[$j] == Auth::user()->id) {
+    //                             array_push($array1, $data);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             if ($data->approvers) {
+    //                 $datauser = explode(',', $data->approvers);
+    //                 for ($i = 0; $i < count($datauser); $i++) {
+    //                     if ($datauser[$i] == Auth::user()->id) {
+    //                         array_push($array2, $data);
+    //                     }
+    //                 }
+    //             }
+
+    //         }
+    //         $arrayTask = array_unique(array_merge($array1, $array2));
+    //         foreach ($arrayTask as $temp) {
+    //             $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)->value('name');
+    //         }
+    //         $task = $this->paginate($arrayTask);
+    //         return view('frontend.tasks', ['task' => $task]);
+    //     }
+    // }
+
     public function index()
     {
+        $array1 = [];
+        $array2 = [];
+        $document = Document::where('stage', '>=', 2)
+            ->orWhere('stage', '>=', '4')
+            ->orderByDesc('id')
+            ->get();
 
-       
-            $array1 = [];
-            $array2 = [];
-            $document = Document::where('stage', '>=', 2)->orWhere('stage','>=','4')->orderByDesc('id')->get();
+        foreach ($document as $data) {
+            $data->originator_name = User::where('id', $data->originator_id)->value('name');
 
-            foreach ($document as $data) {
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
-                if ($data->approver_group) {
-                    $datauser = explode(',', $data->approver_group);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
-                        $ids = explode(',', $group);
-                        for ($j = 0; $j < count($ids); $j++) {
-                            if ($ids[$j] == Auth::user()->id) {
-                                array_push($array1, $data);
-                            }
-                        }
+            if ($data->approver_group) {
+                $datauser = explode(',', $data->approver_group);
+                foreach ($datauser as $groupId) {
+                    $group = Grouppermission::where('id', $groupId)->value('user_ids');
+                    $ids = explode(',', $group);
+                    if (in_array(Auth::user()->id, $ids)) {
+                        $array1[] = $data;
                     }
                 }
-                if ($data->approvers) {
-                    $datauser = explode(',', $data->approvers);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        if ($datauser[$i] == Auth::user()->id) {
-                            array_push($array2, $data);
-                        }
-                    }
-                }
-                if ($data->reviewers_group) {
-                    $datauser = explode(',', $data->reviewers_group);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
-                        $ids = explode(',', $group);
-                        for ($j = 0; $j < count($ids); $j++) {
-                            if ($ids[$j] == Auth::user()->id) {
-                                array_push($array1, $data);
-                            }
-                        }
-                    }
-                }
-                if ($data->reviewers) {
-                    $datauser = explode(',', $data->reviewers);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        if ($datauser[$i] == Auth::user()->id) {
-                            array_push($array2, $data);
-                            // echo "<pre>";
-                            // print_r($array2);
-                            // die;
-
-                        }
-                    }
-                }
-
             }
-            $arrayTask = array_unique(array_merge($array1, $array2));
-            foreach ($arrayTask as $temp) {
-                $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
-                ->value('name');
+
+            if ($data->approvers) {
+                $datauser = explode(',', $data->approvers);
+                if (in_array(Auth::user()->id, $datauser)) {
+                    $array2[] = $data;
+                }
             }
-            $task = $this->paginate($arrayTask);
-            return view('frontend.tasks', ['task' => $task]);
-        
 
-        if (Helpers::checkRoles(2)) {
-            $array1 = [];
-            $array2 = [];
-            $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
-
-            foreach ($document as $data) {
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
-                
-                if ($data->reviewers_group) {
-                    $datauser = explode(',', $data->reviewers_group);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
-                        $ids = explode(',', $group);
-                        for ($j = 0; $j < count($ids); $j++) {
-                            if ($ids[$j] == Auth::user()->id) {
-                                array_push($array1, $data);
-                            }
-                        }
+            if ($data->reviewers_group) {
+                $datauser = explode(',', $data->reviewers_group);
+                foreach ($datauser as $groupId) {
+                    $group = Grouppermission::where('id', $groupId)->value('user_ids');
+                    $ids = explode(',', $group);
+                    if (in_array(Auth::user()->id, $ids)) {
+                        $array1[] = $data;
                     }
                 }
-                if ($data->reviewers) {
-                    $datauser = explode(',', $data->reviewers);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        if ($datauser[$i] == Auth::user()->id) {
-                            array_push($array2, $data);
-                            // echo "<pre>";
-                            // print_r($array2);
-                            // die;
+            }
 
-                        }
-                    }
+            if ($data->reviewers) {
+                $datauser = explode(',', $data->reviewers);
+                if (in_array(Auth::user()->id, $datauser)) {
+                    $array2[] = $data;
                 }
-
             }
-            $arrayTask = array_unique(array_merge($array1, $array2));
-            foreach ($arrayTask as $temp) {
-                $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
-                ->value('name');
-            }
-            $task = $this->paginate($arrayTask);
-            return view('frontend.tasks', ['task' => $task]);
         }
 
-        if (Helpers::checkRoles(1)) {
-            $array1 = [];
-            $array2 = [];
-            $document = Document::where('stage', '>=', 4)->orderByDesc('id')->get();
-            foreach ($document as $data) {
-                $data->originator_name = User::where('id', $data->originator_id)
-                ->value('name');
-                if ($data->approver_group) {
-                    $datauser = explode(',', $data->approver_group);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
-                        $ids = explode(',', $group);
-                        for ($j = 0; $j < count($ids); $j++) {
-                            if ($ids[$j] == Auth::user()->id) {
-                                array_push($array1, $data);
-                            }
-                        }
-                    }
-                }
-                if ($data->approvers) {
-                    $datauser = explode(',', $data->approvers);
-                    for ($i = 0; $i < count($datauser); $i++) {
-                        if ($datauser[$i] == Auth::user()->id) {
-                            array_push($array2, $data);
-                        }
-                    }
-                }
-
-            }
-            $arrayTask = array_unique(array_merge($array1, $array2));
-            foreach ($arrayTask as $temp) {
-                $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)->value('name');
-            }
-            $task = $this->paginate($arrayTask);
-            return view('frontend.tasks', ['task' => $task]);
+        $arrayTask = array_unique(array_merge($array1, $array2));
+        foreach ($arrayTask as $temp) {
+            $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)->value('name');
         }
+
+        return view('frontend.tasks', ['task' => $arrayTask]);
     }
+
+
+
     public function reviewdetails($id)
     {
 
@@ -190,10 +250,22 @@ class MytaskController extends Controller
 
     }
 
-    public function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'mytaskdata'])
+    // public function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'mytaskdata'])
+    // {
+    //     $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+    //     $items = $items instanceof Collection ? $items : Collection::make($items);
+    //     return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    // }
+
+    public function paginate($items, $perPage = null, $page = null, $options = ['path' => 'mytaskdata'])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        $perPage = $items->count();
+        return new LengthAwarePaginator( $items->forPage($page, $perPage), $items->count(), $perPage, $page, $options );
     }
+
+
+
+
 }

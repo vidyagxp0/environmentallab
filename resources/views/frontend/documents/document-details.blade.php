@@ -8,9 +8,9 @@
             <div class="tracker-container">
                 <div class="row">
 
-                    <div class="col-12"> 
+                    <div class="col-12">
                         <div class="inner-block doc-info-block">
-                            <div class="top-block"> 
+                            <div class="top-block">
                                 <div class="title">
                                     {{ $document->document_name }}
                                 </div>
@@ -26,7 +26,7 @@
                                         $showEdit = true;
 
                                         // In-review to Approved Stage Disable for Initiator
-                                        if ( $document->stage > 1 && $document->stage <= 5 && Helpers::checkUserIsOnlyInitiator(auth()->user()) ) 
+                                        if ( $document->stage > 1 && $document->stage <= 5 && Helpers::checkUserIsOnlyInitiator(auth()->user()) )
                                         {
                                             $showEdit = false;
                                         }
@@ -34,7 +34,7 @@
                                     @endphp
 
                                     @if ($document->status !== 'Obsolete' && $showEdit)
-                                        <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
+                                        <button onclick="location.href='{{ route('documents.editWithType', ['id' => $document->id, 'type' => 'doc']) }}';">Edit </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif
                                     <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
@@ -53,14 +53,14 @@
                                         {{-- <button>Obsolete</button> --}}
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
                                     @endif
-                                    
+
                                 </div>
                             </div>
                             <div class="bottom-block">
                                 <div>
                                     <div class="head">Document Number</div>
                                     <div>
-                                        @if($document->revised === 'Yes') 
+                                        @if($document->revised === 'Yes')
                                             000{{ $document->revised_doc }}
                                         @else
                                             000{{ $document->id }}
@@ -159,13 +159,13 @@
                                     @if ($document->stage == 9)
                                         <div class="active">Rejected</div>
                                     @endif
-                                    @if ($document->stage >= 3)      
+                                    @if ($document->stage >= 3)
                                         <div class="active">Reviewed</div>
                                         {{-- && $document->stage < 10 --}}
                                     @else
                                         <div class="">Reviewed</div>
                                     @endif
-                                    @if ($document->stage >= 4)            
+                                    @if ($document->stage >= 4)
                                         <div class="active">For-Approval</div>
                                         {{-- && $document->stage < 10 --}}
                                     @else
@@ -312,8 +312,8 @@
                                                 $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Reviewed') 
-                                                ->where('deleted_at', null)                                                
+                                                ->where('stage', 'Reviewed')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                                 $user->statusReject = DB::table('stage_manages')
@@ -812,7 +812,7 @@
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
 
-                </div>                
+                </div>
                 <!-- Modal body -->
                 <form id="sendstage" action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
@@ -875,7 +875,7 @@
 
     <script>
     $(document).ready(function() {
-        
+
         $('#sendstage').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -914,9 +914,9 @@
                         <div class="group-input">
                             <label for="comment">Comment</label>
                             <input type="comment" name="comment"  required>
-                        </div> 
+                        </div>
                     </div>
-    
+
                     <!-- Modal footer -->
                     <div class="modal-footer">
                     <button class="on-submit-disable-button" type="submit">Submit</button>
@@ -929,7 +929,7 @@
 
     <script>
     $(document).ready(function() {
-        
+
         $('#sendstage1').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -943,15 +943,15 @@
                 <div class="modal-header">
                     <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
                 </div>
-                @if($document->revised === 'Yes') 
-                 
+                @if($document->revised === 'Yes')
+
                 <form method="POST" action="{{ url('revision',$document->revised_doc) }}">
             @else
             <form method="POST" action="{{ url('revision',$document->id) }}">
-               
-            
+
+
             @endif
-              
+
                     @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -965,7 +965,7 @@
                             </span>
                         </label>
                         <input type="number" name="major" id="major" min="0">
-                        
+
                         <label for="minor">
                             Minor Version<span  class="text-primary" data-bs-toggle="modal"
                             data-bs-target="#document-management-system-modal-minor"
@@ -980,7 +980,7 @@
                         </label>
                         <input type="text" name="reason" required>
                     </div>
-                  
+
                 </div>
 
                 <!-- Modal footer -->
@@ -1003,7 +1003,7 @@
                 <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
             </div>
 
-            @if($document->revised === 'Yes') 
+            @if($document->revised === 'Yes')
                 <form method="POST" action="{{ url('revision', $document->revised_doc) }}">
             @else
                 <form method="POST" action="{{ url('revision', $document->id) }}">

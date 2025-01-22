@@ -697,9 +697,8 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $type)
     {
-
         $users = User::all();
         if (! empty($users)) {
             foreach ($users as $data) {
@@ -854,7 +853,8 @@ class DocumentController extends Controller
             'keywords',
             'annexure',
             'documentsubTypes',
-            'document_distribution_grid'
+            'document_distribution_grid',
+            'type'
         ));
     }
 
@@ -866,7 +866,6 @@ class DocumentController extends Controller
      */
     public function update($id, Request $request)
     {
-
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
             $lastContent = DocumentContent::firstOrNew([
@@ -1585,7 +1584,7 @@ class DocumentController extends Controller
 
             toastr()->success('Document Updated');
             DocumentService::update_document_numbers();
-            if (Helpers::checkRoles(3)) {
+            if ($request->type == 'doc') {
                 return redirect('doc-details/'.$id);
             } else {
                 return redirect('rev-details/'.$id);
