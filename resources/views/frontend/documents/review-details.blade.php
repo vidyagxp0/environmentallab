@@ -31,7 +31,7 @@
                                                 $showEdit = true;
                                             @endphp
                                         @elseif($document->stage ==3)
-                                            @php    
+                                            @php
                                                 $showEdit = true;
                                             @endphp
                                         @endif
@@ -47,14 +47,14 @@
                                         @elseif($document->stage == 4 || $document->stage == 5)
                                             @php
                                                 $showEdit = true;
-                                            @endphp    
+                                            @endphp
                                         @endif
 
                                     @endif
 
                                     @if ($showEdit)
                                     {{-- <a href="{{ route('documents.edit', $document->id) }}" class="button">Edit</a> --}}
-                                    <button onclick="location.href='{{ route('documents.edit', $document->id) }}';" style="cursor:pointer;">Edit</button>
+                                    <button onclick="location.href='{{ route('documents.editWithType', ['id' => $document->id, 'type' => 'rev']) }}';" style="cursor:pointer;">Edit</button>
 
                                         {{-- <button ><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button> --}}
                                     @endif
@@ -109,7 +109,7 @@
                                     <div class="main-title">
                                         Record Workflow
                                     </div>
-                                    <div class="buttons"> 
+                                    <div class="buttons">
                                         @if (empty($review_reject))
                                             @if ($stagereview && empty($stagereview_submit))
                                                 @if($document->stage < 3)
@@ -208,7 +208,7 @@
                                                 Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>
                                         @endif
-                                        
+
                                         @if (empty($stageapprove))
                                             @if (empty($approval_reject))
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
@@ -248,7 +248,7 @@
                                             <div>Draft</div>
                                             @endif
 
-                                            
+
                                         @endif
                                         {{-- @if ($approval_reject)
                                             <div class="active">Rejected </div>
@@ -876,7 +876,7 @@
                         <div class="group-input">
                             <label for="comment">Comment<span class="text-danger">*</span></label>
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
-                        </div> 
+                        </div>
                     </div>
                     @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
                         <input type="hidden" name="stage_id" value="Cancel-by-Approver" />

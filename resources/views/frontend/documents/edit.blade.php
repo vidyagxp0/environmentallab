@@ -293,10 +293,10 @@
                                         <!-- Hidden date input for form submission -->
                                         <input type="date" name="due_dateDoc"
                                                value="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"
-                                               readonly {{ Helpers::isRevised($document->stage) }}
+                                               {{ Helpers::isRevised($document->stage) }}
                                                class="hide-input"
                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                               min="{{ \Carbon\Carbon::today()->format('Y-m-d') }}"
+                                               min="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : \Carbon\Carbon::today()->format('Y-m-d') }}"
                                                oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
