@@ -2260,7 +2260,7 @@ class DocumentController extends Controller
         DocumentService::update_document_numbers();
 
         toastr()->success('Document has been revised successfully! You can now edit the content.');
-        return redirect()->route('documents.edit', $newdoc->id);
+        return redirect()->route('documents.editWithType', ['id' => $document->id, 'type' => 'doc']);
     }
 
     public function exportPdf()

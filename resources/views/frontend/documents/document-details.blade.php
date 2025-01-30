@@ -112,13 +112,60 @@
                                         Send For Review<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
+                                @if($document->stage == 2)
+                                    <div class="buttons">
+                                        @if (empty($review_reject))
+                                            @if ($stagereview && empty($stagereview_submit))
+                                                @if($document->stage < 3)
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                                @endif
+                                            @endif
+                                        @elseif($document->stage == 2)
+                                            <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                            </button>
+                                        @endif
 
-                                {{-- @if ($document->stage == 3)
+                                        @if (empty($stagereview))
+                                            @if (empty($review_reject))
+                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                    Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                                </button>
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                            @elseif($document->stage == 2)
+                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                    Review&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                @endif
+                                @if ($document->stage == 3)
                                     <input type="hidden" name="stage_id" value="4" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Approval<i class="fa-regular fa-paper-plane"></i>
                                     </button>
-                                @endif --}}
+                                @endif
+                                @if ($document->stage == 4)
+                                    @if (empty($stageapprove))
+                                        @if (empty($approval_reject))
+                                            <button style="margin-left: 483px;" class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                            </button>
+                                            <button  class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                            </button>
+                                            {{-- @elseif($document->stage == 4)
+                                            <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                Approve&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                            </button>--}}
+                                        @endif
+                                    @endif
+                                @endif
                                 @if ($document->training_required == 'yes')
                                     @if ($document->stage == 5)
                                         <input type="hidden" name="stage_id" value="6" />
@@ -874,13 +921,13 @@
     </div>
 
     <script>
-    $(document).ready(function() {
+        $(document).ready(function() {
 
-        $('#sendstage').on('submit', function(e) {
-            $('.on-submit-disable-button').prop('disabled', true);
-        });
-    })
-</script>
+            $('#sendstage').on('submit', function(e) {
+                $('.on-submit-disable-button').prop('disabled', true);
+            });
+        })
+    </script>
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1072,4 +1119,145 @@ width: 60%;
             $('#signature-modal').modal('show');
         });
     </script>
+
+<div class="modal fade" id="review-sign">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
+            </div>
+
+            <!-- Modal body -->
+            <form action="{{ url('sendforstagechanage') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="document_id" value="{{ $document->id }}">
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" value="{{ old('username') }}" name="username" required>
+                        @if ($errors->has('username'))
+                            <p class="text-danger">User name not matched</p>
+                        @endif
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" value="{{ old('password') }}" name="password" required>
+                        @if ($errors->has('username'))
+                            <p class="text-danger">E-signature not matched</p>
+                        @endif
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment<span class="text-danger">*</span></label>
+                        <textarea required name="comment" value="{{ old('comment') }}"></textarea>
+                    </div>
+                </div>
+                        @if ($document->stage == 2)
+                            <input type="hidden" name="stage_id" value="Reviewed" />
+                        @endif
+
+                        @if ($stagereview)
+                            @if ($stagereview->stage == 'Reviewed')
+                                <input type="hidden" name="stage_id" value="Review-Submit" />
+                            @endif
+                        @endif
+
+
+                        @if ($document->stage == 4)
+                            <input type="hidden" name="stage_id" value="Approved" />
+                        @endif
+
+                        @if ($stageapprove)
+                            @if ($stageapprove->stage == 'Approved')
+                                <input type="hidden" name="stage_id" value="Approval-Submit" />
+                            @endif
+                        @endif
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                    {{-- <button>Close</button> --}}
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="review-cancel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">E-Signature</h4>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
+            </div>
+
+            <!-- Modal body -->
+            <form action="{{ url('sendforstagechanage') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="document_id" value="{{ $document->id }}">
+                <div class="modal-body">
+                    <div class="mb-3 text-justify">
+                        Please select a meaning and a outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a hand written signature.
+                    </div>
+                    {{-- <div class="group-input">
+                        <label for="electronic-meaning">Electronic Signature Approved Meaning</label>
+                        <select name="electronic-meaning">
+                            <option selected>- Please Select -</option>
+                            <option value="cancelled">Document Cancelled</option>
+                        </select>
+                    </div> --}}
+                    <div class="group-input">
+                        <label for="username">Username <span class="text-danger">*</span></label>
+                        <input type="text" value="{{ old('username') }}" name="username" required>
+                        @if ($errors->has('username'))
+                            <p class="text-danger">User name not matched</p>
+                        @endif
+                    </div>
+                    <div class="group-input">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" value="{{ old('password') }}" name="password" required>
+                        @if ($errors->has('username'))
+                            <p class="text-danger">E-signature not matched</p>
+                        @endif
+                    </div>
+                    <div class="group-input">
+                        <label for="comment">Comment<span class="text-danger">*</span></label>
+                        <textarea required name="comment" value="{{ old('comment') }}"></textarea>
+                    </div>
+                </div>
+                @if ($document->stage == 4)
+                    <input type="hidden" name="stage_id" value="Cancel-by-Approver" />
+                @endif
+                @if ($document->stage == 2)
+                    <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
+                @endif
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit">Submit</button>
+                    <button type="button" data-bs-dismiss="modal">Close</button>
+                    {{-- <button>Close</button> --}}
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 @endsection
