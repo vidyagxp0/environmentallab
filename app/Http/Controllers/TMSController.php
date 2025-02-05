@@ -324,11 +324,14 @@ class TMSController extends Controller
        $document_training = DocumentTraining::where('document_id',$id)->first();
        $training = Training::find($trainingId);
        $countAudit = TrainingAudit::where('trainee_id',Auth::user()->id)->where('sop_id',$id)->count();
-       $audit = new TrainingAudit();
-       $audit->trainee_id = Auth::user()->id;
-       $audit->training_id = $trainingId;
-       $audit->sop_id = $id;
-       $audit->save();
+       foreach (explode(',', urldecode($id)) as $sop_id)
+       {
+           $audit = new TrainingAudit();
+           $audit->trainee_id = Auth::user()->id;
+           $audit->training_id = $trainingId;
+           $audit->sop_id = $sop_id;
+           $audit->save();
+       }
        if($countAudit <= 2000 ){
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id = $training->id;
