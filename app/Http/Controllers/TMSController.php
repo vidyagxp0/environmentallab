@@ -469,7 +469,7 @@ class TMSController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = "Pending-Training";
             $history->save();
-            $criteria = $this->effective($id);
+            $criteria = $this->effective($id, $request->training_id);
             if(count(TrainingStatus::where('sop_id',$id)->where('training_id',$request->training_id)->where('status',"Complete")->get()) >= $criteria){
                 $document = DocumentTraining::where('document_id',$id)->first();
                 $document->status = "Complete";
@@ -588,9 +588,9 @@ class TMSController extends Controller
 
      }
 
-     public function effective($id){
+     public function effective($id, $training_id){
         $documentTraining = DocumentTraining::where('document_id', $id)->first();
-        $training = Training::find($documentTraining->training_plan);
+        $training = Training::find($training_id);
 
         $trainees = explode(',',$training->trainees);
         $criteria = (count($trainees) * ($training->effective_criteria)/100);
@@ -883,10 +883,10 @@ class TMSController extends Controller
 
     //---------------------------------------------------EXAMPLE---------------------------
 
-    public function example($id){
+    public function example($id, $trainingID){
         $document = Document::find($id);
         $document_training = DocumentTraining::where('document_id',$id)->first();
-        $training = Training::find($document_training->training_plan);
+        $training = Training::find($trainingID);
         if($training->training_plan_type == "Read & Understand with Questions"){
             $quize = Quize::find($training->quize);
             $data = explode(',',$quize->question);
