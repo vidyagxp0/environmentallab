@@ -17,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $data = Question::where('trainer_id', Auth::user()->id)->orderBy('id', 'asc')->paginate(10);
+        $data = Question::orderBy('id', 'asc')->paginate(10);
         return view('frontend.TMS.question', compact('data'));
     }
     

@@ -106,13 +106,13 @@
                                     Record Workflow
                                 </div>
 
-                                @if ($document->stage == 1)
+                                @if ($document->stage == 1 && $document->originator_id == Auth::user()->id)
                                     <input type="hidden" name="stage_id" value="2" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Review<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
-                                @if($document->stage == 2)
+                                @if($document->stage == 2 && in_array(Auth::user()->id, explode(",", $document->reviewers)))
                                     <div class="buttons">
                                         @if (empty($review_reject))
                                             @if ($stagereview && empty($stagereview_submit))
@@ -144,13 +144,13 @@
                                         @endif
                                     </div>
                                 @endif
-                                @if ($document->stage == 3)
+                                @if ($document->stage == 3 && $document->originator_id == Auth::user()->id)
                                     <input type="hidden" name="stage_id" value="4" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Approval<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
-                                @if ($document->stage == 4)
+                                @if ($document->stage == 4 && in_array(Auth::user()->id, explode(",", $document->approvers)))
                                     @if (empty($stageapprove))
                                         @if (empty($approval_reject))
                                             <button style="margin-left: 483px;" class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-sign">
@@ -167,20 +167,20 @@
                                     @endif
                                 @endif
                                 @if ($document->training_required == 'yes')
-                                    @if ($document->stage == 5)
+                                    @if ($document->stage == 5 && $document->originator_id == Auth::user()->id)
                                         <input type="hidden" name="stage_id" value="6" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Training<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
-                                    @if ($document->stage == 7)
+                                    @if ($document->stage == 7 && $document->originator_id == Auth::user()->id)
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
                                 @elseif($document->training_required == 'no')
-                                    @if ($document->stage == 5)
+                                    @if ($document->stage == 5 && $document->originator_id == Auth::user()->id)
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>

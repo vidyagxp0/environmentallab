@@ -221,7 +221,7 @@
                                                 <a href="/mydms">My DMS</a>
                                             </div>
                                         @endif
-                                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(7) || Helpers::checkRoles(18))
+                                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(7) || Helpers::checkRoles(18))
                                             <div>
                                                 <a href="{{ route('documents.index') }}">Documents</a>
                                             </div>

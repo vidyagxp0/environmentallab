@@ -86,7 +86,7 @@ class QuestionBankController extends Controller
      */
     public function edit($id)
     {
-        $data = Question::where('trainer_id', Auth::user()->id)->paginate('10');
+        $data = Question::paginate('10');
         $question = QuestionBank::withTrashed()->find($id);
         return view('frontend.TMS.manage-question-bank',compact('question','data'));
     }
