@@ -27,7 +27,7 @@ window.addEventListener("popstate", function(event) {
                     <button id="complete-training" class="d-none" style="padding: 10px 20px;" data-bs-toggle="modal" data-bs-target="#trainee-sign">Complete Training</button>
                     @endif
                     @if($training->training_plan_type == "Read & Understand with Questions")
-                    <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion', $document->id) }}/{{ $trainning->trainner_id }}';">Continue with Question</button>
+                    <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion', $document->id) }}/{{ $training->id }}';">Continue with Question</button>
 
                     @endif
                 </div>

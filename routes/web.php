@@ -122,7 +122,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     //     Excel::import(new DocumentsImport, request()->file('file'));
     //     return redirect()->back()->with('success', 'Data Imported Successfully');
     // });
-    Route::get('example/{id}/', [TMSController::class, 'example']);
+    Route::get('example/{id}/{training_id}', [TMSController::class, 'example']);
 
     // Questions Part
     Route::resource('question', QuestionController::class);

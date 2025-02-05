@@ -136,7 +136,7 @@
         var userAnswers = [];
 
 // Local Serve
-// fetch("{{ url('example',$document->id) }}")
+// fetch("{{ url('example', [$document->id, $training->id]) }}")
 //   .then(function(response) {
 //     return response.json();
 //   })
@@ -150,8 +150,8 @@
 
   // Live serve api https
 
-fetch("{{ url()->secure('example', $document->id) }}")
-  .then(function(response) {
+  fetch("{{ secure_url('example', [$document->id, $training->id]) }}")
+    .then(function(response) {
     return response.json();
   })
   .then(function(data) {

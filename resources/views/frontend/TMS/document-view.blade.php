@@ -72,7 +72,7 @@
                     @else
                         <a href="{{ route('TMS.index') }}">Continue Later</a>
 
-                        <a href="{{ url('training', $sopId) }}/{{ $trainning->trainner_id }}">Start Training</a>
+                        <a href="{{ url('training', $sopId) }}/{{ $trainning->id }}">Start Training</a>
                     @endif
                 </div>
             @endif
