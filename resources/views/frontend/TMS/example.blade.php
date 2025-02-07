@@ -136,8 +136,22 @@
         var userAnswers = [];
 
 // Local Serve
-fetch("{{ url('example', [$id, $training->id]) }}")
-  .then(function(response) {
+// fetch("{{ url('example', [$id, $training->id]) }}")
+//   .then(function(response) {
+//     return response.json();
+//   })
+//   .then(function(data) {
+//     quizData = data;
+//     loadQuestion();
+//   })
+//   .catch(function(error) {
+//     console.log('Error fetching quiz data:', error);
+//   });
+
+  // Live serve api https
+
+  fetch("{{ secure_url('example', [$id, $training->id]) }}")
+    .then(function(response) {
     return response.json();
   })
   .then(function(data) {
@@ -147,20 +161,6 @@ fetch("{{ url('example', [$id, $training->id]) }}")
   .catch(function(error) {
     console.log('Error fetching quiz data:', error);
   });
-
-  // Live serve api https
-
-  // fetch("{{ secure_url('example', [$id, $training->id]) }}")
-  //   .then(function(response) {
-  //   return response.json();
-  // })
-  // .then(function(data) {
-  //   quizData = data;
-  //   loadQuestion();
-  // })
-  // .catch(function(error) {
-  //   console.log('Error fetching quiz data:', error);
-  // });
 
 function loadQuestion() {
   var question = quizData[currentQuestion];
