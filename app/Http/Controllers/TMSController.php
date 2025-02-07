@@ -319,9 +319,9 @@ class TMSController extends Controller
         }
     }
     public function training($id, $trainingId){
-
-       $document = Document::find($id);
-       $document_training = DocumentTraining::where('document_id',$id)->first();
+        $id_array = explode(',', $id); // Convert "1,2,3,4,5,6,7,8" to an array
+// dd(explode(',', urldecode($id)));
+        $documents = Document::whereIn('id', $id_array)->get();
        $training = Training::find($trainingId);
        $countAudit = TrainingAudit::where('trainee_id',Auth::user()->id)->where('sop_id',$id)->count();
        foreach (explode(',', urldecode($id)) as $sop_id)
@@ -336,16 +336,16 @@ class TMSController extends Controller
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id = $training->id;
             $TrainingHistory->sop_id = $id;
-            $TrainingHistory->activity_type = "Training Attempts of SOP " .$document->document_name;
+            $TrainingHistory->activity_type = "Training Attempts of SOP Ids" .$id;
             $TrainingHistory->previous = "SOP" .$training->status;
-            $TrainingHistory->current ="Training Attempts of SOP " .$document->document_name;
+            $TrainingHistory->current ="Training Attempts of SOP Ids" .$id;
             $TrainingHistory->comment = "NULL";
             $TrainingHistory->user_id = Auth::user()->id;
             $TrainingHistory->user_name = Auth::user()->name;
             $TrainingHistory->origin_state = "Assigned";
             $TrainingHistory->save();
 
-        return view('frontend.TMS.training-page',compact('document','training'));
+        return view('frontend.TMS.training-page',compact('documents','training', 'id_array', 'id'));
        }
        else{
         toastr()->warning('Your max attempts limit is breached');
@@ -387,8 +387,10 @@ class TMSController extends Controller
     }
     public function trainingQuestion($id, $trainingId)
 {
-    $document = Document::find($id);
-    $document_training = DocumentTraining::where('document_id', $id)->first();
+    $id_array = explode(',', $id); // Convert "1,2,3,4,5,6,7,8" to an array
+    $documents = Document::whereIn('id', $id_array)->get();
+
+    // $document_training = DocumentTraining::where('document_id', $id)->first();
     $training = Training::find($trainingId);
 
     if ($training->training_plan_type == "Read & Understand with Questions") {
@@ -427,7 +429,7 @@ class TMSController extends Controller
         // Convert the array into a JSON string to pass to the frontend
         $data_array = json_encode($array);
 
-        return view('frontend.TMS.example', compact('document', 'data_array', 'quize', 'training'));
+        return view('frontend.TMS.example', compact('documents', 'data_array', 'quize', 'training', 'id'));
     } else {
         toastr()->error('Training not specified');
         return back();
@@ -444,12 +446,14 @@ class TMSController extends Controller
         if(Auth::user()->email == $request->email && Hash::check($request->password,Auth::user()->password)){
             $document = DocumentTraining::where('document_id',$id)->first();
             $document->train = Training::find($request->training_id);
+
             $trainingStatus = new TrainingStatus();
             $trainingStatus->user_id = Auth::user()->id;
             $trainingStatus->sop_id = $id;
             $trainingStatus->training_id = $request->training_id;
             $trainingStatus->status = "Complete";
             $trainingStatus->save();
+
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id =  $request->training_id;
             $TrainingHistory->sop_id =  $id;
@@ -461,6 +465,7 @@ class TMSController extends Controller
             $TrainingHistory->user_name = Auth::user()->name;
             $TrainingHistory->origin_state = "Assigned";
             $TrainingHistory->save();
+
             $history = new DocumentHistory();
             $history->document_id = $id;
             $history->activity_type = "Training Complete";
@@ -472,11 +477,13 @@ class TMSController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = "Pending-Training";
             $history->save();
+
             $criteria = $this->effective($id, $request->training_id);
             if(count(TrainingStatus::where('sop_id',$id)->where('training_id',$request->training_id)->where('status',"Complete")->get()) >= $criteria){
                 $document = DocumentTraining::where('document_id',$id)->first();
                 $document->status = "Complete";
                 $document->update();
+
                 $history = new DocumentHistory();
                 $history->document_id = $id;
                 $history->activity_type = "Training Complete";
@@ -488,6 +495,7 @@ class TMSController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = "Pending-Training";
                 $history->save();
+
                 $TrainingHistory = new TrainingHistory();
                 $TrainingHistory->plan_id =  $request->training_id;
                 $TrainingHistory->sop_id =  $id;
@@ -499,10 +507,12 @@ class TMSController extends Controller
                 $TrainingHistory->user_name = Auth::user()->name;
                 $TrainingHistory->origin_state = "Assigned";
                 $TrainingHistory->save();
+
                 $document->doc = Document::find($id);
                 $document->doc->stage = 8;
                 $document->doc->status = "Effective";
                 $document->doc->update();
+
                 $user_data = User::find($document->doc->originator_id);
                 try {
                     Mail::send('mail.complete-training', ['document' => $document],
@@ -886,76 +896,65 @@ class TMSController extends Controller
 
     //---------------------------------------------------EXAMPLE---------------------------
 
-    public function example($id, $trainingID){
-        $document = Document::find($id);
-        $document_training = DocumentTraining::where('document_id',$id)->first();
+    public function example($id, $trainingID) {
         $training = Training::find($trainingID);
-        if($training->training_plan_type == "Read & Understand with Questions"){
+
+        if ($training->training_plan_type == "Read & Understand with Questions") {
             $quize = Quize::find($training->quize);
-            $data = explode(',',$quize->question);
+            $data = explode(',', $quize->question);
+
+            // Shuffle the questions to get random ones
+            shuffle($data);
+
+            // Limit to a maximum of 10 questions
+            $data = array_slice($data, 0, 10);
 
             $data_array = [];
-            for($i = 0; $i < count($data); $i++){
-                //question
-                $question = Question::find($data[$i]);
-                $question->id = $i+1;
+            foreach ($data as $index => $questionID) {
+                // Get question
+                $question = Question::find($questionID);
+                if (!$question) continue; // Skip if question is not found
 
-                //Options
+                $question->id = $index + 1;
+
+                // Process options
                 $json_option = unserialize($question->options);
-                $options = [];
-                foreach($json_option as $key => $value){
-                    if(!is_null($value)){
-                        array_push($options,$value);
-                    }
-                }
-                $question->choices =$options;
-                //Answers
+                $options = array_filter($json_option, fn($value) => !is_null($value));
+                $question->choices = array_values($options);
+
+                // Process answers
                 $json_answer = unserialize($question->answers);
                 $answers = [];
 
-
-                if($question->type == "Exact Match Questions"){
-                    foreach($json_answer as $key => $value){
-                       $answers = $value;
+                if ($question->type == "Exact Match Questions") {
+                    foreach ($json_answer as $value) {
+                        $answers = $value;
                     }
-                }
-                elseif($question->type == "Multi Selection Questions"){
-                    foreach($json_answer as $key => $value){
-                        foreach($options as $key1 => $option){
-                            if($key1 == $value){
-                            array_push($answers,$key);
-                            }
+                } elseif ($question->type == "Multi Selection Questions") {
+                    foreach ($json_answer as $value) {
+                        if (isset($options[$value])) {
+                            array_push($answers, $value);
                         }
-
                     }
-                }
-                elseif($question->type == "Single Selection Questions"){
-
-                    foreach($json_answer as $key => $value){
-                        foreach($options as $key1 => $option){
-                            if($key1 == $value){
-                              $answers = intval($value);
-
-                            }
+                } elseif ($question->type == "Single Selection Questions") {
+                    foreach ($json_answer as $value) {
+                        if (isset($options[$value])) {
+                            $answers = intval($value);
                         }
-
                     }
                 }
 
-                 $question->answer = $answers;
-                array_push($data_array,$question);
+                $question->answer = $answers;
+                $data_array[] = $question;
             }
-            //  $data_array = implode(',',$array);
-             return $data_array;
-        //    return view('frontend.TMS.example',compact('document','data_array','quize'));
 
-
-       }
-       else{
-        toastr()->error('Training not specified');
-        return back();
-       }
+            return $data_array;
+        } else {
+            toastr()->error('Training not specified');
+            return back();
+        }
     }
+
 
     public function trainingOverallStatus($id){
         $training = Training::where('id', $id)->latest()->first();

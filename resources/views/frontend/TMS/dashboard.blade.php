@@ -245,15 +245,19 @@
                                             ->whereIn('id', $sops) // Assuming 'id' is the column you want to match in the `documents` table
                                             ->first();
                                         // dd($document);
+                                        $id_array = explode(',', $temp->sops);
+
                                         $trainingStatusCheck = DB::table('training_statuses')
-                                        ->whereIn('sop_id', $sops)
                                             ->where([
                                             'user_id' => Auth::user()->id,
+                                            'sop_id'=> $temp->sops,
                                             'training_id' => $temp->id,
                                             'status' => 'Complete'
                                             ])->first();
-
-                                    @endphp
+                                            if($temp->id == 4){
+                                            // dd($trainingStatusCheck, $temp->sops == "1,2,3,4,5,6,7,8");
+                                            }
+                                            @endphp
                                         <tr>
                                             <td>{{ $document ? $document->sop_no : '-' }}</td>
                                             <td>{{ $document ? $document->document_name : '-'}}</td>

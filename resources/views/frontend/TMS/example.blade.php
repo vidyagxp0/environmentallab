@@ -81,7 +81,7 @@
                 </div>
 
                 <!-- Modal body -->
-                <form action="{{ url('trainingComplete', $document->id) }}" method="POST">
+                <form action="{{ url('trainingComplete', $id) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -136,22 +136,8 @@
         var userAnswers = [];
 
 // Local Serve
-// fetch("{{ url('example', [$document->id, $training->id]) }}")
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     quizData = data;
-//     loadQuestion();
-//   })
-//   .catch(function(error) {
-//     console.log('Error fetching quiz data:', error);
-//   });
-
-  // Live serve api https
-
-  fetch("{{ secure_url('example', [$document->id, $training->id]) }}")
-    .then(function(response) {
+fetch("{{ url('example', [$id, $training->id]) }}")
+  .then(function(response) {
     return response.json();
   })
   .then(function(data) {
@@ -161,6 +147,20 @@
   .catch(function(error) {
     console.log('Error fetching quiz data:', error);
   });
+
+  // Live serve api https
+
+  // fetch("{{ secure_url('example', [$id, $training->id]) }}")
+  //   .then(function(response) {
+  //   return response.json();
+  // })
+  // .then(function(data) {
+  //   quizData = data;
+  //   loadQuestion();
+  // })
+  // .catch(function(error) {
+  //   console.log('Error fetching quiz data:', error);
+  // });
 
 function loadQuestion() {
   var question = quizData[currentQuestion];

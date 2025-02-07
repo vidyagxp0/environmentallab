@@ -27,7 +27,7 @@ window.addEventListener("popstate", function(event) {
                     <button id="complete-training" class="d-none" style="padding: 10px 20px;" data-bs-toggle="modal" data-bs-target="#trainee-sign">Complete Training</button>
                     @endif
                     @if($training->training_plan_type == "Read & Understand with Questions")
-                    <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion', $document->id) }}/{{ $training->id }}';">Continue with Question</button>
+                    <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion', $id) }}/{{ $training->id }}';">Continue with Question</button>
 
                     @endif
                 </div>
@@ -38,8 +38,11 @@ window.addEventListener("popstate", function(event) {
                     {{-- SOP-000{{ $document->id }} --}}
                 </div>
                 <div class="inner-block-content">
-                    <iframe id="theFrame" width="100%" height="800"
-                        src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                    @foreach ($documents as $document)
+                        <iframe id="theFrame_{{ $document->id }}" width="100%" height="800"
+                                src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0">
+                        </iframe>
+                    @endforeach
                 </div>
             </div>
 
@@ -61,7 +64,7 @@ window.addEventListener("popstate", function(event) {
                 </div>
 
                 <!-- Modal body -->
-                <form action="{{ url('trainingComplete', $document->id) }}" method="POST">
+                <form action="{{ url('trainingComplete', $id_array) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -116,7 +119,7 @@ window.addEventListener("popstate", function(event) {
 
         if (minutes == 0 && seconds == 0) {
             $("#complete-training").removeClass("d-none");
-            alert('Time Complete Now Continue With Question');
+            alert('Time Complete');
             clearInterval(interval);
         }
 
