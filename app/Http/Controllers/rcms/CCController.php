@@ -3736,7 +3736,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                     }
                     catch (\Throwable $e)
                     {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                        // info('Mail failed to send: ' . $e->getMessage(), []);
                     }
                 }
              foreach ($list as $u)
@@ -3744,22 +3744,22 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 $email = Helpers::getAllUserEmail($u->user_id);
                 if (!empty($email))
                 {
-                    try
-                    {
-                        info('Sending mail to', [$email]);
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $changeControl,'site'=>'Change Control','history' => 'CFT/SME/QA Review Not Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $changeControl) {
-                             $message->to($email)
-                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
-                            );
+                    // try
+                    // {
+                    //     info('Sending mail to', [$email]);
+                    //     Mail::send(
+                    //         'mail.view-mail',
+                    //         ['data' => $changeControl,'site'=>'Change Control','history' => 'CFT/SME/QA Review Not Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                    //         function ($message) use ($email, $changeControl) {
+                    //          $message->to($email)
+                    //          ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
+                    //         );
 
-                    }
-                    catch (\Exception $e)
-                    {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    }
+                    // }
+                    // catch (\Exception $e)
+                    // {
+                    //     \Log::error('Mail failed to send: ' . $e->getMessage());
+                    // }
                 }
             }
 
@@ -3797,26 +3797,26 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 }
             foreach ($list as $u)
             {
-                $email = Helpers::getAllUserEmail($u->user_id);
-                if (!empty($email))
-                {
-                    try
-                    {
-                        info('Sending mail to', [$email]);
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $changeControl,'site'=>'Change Control','history' => 'CFT/SME/QA Review Not Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $changeControl) {
-                             $message->to($email)
-                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
-                            );
+                // $email = Helpers::getAllUserEmail($u->user_id);
+                // if (!empty($email))
+                // {
+                //     try
+                //     {
+                //         info('Sending mail to', [$email]);
+                //         Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl,'site'=>'Change Control','history' => 'CFT/SME/QA Review Not Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //             function ($message) use ($email, $changeControl) {
+                //              $message->to($email)
+                //              ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
+                //             );
 
-                    }
-                    catch (\Exception $e)
-                    {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    }
-                }
+                //     }
+                //     catch (\Exception $e)
+                //     {
+                //         \Log::error('Mail failed to send: ' . $e->getMessage());
+                //     }
+                // }
             }
 
             $changeControl->update();
