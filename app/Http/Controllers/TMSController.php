@@ -974,9 +974,11 @@ class TMSController extends Controller
 
         // dd($trainingUsers);
 
+
+
         // Query Training Status records for the given training ID and SOP IDs
         $trainingStatus = TrainingStatus::where('training_id', $id)
-                                         ->whereIn('sop_id', $sopIds)
+                                         ->where('sop_id', $training->sops)
                                          ->get();
 
         return view('frontend.TMS.training-overall-status',compact('trainingStatus','sops','training','trainingUsers'));
