@@ -186,6 +186,20 @@ class RiskManagementController extends Controller
 
             $data->reference = json_encode($files);
         }
+
+        if (!empty($request->attachment)) {
+            $files = [];
+            if ($request->hasfile('attachment')) {
+                foreach ($request->file('attachment') as $file) {
+                    $name = $request->name . 'attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $data->attachment = json_encode($files);
+        }
         $data->status = 'Opened';
         $data->stage = 1;
         // return $data;
@@ -1073,6 +1087,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if (!empty($data->attachment)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'General Attachments';
+            $history->previous = "Null";
+            $history->current = $data->attachment;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         // if (!empty($data->reference)) {
         //     $history = new RiskAuditTrail();
         //     $history->risk_id = $data->id;
@@ -1720,6 +1748,20 @@ class RiskManagementController extends Controller
 
 
             $data->reference = json_encode($files);
+        }
+
+        if (!empty($request->attachment)) {
+            $files = [];
+            if ($request->hasfile('attachment')) {
+                foreach ($request->file('attachment') as $file) {
+                    $name = $request->name . 'attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $data->attachment = json_encode($files);
         }
         // return $data;
         $data->update();
@@ -2633,6 +2675,21 @@ class RiskManagementController extends Controller
             $history->activity_type = 'Work Group Attachments';
             $history->previous = $lastDocument->reference;
             $history->current = $data->reference;
+            $history->comment = $request->reference_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->attachment != $data->attachment || !empty($request->reference_comment)) {
+
+            $history = new RiskAuditTrail();
+            $history->risk_id = $id;
+            $history->activity_type = 'Work Group Attachments';
+            $history->previous = $lastDocument->attachment;
+            $history->current = $data->attachment;
             $history->comment = $request->reference_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

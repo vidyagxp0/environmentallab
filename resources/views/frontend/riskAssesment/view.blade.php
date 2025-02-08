@@ -774,6 +774,30 @@
                                                 <textarea name="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="comments">{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="File Attachments">General Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                    <div class="file-attachment-field">
+                                                        <div class="file-attachment-list" id="attachment">
+                                                            @if ($data->attachment)
+                                                            @foreach(json_decode($data->attachment) as $file)
+                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                <b>{{ $file }}</b>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                            </h6>
+                                                       @endforeach
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} type="file" id="myfile" name="attachment[]"
+                                                                oninput="addMultipleFiles(this, 'attachment')" multiple>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <div class="button-block">

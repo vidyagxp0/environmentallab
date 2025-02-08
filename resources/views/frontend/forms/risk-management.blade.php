@@ -503,6 +503,21 @@
                                             <textarea name="comments" id="comments"></textarea>
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Attachments">General Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list-new" id="attachment"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myattachments" name="attachment[]"
+                                                        oninput="addMultipleFiles(this, 'attachment')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                 </div>
                                 <div class="button-block">
