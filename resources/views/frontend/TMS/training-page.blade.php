@@ -64,7 +64,7 @@ window.addEventListener("popstate", function(event) {
                 </div>
 
                 <!-- Modal body -->
-                <form action="{{ url('trainingComplete', $id_array) }}" method="POST">
+                <form action="{{ url('trainingComplete', $id) }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">

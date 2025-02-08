@@ -254,9 +254,6 @@
                                             'training_id' => $temp->id,
                                             'status' => 'Complete'
                                             ])->first();
-                                            if($temp->id == 4){
-                                            // dd($trainingStatusCheck, $temp->sops == "1,2,3,4,5,6,7,8");
-                                            }
                                             @endphp
                                         <tr>
                                             <td>{{ $document ? $document->sop_no : '-' }}</td>
