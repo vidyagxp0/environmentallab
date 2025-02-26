@@ -1439,11 +1439,16 @@ class LabIncidentController extends Controller
 
 
                         foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if ($email !== null) {
-                                $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-        
-                                SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -1495,13 +1500,19 @@ class LabIncidentController extends Controller
                         // }
 
                         foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if ($email !== null) {
-                                $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-        
-                                SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
+                        
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
