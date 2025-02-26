@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\rcms;
 
+use App\Jobs\SendMail;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
@@ -1010,24 +1011,38 @@ class ActionItemController extends Controller
 
                 // dd($openState->division_id);
 //dd($list = Helpers::getActionOwnerUserList($openState->division_id));
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $openState,'site'=>'Action Item','history' => 'Submit', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $openState) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $openState,'site'=>'Action Item','history' => 'Submit', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $openState) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $openState,'site'=>'Action Item','history' => 'Submit', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
 
                 $changeControl->update();
@@ -1108,24 +1123,38 @@ class ActionItemController extends Controller
             }
 
             // dd($list);
-            foreach ($list as $u) {
-                $email = Helpers:: getAllUserEmail($u->user_id);
-                if (!empty($email)) {
-                    try {
-                        info('Sending mail to', [$email]);
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $openState,'site'=>'Action Item','history' => 'Complete', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $openState) {
-                             $message->to($email)
-                             ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed"); }
-                            );
+            // foreach ($list as $u) {
+            //     $email = Helpers:: getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $openState,'site'=>'Action Item','history' => 'Complete', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $openState) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed"); }
+            //                 );
 
-                    } catch (\Exception $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            //     // }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data = ['data' => $openState,'site'=>'Action Item','history' => 'Complete', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name];
+            
+                        SendMail::dispatch($data, $email, $changeControl, 'Action Item');
                     }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                    continue;
                 }
-                // }
             }
 
                 toastr()->success('Document Sent');
@@ -1245,24 +1274,38 @@ public function actionStageCancel(Request $request, $id)
             }
 
             // dd($list);
-            foreach ($list as $u) {
-                $email = Helpers:: getAllUserEmail($u->user_id);
-                if (!empty($email)) {
-                    try {
-                        info('Sending mail to', [$email]);
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $openState,'site'=>'Action Item','history' => 'Cancel', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $openState) {
-                             $message->to($email)
-                             ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
-                            );
+            // foreach ($list as $u) {
+            //     $email = Helpers:: getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $openState,'site'=>'Action Item','history' => 'Cancel', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $openState) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
+            //                 );
 
-                    } catch (\Exception $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            //     // }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data = ['data' => $openState,'site'=>'Action Item','history' => 'Cancel', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name];
+            
+                        SendMail::dispatch($data, $email, $changeControl, 'Action Item');
                     }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                    continue;
                 }
-                // }
             }
 
             toastr()->success('Document Sent');
@@ -1374,25 +1417,40 @@ public function actionStageCancel(Request $request, $id)
         //}
 
         // dd($list);
-        foreach ($list as $u) {
-            $email = Helpers:: getAllUserEmail($u->user_id);
-            if (!empty($email)) {
-                try {
-                    info('Sending mail to', [$email]);
-                    Mail::send(
-                        'mail.view-mail',
-                        ['data' => $openState,'site'=>'Action Item','history' => 'More Information Required', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                        function ($message) use ($email, $openState) {
-                         $message->to($email)
-                         ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity:  More Information Required Performed"); }
-                        );
+        // foreach ($list as $u) {
+        //     $email = Helpers:: getAllUserEmail($u->user_id);
+        //     if (!empty($email)) {
+        //         try {
+        //             info('Sending mail to', [$email]);
+        //             Mail::send(
+        //                 'mail.view-mail',
+        //                 ['data' => $openState,'site'=>'Action Item','history' => 'More Information Required', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name],
+        //                 function ($message) use ($email, $openState) {
+        //                  $message->to($email)
+        //                  ->subject("QMS Notification: Action Item, Record #" . str_pad($openState->record, 4, '0', STR_PAD_LEFT) . " - Activity:  More Information Required Performed"); }
+        //                 );
 
-                } catch (\Exception $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
+        //         } catch (\Exception $e) {
+        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+        //         }
+        //     }
+        //     // }
+        // }
+
+        foreach ($list as $u) {
+            try {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if ($email !== null) {
+                    $data = ['data' => $openState,'site'=>'Action Item','history' => 'More Information Required', 'process' => 'Action Item', 'comment' => $history->comment,'user'=> Auth::user()->name];
+        
+                    SendMail::dispatch($data, $email, $changeControl, 'Action Item');
                 }
+            } catch (\Exception $e) {
+                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                continue;
             }
-            // }
         }
+
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }

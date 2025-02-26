@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMail;
 use App\Models\QMSDivision;
 use App\Models\RecordNumber;
 use App\Models\RiskAuditTrail;
@@ -3355,25 +3356,41 @@ class RiskManagementController extends Controller
                     //         }
                     // }
 
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Submitted', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Submitted', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Submitted', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
+            
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3438,25 +3455,40 @@ class RiskManagementController extends Controller
                         $test->save();
                     }
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'evaluated', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: evaluated Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'evaluated', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: evaluated Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'evaluated', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3520,24 +3552,38 @@ class RiskManagementController extends Controller
                             $test->role_name = "Work Group";
                             $test->save();
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Actions Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Actions Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3604,24 +3650,38 @@ class RiskManagementController extends Controller
                             $test->save();
                         }
 
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Plan Approved', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Plan Approved', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Plan Approved', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
                 $changeControl->update();
 
@@ -3690,45 +3750,74 @@ class RiskManagementController extends Controller
                         }
 
 
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Actions Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Actions Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
+
                         $list = Helpers::getHODUserList($changeControl->division_id);
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3843,25 +3932,41 @@ class RiskManagementController extends Controller
                         }
 
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
+
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3914,24 +4019,38 @@ class RiskManagementController extends Controller
 
 
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
                 toastr()->success('Document Sent');
                 return back();
@@ -3984,24 +4103,38 @@ class RiskManagementController extends Controller
                         }
 
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
 
                 toastr()->success('Document Sent');
@@ -4055,25 +4188,39 @@ class RiskManagementController extends Controller
                         }
 
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS
-                                 : Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information   Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS
+                //                  : Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information   Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
                 toastr()->success('Document Sent');
                 return back();

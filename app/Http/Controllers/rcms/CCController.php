@@ -11,12 +11,16 @@ use App\Models\RecordNumber;
 use App\Models\CCStageHistory;
 use App\Models\ChangeClosure;
 use App\Models\Docdetail;
+use App\Models\DocumentLanguage;
+use App\Models\DocumentType;
 use App\Models\Evaluation;
 use App\Models\Extension;
 use App\Models\GroupComments;
+use App\Models\GroupPermission;
 use App\Models\QaApprovalComments;
 use App\Models\Qareview;
 use App\Models\QMSDivision;
+use App\Models\QMSProcess;
 use App\Models\RiskAssessment;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
@@ -3892,8 +3896,27 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             return view('frontend.forms.extension',compact('parent_name','record_number','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id', 'parent_record','cc'));
         }
         if($request->revision == "New Document"){
+            $idDivision = $parent_division_id;
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return redirect()->route('documents.create');
+            $documentTypes = DocumentType::all();
+            $documentLanguages = DocumentLanguage::all();
+            $reviewergroup = GroupPermission::where('role_id', 2)->get();
+            $approversgroup = Grouppermission::where('role_id', 1)->get();
+            $trainer = DB::table('users')
+            ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+            ->where('user_roles.q_m_s_roles_id', 6)
+            ->select('users.*')
+            ->distinct() // Ensure unique users
+            ->get();
+            $users = User::all();
+            if (! empty($users)) {
+                foreach ($users as $data) {
+                    $data->role = RoleGroup::where('id', $data->role)->value('name');
+                }
+            }
+            $idProcess = QMSProcess::where('id', $request->process_id)->pluck('division_id')->first();
+
+            return view('frontend.documents.create',compact('approversgroup','trainer','reviewergroup','documentLanguages','documentTypes','parent_record','users','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record', 'idDivision', 'idProcess'));
 
         }
         else{
