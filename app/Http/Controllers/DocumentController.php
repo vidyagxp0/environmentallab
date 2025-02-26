@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
 use App\Models\QMSDivision;
+use App\Jobs\SendMail;
 
 use Helpers;
 use App\Models\DocumentContent;
@@ -44,6 +45,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+
 
 class DocumentController extends Controller
 {

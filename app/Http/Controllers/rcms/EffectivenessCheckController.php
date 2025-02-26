@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Jobs\SendMail;
+
 
 class EffectivenessCheckController extends Controller
 {
@@ -930,7 +932,7 @@ class EffectivenessCheckController extends Controller
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                         $userId = $users->pluck('name')->implode(',');
                         $userId1 = $users->pluck('id')->implode(',');
-    
+
                         if($userId){
                             $test = new EffectivenessCheckAuditTrail();
                             $test->effectiveness_id = $id;
@@ -951,27 +953,42 @@ class EffectivenessCheckController extends Controller
                         }
 
 
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'submitted', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'submitted', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data =['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'submitted', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Effectiveness Check');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
-                    
+
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
                     $history->doc_id = $id;
@@ -1044,7 +1061,7 @@ class EffectivenessCheckController extends Controller
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                         $userId = $users->pluck('name')->implode(',');
                         $userId1 = $users->pluck('id')->implode(',');
-    
+
                         if($userId){
                             $test = new EffectivenessCheckAuditTrail();
                             $test->effectiveness_id = $id;
@@ -1065,27 +1082,41 @@ class EffectivenessCheckController extends Controller
                         }
 
 
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data =['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Effectiveness Check');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
-                    
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
                     $history->doc_id = $id;
@@ -1211,7 +1242,7 @@ class EffectivenessCheckController extends Controller
                                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                                 $userId = $users->pluck('name')->implode(',');
                                 $userId1 = $users->pluck('id')->implode(',');
-            
+
                                 if($userId){
                                     $test = new EffectivenessCheckAuditTrail();
                                     $test->effectiveness_id = $id;
@@ -1231,24 +1262,39 @@ class EffectivenessCheckController extends Controller
                                     $test->save();
                                 }
 
-                                foreach ($list as $u) {
-                                    $email = Helpers:: getAllUserEmail($u->user_id);
-                                    if (!empty($email)) {
-                                        try {
-                                            info('Sending mail to', [$email]);
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Not Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                                function ($message) use ($email, $changeControl) {
-                                                $message->to($email)
-                                                ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Performed"); }
-                                                );
+                                // foreach ($list as $u) {
+                                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                                //     if (!empty($email)) {
+                                //         try {
+                                //             info('Sending mail to', [$email]);
+                                //             Mail::send(
+                                //                 'mail.view-mail',
+                                //                 ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Not Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                //                 function ($message) use ($email, $changeControl) {
+                                //                 $message->to($email)
+                                //                 ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Performed"); }
+                                //                 );
 
-                                        } catch (\Exception $e) {
-                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                //         } catch (\Exception $e) {
+                                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                                //         }
+                                //     }
+                                //     // }
+                                // }
+
+                                foreach ($list as $u) {
+                                    try {
+                                        $email = Helpers::getAllUserEmail($u->user_id);
+                                        if ($email !== null) {
+                                            $data =['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Not Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+
+                                            SendMail::dispatch($data, $email, $changeControl, 'Effectiveness Check');
                                         }
+                                    } catch (\Exception $e) {
+                                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                        continue;
                                     }
-                                    // }
                                 }
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -1391,24 +1437,38 @@ class EffectivenessCheckController extends Controller
                     $test->save();
                 }
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getSupervisorEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'More Info Required', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                $message->to($email)
-                                ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getSupervisorEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'More Info Required', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                 $message->to($email)
+                //                 ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data =['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'More Info Required', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Effectiveness Check');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
