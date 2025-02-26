@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMail;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
@@ -2387,24 +2388,38 @@ class InternalauditController extends Controller
                 }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Schedule Audit', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Schedule Audit Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Schedule Audit', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Schedule Audit Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Schedule Audit', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -2486,24 +2501,38 @@ class InternalauditController extends Controller
                         }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Complete Audit Preparation', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Audit Preparation Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Complete Audit Preparation', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Audit Preparation Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Complete Audit Preparation', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -2577,24 +2606,38 @@ class InternalauditController extends Controller
                         }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Issue Report', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Issue Report', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Issue Report', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -2757,24 +2800,38 @@ class InternalauditController extends Controller
                         }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -2838,24 +2895,38 @@ class InternalauditController extends Controller
                             }
                         }
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
                 $changeControl->update();
@@ -2947,24 +3018,38 @@ class InternalauditController extends Controller
                 }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -2999,24 +3084,38 @@ class InternalauditController extends Controller
 
                             $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -3052,24 +3151,38 @@ class InternalauditController extends Controller
 
                         $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Internal Audit');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();
@@ -3152,6 +3265,7 @@ class InternalauditController extends Controller
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
             $parent_initiator_id = $id;
+            $parent_division = InternalAudit::where('id', $id)->value('division_id');
             // $changeControl = OpenStage::find(1);/
             $hod = User::get();
             $pre = CC::all();
@@ -3170,7 +3284,7 @@ class InternalauditController extends Controller
 
             if ($request->revision == "capa-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-               return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft'));
+               return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft', 'parent_division',));
             }
 
         }

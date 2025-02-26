@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMail;
 use Illuminate\Http\Request;
 use App\Models\AuditProgram;
 use App\Models\RecordNumber;
@@ -1032,24 +1033,38 @@ class AuditProgramController extends Controller
                     }
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Audit Program','history' => 'Submitted', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Audit Program','history' => 'Submitted', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Audit Program','history' => 'Submitted', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Audit Program');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
                 $changeControl->update();
@@ -1152,24 +1167,38 @@ class AuditProgramController extends Controller
                                 $auditNoti->save();
                         }
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Audit Program','history' => 'Rejected', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Audit Program','history' => 'Rejected', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Audit Program','history' => 'Rejected', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Audit Program');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
                             }
-                            // }
                         }
 
                 $changeControl->update();

@@ -8,7 +8,7 @@
         header {
             display: none;
         }
-        
+
     </style>
 
     @php
@@ -54,16 +54,16 @@
                     html += '</select></td>' +
                         // '<td><input type="date" name="start_date[]"></td>' +
                         '<td><div class="group-input new-date-data-field mb-0">
-                        <div class="input-date "><div class="calenderauditee"> 
+                        <div class="input-date "><div class="calenderauditee">
                         <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                        <input type="date" class="hide-input" name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="start_date' + serialNumber +'_checkdate"  
+                        <input type="date" class="hide-input" name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="start_date' + serialNumber +'_checkdate"
                          oninput="handleDateInput(this, `start_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
                         // '<td><input type="date" name="end_date[]"></td>' +
                         '<td><div class="group-input new-date-data-field mb-0">
                         <div class="input-date "><div class="calenderauditee">
                          <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                         <input type="date" name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' 
+                         <input type="date" name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>'
 
                         '<td><select name="lead_investigator[]">' +
                         '<option value="">Select a value</option>';
@@ -215,7 +215,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
-                            
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -230,7 +230,7 @@
                                 Child
                             </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Audit Completed 
+                                Audit Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -370,7 +370,7 @@
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
@@ -564,13 +564,13 @@
                 @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
                 <tr>
                     <td>
-                        <input disabled type="text" name="serial_number[]" 
-                            value="{{ $key + 1 }}" 
+                        <input disabled type="text" name="serial_number[]"
+                            value="{{ $key + 1 }}"
                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} >
                     </td>
-                    <td> 
+                    <td>
                         <select id="select-state" placeholder="Select..."
-                            name="Auditees[]"  
+                            name="Auditees[]"
                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                             <option value="">-Select-</option>
                             @foreach ($users as $value)
@@ -586,12 +586,13 @@
                         <div class="group-input new-date-data-field mb-0">
                             <div class="input-date">
                                 <div class="calenderauditee">
-                                    <input type="text" id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" 
+                                    <input type="text" id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY"
                                         value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
                                     <input class="hide-input" type="date" id="start_date{{$key}}_checkdate" name="start_date[]"
-                                        value="{{ unserialize($AuditProgramGrid->start_date)[$key] }}" 
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} 
+                                        value="{{ unserialize($AuditProgramGrid->start_date)[$key] ?? '' }}"
+                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
+                                        min="{{ $AuditProgramGrid->start_date && unserialize($AuditProgramGrid->start_date)[$key] ? \Carbon\Carbon::parse(unserialize($AuditProgramGrid->start_date)[$key])->format('Y-m-d') : \Carbon\Carbon::today()->format('Y-m-d') }}"
+                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                         oninput="handleDateInput(this, 'start_date' + {{$key}})" />
                                 </div>
                             </div>
@@ -601,12 +602,13 @@
                         <div class="group-input new-date-data-field mb-0">
                             <div class="input-date">
                                 <div class="calenderauditee">
-                                    <input type="text" id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" 
+                                    <input type="text" id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY"
                                         value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
                                     <input class="hide-input" type="date" id="end_date{{$key}}_checkdate" name="end_date[]"
-                                        value="{{ unserialize($AuditProgramGrid->end_date)[$key] }}" 
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} 
+                                        value="{{ unserialize($AuditProgramGrid->end_date)[$key] ?? '' }}"
+                                        {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
+                                        min="{{ $AuditProgramGrid->end_date && unserialize($AuditProgramGrid->end_date)[$key] ? \Carbon\Carbon::parse(unserialize($AuditProgramGrid->end_date)[$key])->format('Y-m-d') : \Carbon\Carbon::today()->format('Y-m-d') }}"
+                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                         oninput="handleDateInput(this, 'end_date' + {{$key}})" />
                                 </div>
                             </div>
@@ -614,7 +616,7 @@
                     </td>
                     <td>
                         <select id="select-state" placeholder="Select..."
-                            name="lead_investigator[]"  
+                            name="lead_investigator[]"
                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                             <option value="">-Select-</option>
                             @foreach ($users as $value)
@@ -627,7 +629,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="comment[]"  
+                        <input type="text" name="comment[]"
                             value="{{ unserialize($AuditProgramGrid->comment)[$key] }}"
                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                     </td>
@@ -640,17 +642,17 @@
 </div>
 
 
-                            
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                
+
                                                 <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->short_description }}"></input>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
-        
+
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -660,7 +662,7 @@
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity1_level == 'minor') selected @endif
                                                      value="minor">Minor</option>
-                                                    <option  @if ($data->severity1_level == 'major') selected @endif 
+                                                    <option  @if ($data->severity1_level == 'major') selected @endif
                                                     value="major">Major</option>
                                                     <option @if ($data->severity1_level == 'critical') selected @endif
                                                     value="critical">Critical</option>
@@ -722,7 +724,7 @@
                                                 <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
                                             </div>
                                         </div> --}}
-                                        
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="comments">Comments</label>
@@ -761,11 +763,11 @@
 
                                             </div>
                                         </div>
-                                       
+
                             <div class="col-12">
                                <div class="group-input">
                                    <label for="related_url">Related URL</label>
-                                   <input name="related_url" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->related_url }}"> 
+                                   <input name="related_url" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->related_url }}">
                                </div>
                             </div>
 
@@ -785,8 +787,8 @@
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div> --}}
-                                       
-                                        
+
+
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
@@ -911,7 +913,7 @@
                                 <div class="mb-3 text-justify">
                                     Please select a meaning and a outcome for this task and enter your username
                                     and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signatureaaaaaaaaaaaaaaa.
+                                    which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
@@ -1053,7 +1055,7 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    
+
                                     <label for="major">
 
                                     </label>
@@ -1069,7 +1071,7 @@
                                         <input type="radio" name="child_type" value="extension">
                                         Extension
                                     </label> -->
-                                    
+
                                 </div>
 
                             </div>
@@ -1262,12 +1264,12 @@
               <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     const removeButtons = document.querySelectorAll('.remove-file');
-    
+
                     removeButtons.forEach(button => {
                         button.addEventListener('click', function () {
                             const fileName = this.getAttribute('data-file-name');
                             const fileContainer = this.closest('.file-container');
-    
+
                             // Hide the file container
                             if (fileContainer) {
                                 fileContainer.style.display = 'none';

@@ -224,10 +224,10 @@
 
                         <p>Date Opened:- {{ $data->created_at->format('d-M-Y H:i:s') }}</p>
 
-                        <p>Comment:- {{ $comment }}.</p>
+                        {{-- <p>Comment:- {{ $comment }}.</p> --}}
 
                     </div>
-                    <div style="margin-left: 400px" class="logo ">
+                    <div style="margin-left: 400px; width:250px;" class="logo ">
                         <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="...">
                     </div>
                     <div class="logo ">
@@ -259,9 +259,9 @@
                                     <td>
                                         @if ($process == 'Lab Incident')
                                             {{ $data->short_desc }}
-                                        @else    
+                                        @else
                                             {{ $data->short_description }}
-                                        @endif    
+                                        @endif
                                     </td>
 
                                     <td>

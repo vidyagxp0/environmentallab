@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMail;
 use App\Models\ActionItem;
 use App\Models\Auditee;
 use App\Models\AuditProgram;
@@ -2435,24 +2436,38 @@ class ManagementReviewController extends Controller
 
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Management Review','history' => 'Submit', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Management Review','history' => 'Submit', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Management Review','history' => 'Submit', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
 
@@ -2526,24 +2541,38 @@ class ManagementReviewController extends Controller
 
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Management Review','history' => ' More Information Required', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Actions Completed Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Management Review','history' => ' More Information Required', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Actions Completed Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Management Review','history' => ' All Actions Completed', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
 

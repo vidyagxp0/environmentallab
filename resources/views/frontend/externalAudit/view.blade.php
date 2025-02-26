@@ -889,7 +889,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
 
                                                     @if(!empty($auditAgenda))
                                                         @foreach($auditAgenda as $index => $row)
@@ -953,7 +953,7 @@
                                         </div>
                                     </div>
 
-                               
+
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1386,7 +1386,7 @@
                                                                     {{-- <td> <div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div class="calenderauditee">
                                                                         <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->date) }}"/>
-                                                                        <input type="date" name="date[]" value="{{ $data->date }}" class="hide-input" 
+                                                                        <input type="date" name="date[]" value="{{ $data->date }}" class="hide-input"
                                                                         oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
                                                                 <td> --}}
                                                                     {{-- <select placeholder="Select..." name="auditorG[]">
@@ -1423,14 +1423,14 @@
                                                                         <div class="input-date "><div
                                                                         class="calenderauditee">
                                                                         <input type="text" id="capa_due_date{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) }}" />
-                                                                        <input type="date" name="capa_due_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ unserialize($grid_data1->capa_due_date)[$key] }}"
+                                                                        <input type="date" name="capa_due_date[]" min="{{ $grid_data1->capa_due_date && unserialize($grid_data1->capa_due_date)[$key] ? \Carbon\Carbon::parse(unserialize($grid_data1->capa_due_date)[$key])->format('Y-m-d') : \Carbon\Carbon::today()->format('Y-m-d') }}" class="hide-input" value="{{ unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key] : '' }}"
                                                                         oninput="handleDateInput(this, `capa_due_date{{$key}}' + serialNumber +'`)" /></div></div></div></td>
-                                                                    
+
                                                                     <td><input type="text" name="auditee_response[]"
                                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}">
                                                                     </td>
-                                                                   
+
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -2006,7 +2006,7 @@
                                         Observations
                                     </label>
                                 @endif
-        
+
                                 @if ($data->stage == 5)
                                     <label for="major">
                                         <input type="radio" name="revision" value="capa-child">
