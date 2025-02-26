@@ -124,7 +124,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
                         @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5))
@@ -2168,7 +2168,7 @@
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
-                            @elseif($data->stage == 7)
+                            @elseif($data->stage == 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="New Document">
                                     New Document

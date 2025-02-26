@@ -321,7 +321,7 @@ class Helpers
     }
     public static function record($id)
     {
-        return   str_pad($id, 5, '0', STR_PAD_LEFT);
+        return   str_pad($id, 4, '0', STR_PAD_LEFT);
     }
     public static function getDepartmentWithString($id)
     {
