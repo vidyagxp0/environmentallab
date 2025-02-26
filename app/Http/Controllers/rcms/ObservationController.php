@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMail;
 use App\Models\AuditTrialObservation;
 use App\Models\Observation;
 use App\Models\RecordNumber;
@@ -1523,24 +1524,38 @@ class ObservationController extends Controller
 
 
                                 // dd($list);
-                                foreach ($list as $u) {
-                                    $email = Helpers:: getAllUserEmail($u->user_id);
-                                    if (!empty($email)) {
-                                        try {
-                                            info('Sending mail to', [$email]);
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                ['data' => $changestage,'site'=>'Observation','history' => 'Report Issued', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                                function ($message) use ($email, $changestage) {
-                                                 $message->to($email)
-                                                 ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed"); }
-                                                );
+                                // foreach ($list as $u) {
+                                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                                //     if (!empty($email)) {
+                                //         try {
+                                //             info('Sending mail to', [$email]);
+                                //             Mail::send(
+                                //                 'mail.view-mail',
+                                //                 ['data' => $changestage,'site'=>'Observation','history' => 'Report Issued', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                //                 function ($message) use ($email, $changestage) {
+                                //                  $message->to($email)
+                                //                  ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed"); }
+                                //                 );
 
-                                        } catch (\Exception $e) {
-                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                //         } catch (\Exception $e) {
+                                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                                //         }
+                                //     }
+                                //     // }
+                                // }
+
+                                foreach ($list as $u) {
+                                    try {
+                                        $email = Helpers::getAllUserEmail($u->user_id);
+                                        if ($email !== null) {
+                                            $data = ['data' => $changestage,'site'=>'Observation','history' => 'Report Issued', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                                
+                                            SendMail::dispatch($data, $email, $changestage, 'Observation');
                                         }
+                                    } catch (\Exception $e) {
+                                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                        continue;
                                     }
-                                    // }
                                 }
 
                 $changestage->update();
@@ -1612,24 +1627,38 @@ class ObservationController extends Controller
 
 
             // dd($list);
-            foreach ($list as $u) {
-                $email = Helpers:: getAllUserEmail($u->user_id);
-                if (!empty($email)) {
-                    try {
-                        info('Sending mail to', [$email]);
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $changestage,'site'=>'Observation','history' => 'Complete', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $changestage) {
-                             $message->to($email)
-                             ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed"); }
-                            );
+            // foreach ($list as $u) {
+            //     $email = Helpers:: getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $changestage,'site'=>'Observation','history' => 'Complete', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $changestage) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed"); }
+            //                 );
 
-                    } catch (\Exception $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            //     // }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data = ['data' => $changestage,'site'=>'Observation','history' => 'Complete', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+            
+                        SendMail::dispatch($data, $email, $changestage, 'Observation');
                     }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                    continue;
                 }
-                // }
             }
 
 
@@ -1702,26 +1731,40 @@ class ObservationController extends Controller
 
 
                         // dd($list);
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changestage) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Performed"); }
+                        //                 );
+
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
                         foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changestage) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Performed"); }
-                                        );
-
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
-
+ 
                         $list = Helpers::getLeadAuditorUserList($changestage->division_id);
 
                         $userIds = collect($list)->pluck('user_id')->toArray();
@@ -1750,24 +1793,38 @@ class ObservationController extends Controller
                         }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changestage) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity:  QA Approval Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changestage) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity:  QA Approval Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
 
 
@@ -1839,24 +1896,38 @@ class ObservationController extends Controller
 
 
                     // dd($list);
-                    foreach ($list as $u) {
-                        $email = Helpers:: getAllUserEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                info('Sending mail to', [$email]);
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changestage) {
-                                    $message->to($email)
-                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed"); }
-                                    );
+                    // foreach ($list as $u) {
+                    //     $email = Helpers:: getAllUserEmail($u->user_id);
+                    //     if (!empty($email)) {
+                    //         try {
+                    //             info('Sending mail to', [$email]);
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changestage) {
+                    //                 $message->to($email)
+                    //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed"); }
+                    //                 );
 
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         } catch (\Exception $e) {
+                    //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         }
+                    //     }
+                    //     // }
+                    // }
+
+                    foreach ($list as $u) {
+                        try {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if ($email !== null) {
+                                $data = ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                    
+                                SendMail::dispatch($data, $email, $changestage, 'Observation');
                             }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            continue;
                         }
-                        // }
                     }
 
                     $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
@@ -1888,24 +1959,38 @@ class ObservationController extends Controller
 
 
                     // dd($list);
-                    foreach ($list as $u) {
-                        $email = Helpers:: getAllUserEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                info('Sending mail to', [$email]);
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changestage) {
-                                     $message->to($email)
-                                     ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed"); }
-                                    );
+                    // foreach ($list as $u) {
+                    //     $email = Helpers:: getAllUserEmail($u->user_id);
+                    //     if (!empty($email)) {
+                    //         try {
+                    //             info('Sending mail to', [$email]);
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changestage) {
+                    //                  $message->to($email)
+                    //                  ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed"); }
+                    //                 );
 
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         } catch (\Exception $e) {
+                    //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         }
+                    //     }
+                    //     // }
+                    // }
+
+                    foreach ($list as $u) {
+                        try {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if ($email !== null) {
+                                $data = ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                    
+                                SendMail::dispatch($data, $email, $changestage, 'Observation');
                             }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            continue;
                         }
-                        // }
                     }
 
                 $changestage->update();
@@ -1977,24 +2062,38 @@ class ObservationController extends Controller
 
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changestage) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changestage) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
 
                         $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
@@ -2025,24 +2124,38 @@ class ObservationController extends Controller
                         }
 
                         // dd($list);
-                        foreach ($list as $u) {
-                            $email = Helpers:: getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changestage) {
-                                        $message->to($email)
-                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers:: getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changestage) {
+                        //                 $message->to($email)
+                        //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        //     // }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
-                            // }
                         }
 
 
@@ -2131,26 +2244,40 @@ class ObservationController extends Controller
 
 
                 // dd($list);
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Observation','history' => 'Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                 $message->to($email)
+                //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject CAPA Plan Performed"); }
+                //                 );
+
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+
                 foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Observation','history' => 'Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                $message->to($email)
-                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject CAPA Plan Performed"); }
-                                );
-
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changestage, 'Observation');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
-
 
                 toastr()->success('Document Sent');
                 return back();
@@ -2201,24 +2328,38 @@ class ObservationController extends Controller
                 }
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                $message->to($email)
-                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                 $message->to($email)
+                //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
 
                 $list = Helpers::getQAUserList($changeControl->division_id);
@@ -2250,24 +2391,38 @@ class ObservationController extends Controller
 
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                $message->to($email)
-                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                 $message->to($email)
+                //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
 
                 $changeControl->update();
@@ -2323,24 +2478,38 @@ class ObservationController extends Controller
 
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Observation','history' => 'More Info Required', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                $message->to($email)
-                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Observation','history' => 'More Info Required', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                 $message->to($email)
+                //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Observation','history' => 'More Info Required', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
 
 
@@ -2395,24 +2564,38 @@ class ObservationController extends Controller
                 }
 
                 // dd($list);
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Observation','history' => 'Final Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                $message->to($email)
-                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Reject CAPA Plan Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Observation','history' => 'Final Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                 $message->to($email)
+                //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Reject CAPA Plan Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Final Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
-                    // }
                 }
 
                 $changeControl->update();
@@ -2480,24 +2663,38 @@ class ObservationController extends Controller
 
 
                     // dd($list);
-                    foreach ($list as $u) {
-                        $email = Helpers:: getAllUserEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                info('Sending mail to', [$email]);
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed"); }
-                                    );
+                    // foreach ($list as $u) {
+                    //     $email = Helpers:: getAllUserEmail($u->user_id);
+                    //     if (!empty($email)) {
+                    //         try {
+                    //             info('Sending mail to', [$email]);
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                 $message->to($email)
+                    //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed"); }
+                    //                 );
 
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         } catch (\Exception $e) {
+                    //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         }
+                    //     }
+                    //     // }
+                    // }
+
+                    foreach ($list as $u) {
+                        try {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if ($email !== null) {
+                                $data = ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                    
+                                SendMail::dispatch($data, $email, $changeControl, 'Observation');
                             }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            continue;
                         }
-                        // }
                     }
 
                     $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
@@ -2529,25 +2726,40 @@ class ObservationController extends Controller
 
 
                     // dd($list);
-                    foreach ($list as $u) {
-                        $email = Helpers:: getAllUserEmail($u->user_id);
-                        if (!empty($email)) {
-                            try {
-                                info('Sending mail to', [$email]);
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed"); }
-                                    );
+                    // foreach ($list as $u) {
+                    //     $email = Helpers:: getAllUserEmail($u->user_id);
+                    //     if (!empty($email)) {
+                    //         try {
+                    //             info('Sending mail to', [$email]);
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                 $message->to($email)
+                    //                 ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed"); }
+                    //                 );
 
-                            } catch (\Exception $e) {
-                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         } catch (\Exception $e) {
+                    //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                    //         }
+                    //     }
+                    //     // }
+                    // }
+
+                    foreach ($list as $u) {
+                        try {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if ($email !== null) {
+                                $data = ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                    
+                                SendMail::dispatch($data, $email, $changeControl, 'Observation');
                             }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            continue;
                         }
-                        // }
                     }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
