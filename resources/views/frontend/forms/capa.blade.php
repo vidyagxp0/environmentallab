@@ -88,7 +88,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+            @if(!empty($parent_id))
+            {{ Helpers::getDivisionName($parent_division) }} / CAPA
+        @else
+        {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+        @endif
         </div>
     </div>
 
@@ -129,9 +133,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
+                                        @if(!empty($parent_id))
+                                        <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName($parent_division) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

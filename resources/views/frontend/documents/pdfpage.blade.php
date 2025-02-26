@@ -421,7 +421,7 @@
             text-justify: inter-word;
         }
 
- 
+
         /* Main Table Styling */
 #isPasted {
     width: 650px !important;
@@ -442,7 +442,7 @@
 #isPasted th:last-child {
     width: auto; /* Take remaining space */
     vertical-align: top;
-    
+
 }
 
 /* Common Table Cell Styling */
@@ -578,7 +578,10 @@
                         <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    {{-- {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!} --}}
+                                    {!! $data->document_content && $data->document_content->purpose
+                                        ? nl2br(e($data->document_content->purpose))
+                                        : 'Not Applicable' !!}
                                 </div>
                             </div>
                         </div>
@@ -600,7 +603,10 @@
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                    {{-- {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!} --}}
+                                    {!! $data->document_content && $data->document_content->scope
+                                        ? nl2br(e($data->document_content->scope))
+                                        : 'Not Applicable' !!}
                                 </div>
                             </div>
                         </div>
@@ -635,6 +641,10 @@
                                         @if (!empty($res))
                                             <div style="position: relative;">
                                                 <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @else
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
                                             </div>
                                         @endif
                                         @php
@@ -683,6 +693,10 @@
                                             <div style="position: relative;">
                                                 <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
+                                        @else
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
+                                            </div>
                                         @endif
                                         @php
                                             if (!$isSub) {
@@ -730,6 +744,10 @@
                                                 <div style="position: relative;">
                                                     <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
                                                 </div>
+                                            @else
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
+                                                </div>
                                             @endif
                                             @php
                                                 if (!$isSub) {
@@ -775,6 +793,10 @@
                                                 <div style="position: relative;">
                                                     <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
+                                            @else
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
+                                                </div>
                                             @endif
                                             @php
                                                 if (!$isSub) {
@@ -808,9 +830,16 @@
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
-                                    @if ($data->document_content)
-                                        {{-- {!! $data->document_content->safety_precautions !!} --}}
+                                    {{-- @if ($data->document_content)
                                         {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->safety_precautions)), '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
+                                    @endif --}}
+                                    @if ($data->document_content && !empty($data->document_content->safety_precautions))
+                                        {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->safety_precautions)),
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><strong><ol><li>') !!}
+                                    @else
+                                        <div style="position: relative;">
+                                            <span style="position: absolute; left: -2.5rem; top: 0;"></span> Not Applicable <br>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -835,8 +864,16 @@
                             <div class="w-100" style="display:inline-block;">
                                 <div class="w-100">
                                     <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
-                                        @if ($data->document_content)
+                                        {{-- @if ($data->document_content)
                                             {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->procedure)), '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
+                                        @endif --}}
+                                        @if ($data->document_content && !empty($data->document_content->procedure))
+                                        {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->procedure)),
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><strong><ol><li>') !!}
+                                        @else
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;"></span> Not Applicable <br>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -873,6 +910,10 @@
                                             @if (!empty($res))
                                                 <div style="position: relative;">
                                                     <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @else
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
                                                 </div>
                                             @endif
                                             @php
@@ -918,6 +959,10 @@
                                                 <div style="position: relative;">
                                                     <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
+                                            @else
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
+                                                </div>
                                             @endif
                                             @php
                                                 if (!$isSub) {
@@ -962,6 +1007,10 @@
                                         @if (!empty($res))
                                             <div style="position: relative;">
                                                 <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @else
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> Not Applicable <br>
                                             </div>
                                         @endif
                                         @php
@@ -1074,7 +1123,7 @@
                                             $totalRecords = count($reference_records); // Total number of records
                                             $currentIndex = 0;
                                         @endphp
-                                        
+
                                         @foreach ($reference_records as $reference_record)
                                             @php
                                             $currentIndex++;
@@ -1097,7 +1146,7 @@
                                                 , <!-- Add a comma if it's not the last record -->
                                             @endif
                                         @endforeach
-                                        
+
                                     </td>
                                 </tr>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMail;
 use Illuminate\Http\Request;
 use App\Models\Capa;
 use Illuminate\Support\Facades\DB;
@@ -1417,22 +1418,37 @@ class LabIncidentController extends Controller
                                 $notification->role_name = "Initiator";
                                 $notification->save();
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -1464,24 +1480,39 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
+                        
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1551,22 +1582,35 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Incident Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Incident Review Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Incident Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Incident Review Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Incident Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -1638,22 +1682,36 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Investigation Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Investigation Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Investigation Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Investigation Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Investigation Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -1748,22 +1806,36 @@ class LabIncidentController extends Controller
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
             }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -1819,22 +1891,36 @@ class LabIncidentController extends Controller
                 }
             }
 
-                foreach ($list as $u) {
-                    $email = Helpers::getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers::getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        continue;
                     }
                 }
 
@@ -1866,22 +1952,36 @@ class LabIncidentController extends Controller
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
             }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data =  ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -1913,26 +2013,38 @@ class LabIncidentController extends Controller
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
             }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data =  ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
-
-
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2039,24 +2151,39 @@ class LabIncidentController extends Controller
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
             }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Request More Info', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Request More Info', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Request More Info', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Lab Incident";
@@ -2148,22 +2275,36 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -2196,22 +2337,36 @@ class LabIncidentController extends Controller
                             }
                         }
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data =  ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -2243,26 +2398,38 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
-
-
 
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -2397,22 +2564,36 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
 
@@ -2444,25 +2625,39 @@ class LabIncidentController extends Controller
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
-                        foreach ($list as $u) {
-                            $email = Helpers::getAllUserEmail($u->user_id);
-                            if (!empty($email)) {
-                                try {
-                                    info('Sending mail to', [$email]);
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                         $message->to($email)
-                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
-                                        );
+                        // foreach ($list as $u) {
+                        //     $email = Helpers::getAllUserEmail($u->user_id);
+                        //     if (!empty($email)) {
+                        //         try {
+                        //             info('Sending mail to', [$email]);
+                        //             Mail::send(
+                        //                 'mail.view-mail',
+                        //                 ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                        //                 function ($message) use ($email, $changeControl) {
+                        //                  $message->to($email)
+                        //                  ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                        //                 );
 
-                                } catch (\Exception $e) {
-                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         } catch (\Exception $e) {
+                        //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                        //         }
+                        //     }
+                        // }
+
+
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                        
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                continue;
                             }
                         }
-
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
