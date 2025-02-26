@@ -48,7 +48,7 @@ class SendMail implements ShouldQueue
                 $this->data,
                 function ($message) use ($email, $process, $process_name) {
                     $message->to($email)
-                    ->subject("LIMS Notification: $process_name, Record #" . str_pad($process->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                    ->subject("Enviromental Notification: $process_name, Record #" . str_pad($process->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                 }
             );
         } catch(\Exception $e) {
