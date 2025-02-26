@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\OpenStage;
 use App\Models\QMSDivision;
 use App\Services\DocumentService;
+use App\Jobs\SendMail;
+
 
 class CapaController extends Controller
 {
@@ -1766,24 +1768,38 @@ class CapaController extends Controller
                 }
 
 
-                foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $capa,'site'=>'CAPA','history' => 'Plan Proposed', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $capa) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Plan Proposed Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $capa,'site'=>'CAPA','history' => 'Plan Proposed', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $capa) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Plan Proposed Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $capa,'site'=>'CAPA','history' => 'Plan Proposed', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $capa, 'CAPA');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
                 $capa->update();
@@ -1843,25 +1859,39 @@ class CapaController extends Controller
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
+                // foreach ($list as $u) {
+                //     $email = Helpers:: getAllUserEmail($u->user_id);
+
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $capa,'site'=>'CAPA','history' => 'Approve Plan', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $capa) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
+                //                 );
+
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
                 foreach ($list as $u) {
-                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $capa,'site'=>'CAPA','history' => 'Approve Plan', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name];
 
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $capa,'site'=>'CAPA','history' => 'Approve Plan', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $capa) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
-                                );
-
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                            SendMail::dispatch($data, $email, $capa, 'CAPA');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
                 $capa->update();
@@ -1996,23 +2026,37 @@ class CapaController extends Controller
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
             }
-            foreach ($list as $u) {
-                $email = Helpers:: getAllUserEmail($u->user_id);
-                if (!empty($email)) {
-                    try {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $capa,'site'=>'CAPA','history' => 'Cancelled', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $capa) {
-                             $message->to($email)
-                             ->subject("QMS Notification: CAPA , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
-                            );
+            // foreach ($list as $u) {
+            //     $email = Helpers:: getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $capa,'site'=>'CAPA','history' => 'Cancelled', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $capa) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: CAPA , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+            //                 );
 
-                    } catch (\Exception $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            //     // }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data = ['data' => $capa,'site'=>'CAPA','history' => 'Cancelled', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name];
+
+                        SendMail::dispatch($data, $email, $capa, 'CAPA');
                     }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                    continue;
                 }
-                // }
             }
 
             $capa->update();
@@ -2079,24 +2123,38 @@ class CapaController extends Controller
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
             }
-            foreach ($list as $u) {
-                $email = Helpers::  getAllUserEmail($u->user_id);
-                if (!empty($email)) {
-                    try {
-                        info('Sending mail to', [$email]);
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $capa,'site'=>'CAPA','history' => 'QA More Info Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                            function ($message) use ($email, $capa) {
-                             $message->to($email)
-                             ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
-                            );
+            // foreach ($list as $u) {
+            //     $email = Helpers::  getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $capa,'site'=>'CAPA','history' => 'QA More Info Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $capa) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
+            //                 );
 
-                    } catch (\Exception $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            //     // }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data = ['data' => $capa,'site'=>'CAPA','history' => 'QA More Info Required', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name];
+
+                        SendMail::dispatch($data, $email, $capa, 'CAPA');
                     }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                    continue;
                 }
-                // }
             }
 
             toastr()->success('Document Sent');
@@ -2194,24 +2252,38 @@ class CapaController extends Controller
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-                foreach ($list as $u) {
-                    $email = Helpers::  getAllUserEmail($u->user_id);
-                    if (!empty($email)) {
-                        try {
-                            info('Sending mail to', [$email]);
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $capa,'site'=>'CAPA','history' => 'More Information Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
-                                function ($message) use ($email, $capa) {
-                                 $message->to($email)
-                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
-                                );
+                // foreach ($list as $u) {
+                //     $email = Helpers::  getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $capa,'site'=>'CAPA','history' => 'More Information Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $capa) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
+                //                 );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                //     // }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data = ['data' => $capa,'site'=>'CAPA','history' => 'More Information Required', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $capa, 'CAPA');
                         }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
                     }
-                    // }
                 }
 
                 toastr()->success('Document Sent');
