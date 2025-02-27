@@ -22,7 +22,7 @@
     </script> --}}
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -44,7 +44,7 @@
             display: none;
             margin-left: auto;
         }
-        
+
     </style>
 
 
@@ -146,7 +146,39 @@
                 </div>
             </div>
         </div>
+        <style>
+            .bottom-links a {
+text-decoration: none;
+/* padding: 10px 15px; */
+display: inline-block;
+border-bottom: 3px solid transparent; /* Default border hidden */
+transition: border-color 0.3s ease-in-out;
+color: #333; /* Default text color */
+}
 
+
+
+.bottom-links a.active {
+border-bottom: 2px solid #0f43cf; /* Active link color */
+font-weight: bold;
+color: #333;
+}
+
+        </style>
+
+        <script>
+           document.addEventListener("DOMContentLoaded", function () {
+let links = document.querySelectorAll(".bottom-links a");
+let currentUrl = window.location.pathname;
+
+links.forEach(link => {
+    if (link.href.includes(currentUrl)) {
+        link.classList.add("active");
+    }
+});
+});
+
+        </script>
         {{-- Header Bottom --}}
         <div class="container-fluid header-bottom">
             <div class="container-fluid">
@@ -1281,7 +1313,7 @@
                 <div class="modal-body">
                     <ol class="list-group">
                             <p>For the initial version of a document, set the Major Count to "1".
-                               
+
 
                             <p> For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
                                 2 for the 2nd version
@@ -1320,9 +1352,9 @@
                                 X.2 for the 3rd version
                                 And so forth, up to X.9.</p>
 
-                            <p>This protocol ensures clear and organized version management within the DMS. 
+                            <p>This protocol ensures clear and organized version management within the DMS.
                                 Please adhere to these instructions when creating or updating documents.</p>
-                                
+
                             <strong>Thank you for your cooperation in!</strong>
                     </ol>
                 </div>

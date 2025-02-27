@@ -160,7 +160,7 @@
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
                             <div onclick="
-                            
+
                             window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');"
                                 data-bs-toggle="tooltip" title="Logs">
                                 <i class="fa-solid fa-gauge-high"></i>
@@ -196,6 +196,39 @@
                     </div>
                 </div>
             </div>
+            <style>
+                .bottom-links a {
+    text-decoration: none;
+    /* padding: 10px 15px; */
+    display: inline-block;
+    border-bottom: 3px solid transparent; /* Default border hidden */
+    transition: border-color 0.3s ease-in-out;
+    color: #333; /* Default text color */
+}
+
+
+
+.bottom-links a.active {
+    border-bottom: 2px solid #0f43cf; /* Active link color */
+    font-weight: bold;
+    color: #333;
+}
+
+            </style>
+
+            <script>
+               document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll(".bottom-links a");
+    let currentUrl = window.location.pathname;
+
+    links.forEach(link => {
+        if (link.href.includes(currentUrl)) {
+            link.classList.add("active");
+        }
+    });
+});
+
+            </script>
             <div class="header-bottom">
                             <div class="container-fluid">
                                 <div class="bottom-links">
@@ -206,13 +239,13 @@
                                         <a href="/dashboard">DMS Dashboard</a>
                                     </div>
                                     <div>
-                                         <a href="/TMS">TMS Dashboard</a> 
+                                         <a href="/TMS">TMS Dashboard</a>
                                     </div>
                                     <div>
                                         <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
-                                    </div> 
+                                    </div>
                                     {{-- <div>
-                                    <a href="/analytics">Analytics</a> 
+                                    <a href="/analytics">Analytics</a>
                                     </div>  --}}
 
                                     @if (Auth::user())
