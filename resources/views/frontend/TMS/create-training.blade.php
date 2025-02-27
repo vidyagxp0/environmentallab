@@ -168,6 +168,19 @@
                                 </div>
                             </div> --}}
 
+                            <div class="col-6" style="margin-bottom: 10px;">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Select Trinees</label>
+                                    <select id="trainee" name="trainees[]" multiple>
+                                    <option value="">Select Trainees</option>
+                                        @foreach ($users as $temp)
+                                            <option value="{{$temp->id}}">{{$temp->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
@@ -232,6 +245,7 @@
                                 </div>
                             </div>
 
+                            
                             <script>
                                 function toggleAssessmentQuiz() {
                                   var selectedValue = document.getElementById("assessment_required").value;
@@ -285,7 +299,7 @@
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Status </label>
-                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >
+                                    <select class="assessment_required" id="status" name="status" placeholder="Select Stauts" >
                                         <option value="active"> Active</option>
                                         <option value="inactive"> Inactive</option>
                                     </select>
@@ -301,6 +315,8 @@
                                     }
                                 }
                             </script>
+
+                            
                             {{-- <div class="col-lg-6" id="trainee-criteria">
                                 <div class="group-input">
                                     <label for="trainee-criteria">Trainee Criteria(in %)</label>
@@ -320,7 +336,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting SOP's
@@ -408,7 +424,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting Trainees
@@ -426,7 +442,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 {{-- <div class="inner-block add-question" id="question-select">
@@ -576,7 +592,7 @@
     </script>
       <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training, #trainee'
         });
     </script>
 @endsection

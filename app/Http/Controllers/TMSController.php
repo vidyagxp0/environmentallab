@@ -507,33 +507,38 @@ class TMSController extends Controller
                 $TrainingHistory->user_name = Auth::user()->name;
                 $TrainingHistory->origin_state = "Assigned";
                 $TrainingHistory->save();
+                
+                $trainnigData = Training::find($request->training_id);
+                $sops = explode(',', $trainnigData->sops);
 
-                $document->doc = Document::find($id);
-                $document->doc->stage = 8;
-                $document->doc->status = "Effective";
-                $document->doc->update();
-
-                $user_data = User::find($document->doc->originator_id);
-                try {
-                    Mail::send('mail.complete-training', ['document' => $document],
-                      function ($message) use ($user_data) {
-                              $message->to($user_data->email)
-                              ->subject("Training is Completed.");
-
-                      });
-                } catch (\Exception $e) {
-                    // log
+                $document->doc = Document::whereIn('id', $sops)->get();
+                foreach($document->doc as $doc){
+                    $doc->stage = 8;
+                    $doc->status = "Effective";
+                    $doc->update();
+                    $user_data = User::find($doc->originator_id);
+                    try {
+                        Mail::send('mail.complete-training', ['document' => $doc],
+                          function ($message) use ($user_data) {
+                                  $message->to($user_data->email)
+                                  ->subject("Training is Completed.");
+    
+                          });
+                    } catch (\Exception $e) {
+                        // log
+                    }
+    
+                    try {
+                        Mail::send('mail.effective', ['document' => $doc],
+                        function ($message) use ($user_data) {
+                                $message->to($user_data->email)
+                                ->subject("Document Effective Now.");
+                        });
+                    } catch (\Exception $e) {
+                        // log
+                    }
                 }
 
-                try {
-                    Mail::send('mail.effective', ['document' => $document],
-                    function ($message) use ($user_data) {
-                            $message->to($user_data->email)
-                            ->subject("Document Effective Now.");
-                    });
-                } catch (\Exception $e) {
-                    // log
-                }
 
                 $doc = Training::find($request->training_id);
                 $sop = explode(',',$doc->sops);

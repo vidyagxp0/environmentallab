@@ -170,7 +170,7 @@
                         @endif
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
                     <div class="created-by-me" style="font-size: 16px; font-weight: 600; padding-top:30px">Training Assigned</div>
-                       <div class="block-table">
+                       <div class="table-responsive block-table">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -178,7 +178,7 @@
                                         <th>Document Title</th>
                                         <th>Training Status</th>
                                         <th>Content Type</th>
-                                        <th>Due Date</th>
+                                        <th>Training Due Date</th>
                                         <th>Completed Date</th>
                                         <th>Status</th>
                                     </tr>
@@ -219,9 +219,9 @@
 
                                     @endphp
                                     @foreach ($AssignedTrainings as $temp)
-                                    @php
-                                    // Calculate total number of trainees and effective criteria
-                                    $trainees = explode(',', $temp->trainees);
+                                        @php
+                                        // Calculate total number of trainees and effective criteria
+                                        $trainees = explode(',', $temp->trainees);
                                             $traineesCount = count($trainees);
 
                                             $effectiveCriteria = $temp->effective_criteria;
@@ -241,10 +241,27 @@
 
 
                                         $sops = explode(',', $temp->sops);
-                                        $document = DB::table('documents')
-                                            ->whereIn('id', $sops) // Assuming 'id' is the column you want to match in the `documents` table
-                                            ->first();
-                                        // dd($document);
+                                        // Retrieve the documents based on your condition
+                                        $documents = DB::table('documents')
+                                                        ->whereIn('id', $sops) // Assuming 'id' is the column you want to match in the `documents` table
+                                                        ->get();
+
+                                        // Initialize separate arrays to store the document names and SOP numbers
+                                        $documentNames = [];
+                                        $sopNos = [];
+
+                                        // Loop through the documents and extract the document_name and sop_no into separate arrays
+                                        foreach ($documents as $document) {
+                                            $documentNames[] = $document->document_name;
+                                            $sopNos[] = $document->sop_no;
+                                        }
+
+                                        // Convert the arrays to comma-separated strings
+                                        $documentNamesString = implode(', ', $documentNames);
+                                        $sopNosString = implode(', ', $sopNos);
+
+
+
                                         $id_array = explode(',', $temp->sops);
 
                                         $trainingStatusCheck = DB::table('training_statuses')
@@ -258,20 +275,20 @@
                                             // dd($trainingStatusCheck, $temp->sops == "1,2,3,4,5,6,7,8");
                                             }
                                             @endphp
-                                        <tr>
-                                            <td>{{ $document ? $document->sop_no : '-' }}</td>
-                                            <td>{{ $document ? $document->document_name : '-'}}</td>
-                                            <td>{{ $status }}</td>
-                                            <td>Document</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->training_end_date)->format('d M Y h:i') }}</td>
-                                            <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
-                                            @if($trainingStatusCheck)
-                                            <th>Complete</th>
-                                            @else
-                                            <td><a href="{{ url('TMS-details', $temp->id) }}/{{ $temp->sops }}"><i
-                                                class="fa-solid fa-eye"></i></a></td>
-                                            @endif
-                                        </tr>
+                                                <tr>
+                                                    <td>{{ $documents ? $sopNosString : '-' }}</td>
+                                                    <td>{{ $documents ? $documentNamesString : '-'}}</td>
+                                                    <td>{{ $status }}</td>
+                                                    <td>Document</td>
+                                                    <td>{{ \Carbon\Carbon::parse($temp->training_end_date)->format('d M Y h:i') }}</td>
+                                                    <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
+                                                    @if($trainingStatusCheck)
+                                                    <th>Complete</th>
+                                                    @else
+                                                    <td><a href="{{ url('TMS-details', $temp->id) }}/{{ $temp->sops }}"><i
+                                                        class="fa-solid fa-eye"></i></a></td>
+                                                    @endif
+                                                </tr>
                                     @endforeach
 
                                 </tbody>
