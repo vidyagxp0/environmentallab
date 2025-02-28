@@ -773,7 +773,7 @@
                                                         value="{{ Helpers::getdateFormat($data->audit_schedule_start_date) }}" />
                                                     <input type="date" id="audit_schedule_start_date_checkdate"
                                                         value="{{ $data->audit_schedule_start_date }}"
-                                                        name="audit_schedule_start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        name="audit_schedule_start_date"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_start_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
@@ -791,7 +791,7 @@
                                                     <input type="date" name="audit_schedule_end_date"
                                                         value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         id="audit_schedule_end_date_checkdate"
-                                                        value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        value="{{ $data->audit_schedule_end_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                 </div>
@@ -1364,7 +1364,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                 <input type="date" id="audit_start_date_checkdate"
                                                     name="audit_start_date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     value="{{ $data->audit_start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                             </div>
@@ -1379,7 +1379,7 @@
                                                     value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                 <input type="date" id="audit_end_date_checkdate" name="audit_end_date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     value="{{ $data->audit_end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                             </div>
