@@ -1476,12 +1476,38 @@
                                                                             name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : '' }}">
                                                                     </td>
-                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                    {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                         class="calenderauditee">
                                                                         <input type="text" id="capa_due_date{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) }}" />
                                                                         <input type="date" name="capa_due_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value="{{ unserialize($grid_data1->capa_due_date)[$key] }}"
-                                                                        oninput="handleDateInput(this, `capa_due_date{{$key}}' + serialNumber +'`)" /></div></div></div></td>
+                                                                        oninput="handleDateInput(this, `capa_due_date{{$key}}' + serialNumber +'`)" /></div></div></div></td> --}}
+
+
+                                                                    @php
+                                                                        $storedDates = $grid_data1->capa_due_date ? unserialize($grid_data1->capa_due_date) : [];
+                                                                        $existingDate = $storedDates[$key] ?? null;
+                                                                        $today = \Carbon\Carbon::today()->format('Y-m-d');
+
+                                                                        if ($existingDate) {
+                                                                            $existingDateFormatted = \Carbon\Carbon::parse($existingDate)->format('Y-m-d');
+                                                                            $minDate = $existingDateFormatted < $today ? $existingDateFormatted : $today;
+                                                                        } else {
+                                                                            $minDate = $today;
+                                                                        }
+                                                                    @endphp
+
+                                                                    <td>
+                                                                        <div class="group-input new-date-data-field mb-0">
+                                                                            <div class="input-date ">
+                                                                                <div class="calenderauditee">
+                                                                                    <input type="text" id="capa_due_date{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) }}" />
+                                                                                    <input type="date" name="capa_due_date[]" min="{{ $minDate }}" class="hide-input" value="{{ $existingDate ?? '' }}"
+                                                                                    oninput="handleDateInput(this, `capa_due_date{{$key}}' + serialNumber +'`)"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
                                                                         <select name="capa_required[]">
@@ -1495,12 +1521,12 @@
                                                                             value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}">
                                                                     </td> --}}
                                                                     <td>
-                                                                        <input type="text" 
-                                                                               name="auditee_response[]" 
-                                                                               {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} 
+                                                                        <input type="text"
+                                                                               name="auditee_response[]"
+                                                                               {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                                value="{{ is_array($unserialized = unserialize($grid_data1->auditee_response)) && isset($unserialized[$key]) ? $unserialized[$key] : '' }}">
                                                                     </td>
-                                                                    
+
                                                                     {{-- <td><input type="text" name="auditee_response[]" value="{{ is_array($auditee_response = unserialize($grid_data1->auditee_response)) && isset($auditee_response[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
@@ -2330,7 +2356,7 @@
         <div class="modal fade" id="child-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-        
+
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Child</h4>
@@ -2346,7 +2372,7 @@
                                         Observations
                                     </label>
                                 @endif
-        
+
                                 @if ($data->stage == 5)
                                     <label for="major">
                                         <input type="radio" name="revision" value="capa-child">
@@ -2355,7 +2381,7 @@
                                 @endif
                             </div>
                         </div>
-        
+
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2365,7 +2391,7 @@
                 </div>
             </div>
         </div>
-        
+
         <style>
             #step-form>div {
                 display: none
