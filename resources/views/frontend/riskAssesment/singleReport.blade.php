@@ -342,7 +342,7 @@
                             <th class="w-20">Department(s)</th>
                             <td class="w-80">@if($data->departments2){{  $data->departments2 }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
-                            <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->source_of_risk2){{ $data->source_of_risk2 }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Site Name</th>
@@ -542,29 +542,23 @@
                         <table class="tableFMEA">
                             <thead>
                                 <tr class="table_bg">
-                                    <th class="thFMEA" rowspan="2">Row #</th>
-                                    <th class="thFMEA" colspan="2">Risk Identification</th>
-                                    <th class="thFMEA" rowspan="1">Risk Analysis</th>
-                                    <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                    <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
-                                    <th class="thFMEA" colspan="1">Risk Control</th>
-                                    <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                    <th class="thFMEA" rowspan="2">Risk Level (RPN)</th>
-                                    <th class="thFMEA" rowspan="2">Risk Acceptance (Y/N)</th>
-                                    <th class="thFMEA" rowspan="2">Traceability Document</th>
-                                </tr>
-                                <tr class="table_bg">
-                                    <th class="thFMEA">Activity</th>
-                                    <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
-                                    <th class="thFMEA">Consequences of Risk/Potential Causes</th>
-                                    <th class="thFMEA">Severity (S)</th>
-                                    <th class="thFMEA">Probability (P)</th>
-                                    <th class="thFMEA">Detection (D)</th>
-                                    <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
-                                    {{--<th class="thFMEA">RPN</th>--}}
-                                    <th class="thFMEA">Severity (S)</th>
-                                    <th class="thFMEA">Probability (P)</th>
-                                    <th class="thFMEA">Detection (D)</th>
+                                    <th class="thFMEA" >Row #</th>
+                                    <th class="thFMEA" >Risk Factor</th>
+                                    <th class="thFMEA" >Risk element </th>
+                                    <th class="thFMEA" >Probable cause of risk element</th>
+                                    <th class="thFMEA" >Existing Risk Controls</th>
+                                    <th class="thFMEA" >Initial Severity- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Initial Probability- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Initial Detectability- H(1)/M(2)/L(3)</th>
+                                    <th class="thFMEA" >Initial RPN</th>
+                                    <th class="thFMEA" >Risk Acceptance (Y/N)</th>
+                                    <th class="thFMEA" >Proposed Additional Risk control measure (Mandatory for Risk elements having RPN>4)</th>
+                                    <th class="thFMEA" >Residual Severity- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Residual Probability- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Residual Detectability- H(1)/M(2)/L(3)</th>
+                                    <th class="thFMEA" >Residual RPN</th>
+                                    <th class="thFMEA" >Risk Acceptance (Y/N)</th>
+                                    <th class="thFMEA" >Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -573,25 +567,26 @@
                                         <tr>
                                             <td class="tdFMEA">{{ $key + 1 }}</td>
                                             <td class="tdFMEA">{{ $riskFactor }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
-                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
-                                            {{--<td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>--}}
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
-                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null }}</td>
                                             <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
                                         </tr>
                                     @endforeach
                                     @else
                                     <tr>
-                                        <td colspan="3">No data available.</td>
+                                        <td colspan="17">No data available.</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -614,7 +609,8 @@
                             <div class="block-head">
                                 Risk Analysis
                             </div>
-                            <table>
+                        <table>
+                        <tr>
                             <th class="w-20">Severity Rate </th>
                             <td class="w-30">
                                 @if($data->severity_rate == 1)
@@ -784,8 +780,8 @@
                           </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Problem Statement1</th>
-                        <td class="w-80" colspan="3">@if($riskgrdfishbone->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
+                        <th class="w-20">Problem Statement</th>
+                        <td class="w-80" colspan="3">@if($riskgrdfishbone->problem_statement){{ $riskgrdfishbone->problem_statement }}@else Not Applicable @endif</td>
 
                     </tr>
              </table>
