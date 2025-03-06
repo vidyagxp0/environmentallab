@@ -171,6 +171,18 @@
                                     <input type="datetime-local" name="training_end_date" value="{{ $train->training_end_date }}">
                                 </div>
                             </div> --}}
+                            <div class="col-6" style="margin-bottom: 10px;">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Select Trainees</label>
+                                    <select id="trainee" name="trainees[]" multiple>
+                                        @foreach ($users as $value)
+                                            <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $train->trainees)) ? 'selected' : '' }}>{{ $value->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="col-12">
                                 <div class="group-input"> 
                                     <label for="desc">Training Plan Description</label>
@@ -340,7 +352,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting SOP's
@@ -374,7 +386,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting Trainees
@@ -419,7 +431,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 {{-- <div class="inner-block add-question" id="question-select">
@@ -535,7 +547,7 @@
     </script>
      <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training' 
+            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training, #trainee' 
         });
     </script>
 @endsection

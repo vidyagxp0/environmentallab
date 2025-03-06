@@ -43,8 +43,7 @@ class FormDivisionController extends Controller
             $new->process_id = $request->process_id;
             $new->user_id = Auth::user()->id;
             $new->save();
-
-            return redirect('documents/create');
+            return app('App\Http\Controllers\DocumentController')->division($request);
         }
     }
 }
