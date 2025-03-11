@@ -170,9 +170,8 @@
 
                             <div class="col-6" style="margin-bottom: 10px;">
                                 <div class="group-input">
-                                    <label for="classRoom_trainingName">Select Trinees</label>
+                                    <label for="classRoom_trainingName">Select Trainees</label>
                                     <select id="trainee" name="trainees[]" multiple>
-                                    <option value="">Select Trainees</option>
                                         @foreach ($users as $temp)
                                             <option value="{{$temp->id}}">{{$temp->name}}</option>
                                         @endforeach

@@ -299,7 +299,7 @@
 
 
                 <div class="inner-block tms-block" id="tms-due-block">
-                    @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
+                    {{-- @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -362,12 +362,12 @@
                                 </tbody>
                             </table>
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
 
 
 
-                <div class="inner-block tms-block" id="tms-pending-block">
+                {{-- <div class="inner-block tms-block" id="tms-pending-block">
                     @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -498,7 +498,7 @@
                             </table>
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
                 {{-- <div class="row">
                     <div class="col-lg-4">
