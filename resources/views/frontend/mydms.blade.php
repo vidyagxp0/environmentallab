@@ -47,7 +47,7 @@
                                                             <th class="pr-id" data-bs-toggle="modal"
                                                                 data-bs-target="#division-modal">
                                                                 ID
-                                                            </th>   
+                                                            </th>
                                                             {{-- <th class="division">
                                                                 SOP Type
                                                             </th> --}}
@@ -74,7 +74,7 @@
                                                             @foreach ($draft as $temp)
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -106,7 +106,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                                     action="{{ route('documents.destroy', $temp->id) }}"
                                                                                     method="post">
@@ -170,7 +170,7 @@
                                                             @foreach ($under_review as $temp)
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -202,7 +202,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                                     action="{{ route('documents.destroy', $temp->id) }}"
                                                                                     method="post">
@@ -264,7 +264,7 @@
                                                             @foreach ($reviewed as $temp)
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -296,7 +296,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                                     action="{{ route('documents.destroy', $temp->id) }}"
                                                                                     method="post">
@@ -358,7 +358,7 @@
                                                             @foreach ($under_approval as $temp)
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -390,7 +390,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                                     action="{{ route('documents.destroy', $temp->id) }}"
                                                                                     method="post">
@@ -567,7 +567,7 @@
                                                             @foreach ($effective as $temp)
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -599,7 +599,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                                 action="{{ route('documents.destroy', $temp->id) }}"
                                                                                 method="post">
@@ -670,7 +670,7 @@
 
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -704,7 +704,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                             action="{{ route('documents.destroy', $temp->id) }}"
                                                                             method="post">
@@ -766,7 +766,7 @@
 
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -800,7 +800,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                             action="{{ route('documents.destroy', $temp->id) }}"
                                                                             method="post">
@@ -860,7 +860,7 @@
 
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -890,7 +890,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                             action="{{ route('documents.destroy', $temp->id) }}"
                                                                             method="post">
@@ -950,7 +950,7 @@
 
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -984,7 +984,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                             action="{{ route('documents.destroy', $temp->id) }}"
                                                                             method="post">
@@ -1157,7 +1157,7 @@
                                                                 {{-- @foreach ($effective as $temp) --}}
                                                                 <tr>
                                                                     <td class="pr-id" style="text-decoration:underline"><a
-                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">
                                                                         000{{ $temp->id }}
                                                                     </a>
                                                                 </td>
@@ -1191,7 +1191,7 @@
                                                                                 </a>
 
                                                                                 <a
-                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                    href="{{ route('documents.editWithType', ['id' => $temp->id, 'type' => 'doc']) }}">Edit</a>
                                                                                 {{-- <form
                                                                             action="{{ route('documents.destroy', $temp->id) }}"
                                                                             method="post">

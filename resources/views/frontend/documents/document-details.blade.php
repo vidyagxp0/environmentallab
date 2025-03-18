@@ -37,7 +37,7 @@
                                         <button onclick="location.href='{{ route('documents.editWithType', ['id' => $document->id, 'type' => 'doc']) }}';">Edit </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif
-                                    <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
+                                    <button  onclick="location.href='{{ secure_url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
                                     <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';" target="__blank">
                                             Print
