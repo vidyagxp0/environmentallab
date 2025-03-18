@@ -354,7 +354,7 @@ class DocumentController extends Controller
 
                 $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
 
-                $reviewer = User::whereIn('id', $reviewer_ids)->get();
+                $reviewer = User::where('is_active', 1)->whereIn('id', $reviewer_ids)->get();
 
                 $approver_users = UserRole::where([
                     'q_m_s_divisions_id' => $checkDivision,
@@ -364,7 +364,7 @@ class DocumentController extends Controller
 
                     $approver_ids = $approver_users->pluck('user_id')->toArray();
 
-                    $approvers = User::whereIn('id', $approver_ids)->get();
+                    $approvers = User::where('is_active', 1)->whereIn('id', $approver_ids)->get();
 
 
                     // return $reviewer_users;
@@ -419,7 +419,7 @@ class DocumentController extends Controller
 
                         // dd($reviewer, $approvers);
 
-                        $trainer = DB::table('users')
+                        $trainer = DB::table('users')->where('is_active', 1)
                         ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
                         ->where('user_roles.q_m_s_roles_id', 6)
                         ->select('users.*')
@@ -731,7 +731,7 @@ class DocumentController extends Controller
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
         $document['division'] = QMSDivision::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
-        $trainer = DB::table('users')
+        $trainer = DB::table('users')->where('is_active', 1)
                         ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
                         ->where('user_roles.q_m_s_roles_id', 6)
                         ->select('users.*')
@@ -766,7 +766,7 @@ class DocumentController extends Controller
 
 	    $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
 
-	    $reviewer = User::whereIn('id', $reviewer_ids)->get();
+	    $reviewer = User::where('is_active', 1)->whereIn('id', $reviewer_ids)->get();
 
         $approver_users = UserRole::where([
             'q_m_s_divisions_id' => $document->division_id,
@@ -776,7 +776,7 @@ class DocumentController extends Controller
 
         $approver_ids = $approver_users->pluck('user_id')->toArray();
 
-	    $approvers = User::whereIn('id', $approver_ids)->get();
+	    $approvers = User::where('is_active', 1)->whereIn('id', $approver_ids)->get();
 
         // $reviewer = DB::table('user_roles')
         //             ->join('users', 'user_roles.user_id', '=', 'users.id')

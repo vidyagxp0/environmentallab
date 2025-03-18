@@ -74,37 +74,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($all_trainings as $index => $temp)
-                                    @if(!empty($temp->training))
-                                            @php
-                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first();
-                                                    if ($trainingPlan) {
-                                                        $traineesCount = count(explode(',', $trainingPlan->trainees));
-                                                        $sopsCount = count(explode(',', $trainingPlan->sops));
-                                                    }
-                                            @endphp
-                                            @if($trainingPlan)
-                                                <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
-                                                    {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
-                                                        000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
-                                                    <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
-                                                    <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
-                                                    <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
-                                                    <td>{{ $temp->status }}</td>
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $temp->traning_plan_name }}</td>
+                                        <td>{{ count(explode(',', $temp->sops)) ?? 0 }}</td>
+                                        <td>{{ $temp->effective_criteria ?? 0 }}</td>
+                                        <td>{{ count(explode(',', $temp->trainees)) ?? 0 }}</td>
+                                        <td>{{ $temp->status }}</td>
 
-                                                    {{-- <td>
-                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>
-                                                    </td> --}}
-                                                    @php
-                                                        $trainer_user = App\Models\User::find($temp->trainer);
-                                                    @endphp
-                                                    <td>{{ $trainer_user ? $trainer_user->name : '-' }}</td>
-                                                    <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
-                                                </tr>
-                                            @endif
+                                        {{-- <td>
+                                            <a href="#"><i class="fa-solid fa-eye"></i></a>
+                                        </td> --}}
+                                        @php
+                                            $trainer_user = App\Models\User::find($temp->trainer);
+                                        @endphp
+                                        <td>{{ $trainer_user ? $trainer_user->name : '-' }}</td>
+                                        <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                    </tr>
 
-                                        @endif
                                     @endforeach
 
 
