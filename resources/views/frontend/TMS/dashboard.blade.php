@@ -89,7 +89,7 @@
                                             $trainer_user = App\Models\User::find($temp->trainer);
                                         @endphp
                                         <td>{{ $trainer_user ? $trainer_user->name : '-' }}</td>
-                                        <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td><a href="{{ url('training-overall-status', $temp->id) }}"><i class="fa-solid fa-eye"></i></a></td>
                                     </tr>
 
                                     @endforeach
