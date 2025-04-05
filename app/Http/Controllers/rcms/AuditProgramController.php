@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class AuditProgramController extends Controller
 {
@@ -969,15 +970,44 @@ class AuditProgramController extends Controller
         if($AuditProgramGrid->end_date){
             $enddate = unserialize($AuditProgramGrid->end_date);
         }
-        $client = new Client();
-        $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
-        $data->stateArr = json_decode($stateList->getBody(), true);
-        $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
-        $data->cityArr = json_decode($cityList->getBody(), true);
-        $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
-        $data->countryArr = json_decode($countryList->getBody(), true);
-        $old_record = AuditProgram::select('id', 'division_id', 'record', 'created_at')->get();
 
+        $client = new Client();
+
+        // Get Country List
+        try {
+            $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
+            $data->countryArr = json_decode($countryList->getBody(), true);
+        } catch (RequestException $e) {
+            $data->countryArr = [];
+            // You can log the error if needed
+        }
+
+        // Get State List (only if countryId exists)
+        if (!empty($data->country)) {
+            try {
+                $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId=' . $data->country);
+                $data->stateArr = json_decode($stateList->getBody(), true);
+            } catch (RequestException $e) {
+                $data->stateArr = [];
+            }
+        } else {
+            $data->stateArr = [];
+        }
+
+        // Get City List (only if stateId exists)
+        if (!empty($data->state)) {
+            try {
+                $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&stateId=' . $data->state);
+                $data->cityArr = json_decode($cityList->getBody(), true);
+            } catch (RequestException $e) {
+                $data->cityArr = [];
+            }
+        } else {
+            $data->cityArr = [];
+        }
+
+        // Fetch old records
+        $old_record = AuditProgram::select('id', 'division_id', 'record', 'created_at')->get();
 
         return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid', 'startdate', 'enddate', 'old_record'));
     }
