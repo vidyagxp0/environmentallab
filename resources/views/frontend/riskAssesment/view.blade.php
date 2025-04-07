@@ -131,33 +131,38 @@
         }
     </script>
     <script>
-        function calculateInitialResult(selectElement) {
-            let row = selectElement.closest('tr');
-            let R = parseFloat(row.querySelector('.fieldR').value) || 0;
-            let P = parseFloat(row.querySelector('.fieldP').value) || 0;
-            let N = parseFloat(row.querySelector('.fieldN').value) || 0;
-            let result = R * P * N;
+       function calculateInitialResult(element) {
+            // Find the row (parent <tr>) containing the select
+            var row = element.closest('tr');
 
-            // Update the result field within the row
-            row.querySelector('.initial-rpn').value = result;
+            // Get values from the same row
+            var severity = parseInt(row.querySelector('.fieldR').value) || 0;
+            var detectability = parseInt(row.querySelector('.fieldP').value) || 0;
+            var probability = parseInt(row.querySelector('.fieldN').value) || 0;
+
+            // Calculate RPN
+            var rpn = severity + detectability + probability;
+
+            // Set the RPN value in the input
+            row.querySelector('.initial-rpn').value = rpn > 0 ? rpn : '';
         }
     </script>
     <script>
-        function calculateResidualResult(selectElement) {
-            // Get the row containing the changed select element
-            let row = selectElement.closest('tr');
+            function calculateResidualResult(selectElement) {
+                const row = selectElement.closest('tr');
 
-            // Get values from select elements within the row
-            let R = parseFloat(row.querySelector('.residual-fieldR').value) || 0;
-            let P = parseFloat(row.querySelector('.residual-fieldP').value) || 0;
-            let N = parseFloat(row.querySelector('.residual-fieldN').value) || 0;
+                const severity = parseInt(row.querySelector('.residual-fieldR')?.value) || 0;
+                const probability = parseInt(row.querySelector('.residual-fieldP')?.value) || 0;
+                const detectability = parseInt(row.querySelector('.residual-fieldN')?.value) || 0;
 
-            // Perform the calculation
-            let result = R * P * N;
+                const rpn = severity + probability + detectability;
 
-            // Update the result field within the row
-            row.querySelector('.residual-rpn').value = result;
-        }
+                // Find the corresponding input field in the same row
+                const rpnInput = row.querySelector('input[name="residual_rpn[]"]');
+                if (rpnInput) {
+                    rpnInput.value = rpn > 0 ? rpn : '';
+                }
+            }
     </script>
     <script>
         function calculateRiskAnalysis(selectElement) {
@@ -1553,32 +1558,34 @@
                                                                     </td>
                                                                     <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
+                                                                    <td>  <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                            <option value="2" {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3" {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                            <option value="2" {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3" {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
-                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
-                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                            <option value="2" {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3" {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        {{-- <input name="initial_rpn[]" type="text"  class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" > --}}
-                                                                        <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" disabled readonly>
+                                                                       
+                                                                        <!-- <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" disabled readonly> -->
+                                                                        <input name="initial_rpn[]" type="text" class="initial-rpn"  value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" readonly />
+
 
                                                                     </td>
                                                                     <td>
