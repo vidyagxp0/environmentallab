@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                    <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -184,7 +184,21 @@
             </tr>
         </table>
     </header>
-
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -1167,21 +1181,7 @@
 
     
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+   
 
 </body>
 

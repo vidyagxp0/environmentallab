@@ -34,722 +34,247 @@
                     </div>
                 </div>
 
+                @php
+                    $tabs = [];
+                    $tabIndex = 0;
+
+                    if (auth()->user()->department->name == 'Quality Assurance Director') {
+                        $tabs[] = ['label' => 'All', 'icon' => 'fa-bars-progress', 'id' => 'all'];
+                    }
+
+                    if (Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)) {
+                        $tabs[] = ['label' => 'Created By Me', 'icon' => 'fa-clock-rotate-left fa-flip-horizontal', 'id' => 'created'];
+                    }
+
+                    $tabs[] = ['label' => 'Assigned Training to me', 'icon' => 'fa-hourglass-half', 'id' => 'assigned'];
+                @endphp
+
+                <!-- TABS -->
                 <div class="tms-dashboard-tabs">
-                    <div class="inner-block tab-btn active">
-                        <input type="radio" name="dash-tabs" data-target="tms-all-block" checked>
-                        <div><i class="fa-solid fa-bars-progress"></i>&nbsp;All</div>
-                    </div>
-                    {{-- <div class="inner-block tab-btn">
-                        <input type="radio" name="dash-tabs" data-target="tms-due-block">
-                        <div><i class="fa-solid fa-clock-rotate-left fa-flip-horizontal"></i>&nbsp;Past Due</div>
-                    </div>
-                    <div class="inner-block tab-btn">
-                        <input type="radio" name="dash-tabs" data-target="tms-pending-block">
-                        <div><i class="fa-solid fa-hourglass-half"></i>&nbsp;Pending</div>
-                    </div>
-                    <div class="inner-block tab-btn">
-                        <input type="radio" name="dash-tabs" data-target="tms-completed-block">
-                        <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
-                    </div> --}}
+                    @foreach ($tabs as $index => $tab)
+                        <div class="inner-block tab-btn {{ $index === 0 ? 'active' : '' }}" data-tab="tms-tab-{{ $index }}">
+                            <div><i class="fa-solid {{ $tab['icon'] }}"></i>&nbsp;{{ $tab['label'] }}</div>
+                        </div>
+                    @endforeach
                 </div>
 
-
-                <div class="inner-block tms-block" id="tms-all-block">
-{{-- ========= --}}
-                    @if (auth()->user()->department->name == 'Quality Assurance Director')
-                        <div class="created-by-me"style="font-size: 16px; font-weight: 600;">All Trainings</div>
-                        <div class="block-table" style="height: 250px; overflow-y: scroll;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>S. No.</th>
-                                        <th>Training Plan</th>
-                                        <th>Number of SOPs</th>
-                                        <th>Effective Criteria</th>
-                                        <th>Number of Trainees </th>
-                                        <th>Status</th>
-                                        <th>Created By</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($all_trainings as $index => $temp)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $temp->traning_plan_name }}</td>
-                                        <td>{{ count(explode(',', $temp->sops)) ?? 0 }}</td>
-                                        <td>{{ $temp->effective_criteria ?? 0 }}</td>
-                                        <td>{{ count(explode(',', $temp->trainees)) ?? 0 }}</td>
-                                        <td>{{ $temp->status }}</td>
-
-                                        {{-- <td>
-                                            <a href="#"><i class="fa-solid fa-eye"></i></a>
-                                        </td> --}}
-                                        @php
-                                            $trainer_user = App\Models\User::find($temp->trainer);
-                                        @endphp
-                                        <td>{{ $trainer_user ? $trainer_user->name : '-' }}</td>
-                                        <td><a href="{{ url('training-overall-status', $temp->id) }}"><i class="fa-solid fa-eye"></i></a></td>
-                                    </tr>
-
-                                    @endforeach
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                    {{-- =================== --}}
-
-                    @if (Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18))
-                    <div class="created-by-me"style="font-size: 16px; font-weight: 600;">Training Created</div>
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Training Plan</th>
-                                        <th>Number of SOPs</th>
-                                        <th>Effective Criteria</th>
-                                        <th>Number of Trainees </th>
-                                        <th>Status</th>
-                                         <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $Usertraining = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
-                                    @endphp
-                                    @foreach ($Usertraining as $temp)
-                                        @php
-                                            // Calculate total number of trainees and effective criteria
-                                            $trainees = explode(',', $temp->trainees);
-                                            $traineesCount = count($trainees);
-
-                                            $effectiveCriteria = $temp->effective_criteria;
-
-                                            // Count completed trainees
-                                            $completedTrainees = DB::table('training_statuses')
-                                                ->whereIn('user_id', $trainees) // Match trainees from the plan
-                                                ->where('training_id', $temp->id)
-                                                ->where('status', 'Complete')
-                                                ->count();
-
-                                            // Calculate completion percentage
-                                            $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
-
-                                            // Determine status based on criteria
-                                            $status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
-                                        @endphp
-
+                <!-- TAB CONTENT -->
+                @foreach ($tabs as $index => $tab)
+                    <div class="inner-block tms-block" id="tms-tab-{{ $index }}" style="display: {{ $index === 0 ? 'block' : 'none' }};">
+                        @if ($tab['id'] == 'all')
+                            {{-- All Trainings Table --}}
+                            <div class="block-table" style="height: 250px; overflow-y: scroll;">
+                                <table class="table table-bordered">
+                                    <thead>
                                         <tr>
+                                            <th>S. No.</th>
+                                            <th>Training Plan</th>
+                                            <th>Number of SOPs</th>
+                                            <th>Effective Criteria</th>
+                                            <th>Number of Trainees </th>
+                                            <th>Status</th>
+                                            <th>Created By</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($all_trainings as $index => $temp)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
                                             <td>{{ $temp->traning_plan_name }}</td>
-                                            <td>{{ count(explode(',', $temp->sops)) }}</td>
-                                            <td>{{ $effectiveCriteria }}</td>
-                                            <td>{{ $traineesCount }}</td>
-                                            <td>{{ $status }}</td>
-                                            <td><a href="{{ url('training-overall-status', $temp->id) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                            <td>{{ count(explode(',', $temp->sops)) ?? 0 }}</td>
+                                            <td>{{ $temp->effective_criteria ?? 0 }}</td>
+                                            <td>{{ count(explode(',', $temp->trainees)) ?? 0 }}</td>
+                                            <td>{{ $temp->status }}</td>
+                                            @php $trainer_user = App\Models\User::find($temp->trainner_id); @endphp
+                                            <td>{{ $trainer_user ? $trainer_user->name : '-' }}</td>
+                                            <td><a href="{{ url('training-overall-status', $temp->id) }}">View</a></td>
                                         </tr>
-                                    @endforeach
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @elseif ($tab['id'] == 'created')
+                            {{-- Created By Me Table --}}
+                            <div class="block-table" style="height: 250px; overflow-y: scroll;">
+                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>                                        
+                                                        <th>S. No.</th>
+                                                        <th>Training Plan</th>
+                                                        <th>Number of SOPs</th>
+                                                        <th>Effective Criteria</th>
+                                                        <th>Number of Trainees </th>
+                                                        <th>Status</th>
+                                                        <th>&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $Usertraining = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
+                                                    @endphp
+                                                    @foreach ($Usertraining as $index => $temp)
+                                                        @php
+                                                            // Calculate total number of trainees and effective criteria
+                                                            $trainees = explode(',', $temp->trainees);
+                                                            $traineesCount = count($trainees);
 
-                                </tbody>
-                            </table>
-                        </div>
+                                                            $effectiveCriteria = $temp->effective_criteria;
+
+                                                            // Count completed trainees
+                                                            $completedTrainees = DB::table('training_statuses')
+                                                                ->whereIn('user_id', $trainees) // Match trainees from the plan
+                                                                ->where('training_id', $temp->id)
+                                                                ->where('status', 'Complete')
+                                                                ->count();
+
+                                                            // Calculate completion percentage
+                                                            $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
+
+                                                            // Determine status based on criteria
+                                                            $status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
+                                                        @endphp
+
+                                                        <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $temp->traning_plan_name }}</td>
+                                                            <td>{{ count(explode(',', $temp->sops)) }}</td>
+                                                            <td>{{ $effectiveCriteria }}</td>
+                                                            <td>{{ $traineesCount }}</td>
+                                                            <td>{{ $status }}</td>
+                                                            <td><a href="{{ url('training-overall-status', $temp->id) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                            </div>
+                        @elseif ($tab['id'] == 'assigned')
+                            {{-- Assigned Trainings Table --}}
+                            <div class="block-table" style="height: 250px; overflow-y: scroll;">
+                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                    <th>S. No.</th>
+                                                        <th>Document Number</th>
+                                                        <th>Document Title</th>
+                                                        <th>Training Status</th>
+                                                        <th>Content Type</th>
+                                                        <th>Training Due Date</th>
+                                                        <th>Completed Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="searchTable">
+                                                    @php
+                                                        $userId = Auth::user()->id;
+                                                        $AssignedTrainings = DB::table('trainings')
+                                                            ->whereRaw("FIND_IN_SET(?, trainees)", [$userId])
+                                                            ->get();
+
+                                                    @endphp
+                                                    @foreach ($AssignedTrainings as $index => $temp)
+                                                        @php
+                                                        // Calculate total number of trainees and effective criteria
+                                                        $trainees = explode(',', $temp->trainees);
+                                                            $traineesCount = count($trainees);
+
+                                                            $effectiveCriteria = $temp->effective_criteria;
+
+                                                            // Count completed trainees
+                                                            $completedTrainees = DB::table('training_statuses')
+                                                                ->whereIn('user_id', $trainees) // Match trainees from the plan
+                                                                ->where('training_id', $temp->id)
+                                                                ->where('status', 'Complete')
+                                                                ->count();
+
+                                                            // Calculate completion percentage
+                                                            $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
+
+                                                            // Determine status based on criteria
+                                                            $status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
+
+
+                                                        $sops = explode(',', $temp->sops);
+                                                        // Retrieve the documents based on your condition
+                                                        $documents = DB::table('documents')
+                                                                        ->whereIn('id', $sops) // Assuming 'id' is the column you want to match in the `documents` table
+                                                                        ->get();
+
+                                                        // Initialize separate arrays to store the document names and SOP numbers
+                                                        $documentNames = [];
+                                                        $sopNos = [];
+
+                                                        // Loop through the documents and extract the document_name and sop_no into separate arrays
+                                                        foreach ($documents as $document) {
+                                                            $documentNames[] = $document->document_name;
+                                                            $sopNos[] = $document->sop_no;
+                                                        }
+
+                                                        // Convert the arrays to comma-separated strings
+                                                        $documentNamesString = implode(', ', $documentNames);
+                                                        $sopNosString = implode(', ', $sopNos);
+
+
+
+                                                        $id_array = explode(',', $temp->sops);
+
+                                                        $trainingStatusCheck = DB::table('training_statuses')
+                                                            ->where([
+                                                            'user_id' => Auth::user()->id,
+                                                            'sop_id'=> $temp->sops,
+                                                            'training_id' => $temp->id,
+                                                            'status' => 'Complete'
+                                                            ])->first();
+                                                            if($temp->id == 4){
+                                                            // dd($trainingStatusCheck, $temp->sops == "1,2,3,4,5,6,7,8");
+                                                            }
+                                                            @endphp
+                                                                <tr>
+                                                        <td>{{ $index + 1 }}</td>
+
+                                                                    <td>{{ $documents ? $sopNosString : '-' }}</td>
+                                                                    <td>{{ $documents ? $documentNamesString : '-'}}</td>
+                                                                    <td>{{ $status }}</td>
+                                                                    <td>Document</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($temp->training_end_date)->format('d M Y h:i') }}</td>
+                                                                    <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
+                                                                    @if($trainingStatusCheck)
+                                                                    <th>Complete</th>
+                                                                    @else
+                                                                    <td><a href="{{ url('TMS-details', $temp->id) }}/{{ $temp->sops }}"><i
+                                                                        class="fa-solid fa-eye"></i></a></td>
+                                                                    @endif
+                                                                </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                            </div>
                         @endif
-                       @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                    <div class="created-by-me" style="font-size: 16px; font-weight: 600; padding-top:30px">Training Assigned</div>
-                       <div class="table-responsive block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Document Title</th>
-                                        <th>Training Status</th>
-                                        <th>Content Type</th>
-                                        <th>Training Due Date</th>
-                                        <th>Completed Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="searchTable">
-                                    {{-- @foreach ($documents2 as $temp)
-                                    @php
-                                        $trainingStatusCheck = DB::table('training_statuses')
-                                            ->where([
-                                            'user_id' => Auth::user()->id,
-                                            'sop_id' => $temp->id,
-                                            'training_id' => $temp->traningstatus->training_plan,
-                                            'status' => 'Complete'
-                                            ])->first();
-
-                                    @endphp
-                                        <tr>
-                                            <td>{{ $temp->sop_no }}</td>
-                                            <td>{{ $temp->document_name }}</td>
-                                            <td>{{ $temp->traningstatus->status }}</td>
-                                            <td>Document</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
-                                            @if($temp->traningstatus->status == 'Complete')
-                                            <th>{{$temp->traningstatus->status}}</th>
-                                            @else
-                                            <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
-                                                class="fa-solid fa-eye"></i></a></td>
-                                            @endif
-                                        </tr>
-                                    @endforeach --}}
-
-                                    @php
-                                        $userId = Auth::user()->id;
-                                        $AssignedTrainings = DB::table('trainings')
-                                            ->whereRaw("FIND_IN_SET(?, trainees)", [$userId])
-                                            ->get();
-
-                                    @endphp
-                                    @foreach ($AssignedTrainings as $temp)
-                                        @php
-                                        // Calculate total number of trainees and effective criteria
-                                        $trainees = explode(',', $temp->trainees);
-                                            $traineesCount = count($trainees);
-
-                                            $effectiveCriteria = $temp->effective_criteria;
-
-                                            // Count completed trainees
-                                            $completedTrainees = DB::table('training_statuses')
-                                                ->whereIn('user_id', $trainees) // Match trainees from the plan
-                                                ->where('training_id', $temp->id)
-                                                ->where('status', 'Complete')
-                                                ->count();
-
-                                            // Calculate completion percentage
-                                            $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
-
-                                            // Determine status based on criteria
-                                            $status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
-
-
-                                        $sops = explode(',', $temp->sops);
-                                        // Retrieve the documents based on your condition
-                                        $documents = DB::table('documents')
-                                                        ->whereIn('id', $sops) // Assuming 'id' is the column you want to match in the `documents` table
-                                                        ->get();
-
-                                        // Initialize separate arrays to store the document names and SOP numbers
-                                        $documentNames = [];
-                                        $sopNos = [];
-
-                                        // Loop through the documents and extract the document_name and sop_no into separate arrays
-                                        foreach ($documents as $document) {
-                                            $documentNames[] = $document->document_name;
-                                            $sopNos[] = $document->sop_no;
-                                        }
-
-                                        // Convert the arrays to comma-separated strings
-                                        $documentNamesString = implode(', ', $documentNames);
-                                        $sopNosString = implode(', ', $sopNos);
-
-
-
-                                        $id_array = explode(',', $temp->sops);
-
-                                        $trainingStatusCheck = DB::table('training_statuses')
-                                            ->where([
-                                            'user_id' => Auth::user()->id,
-                                            'sop_id'=> $temp->sops,
-                                            'training_id' => $temp->id,
-                                            'status' => 'Complete'
-                                            ])->first();
-                                            if($temp->id == 4){
-                                            // dd($trainingStatusCheck, $temp->sops == "1,2,3,4,5,6,7,8");
-                                            }
-                                            @endphp
-                                                <tr>
-                                                    <td>{{ $documents ? $sopNosString : '-' }}</td>
-                                                    <td>{{ $documents ? $documentNamesString : '-'}}</td>
-                                                    <td>{{ $status }}</td>
-                                                    <td>Document</td>
-                                                    <td>{{ \Carbon\Carbon::parse($temp->training_end_date)->format('d M Y h:i') }}</td>
-                                                    <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : '-' }}</td>
-                                                    @if($trainingStatusCheck)
-                                                    <th>Complete</th>
-                                                    @else
-                                                    <td><a href="{{ url('TMS-details', $temp->id) }}/{{ $temp->sops }}"><i
-                                                        class="fa-solid fa-eye"></i></a></td>
-                                                    @endif
-                                                </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
-
-
-                <div class="inner-block tms-block" id="tms-due-block">
-                    {{-- @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Document Title</th>
-                                        <th>Document Type</th>
-                                        <th>Division</th>
-                                        <th>Training Status</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($due as $temp)
-                                        <tr>
-                                            <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}</td>
-                                                <td>{{ $temp->training ? $temp->training?->document_name : '' }}</td>
-                                            <td>{{ $temp->document_type_name }}</td>
-                                            <td>{{ $temp->division_name }}</td>
-                                            <td>{{ $temp->status }} </td>
-                                            <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Name</th>
-                                        <th>Revision</th>
-                                        <th>Training Status</th>
-                                        <th>Content Type</th>
-                                        <th>Due Dat </th>
-                                        <th>Completed Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($documents as $temp)
-                                        <tr>
-                                            <td>Sop-000{{ $temp->id }}</td>
-                                            <td>{{ $temp->document_name }}</td>
-                                            <th>1</th>
-                                            <td>{{ $temp->training?->status }}</td>
-                                            <td>Document</td>
-                                            <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td>{{ $temp->due_dateDoc  }}</td>
-
-                                            <td><a
-                                                    href="{{ url('TMS-details', $temp->training?->training_plan) }}/{{ $temp->id }}"><i
-                                                        class="fa-solid fa-eye"></i></a></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif --}}
-                </div>
-
-
-
-                {{-- <div class="inner-block tms-block" id="tms-pending-block">
-                    @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Document Title</th>
-                                        <th>Document Type</th>
-                                        <th>Division</th>
-                                        <th>Training Status</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($pending as $temp)
-                                        <tr>
-                                            <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training ? $temp->training?->document_name : '' }}</td>
-                                            <td>{{ $temp->document_type_name }}</td>
-                                            <td>{{ $temp->division_name }}</td>
-                                            <td>{{ $temp->status }} </td>
-                                            <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Name</th>
-                                        <th>Revision</th>
-                                        <th>Training Status</th>
-                                        <th>Content Type</th>
-                                        <th>Due Date</th>
-                                        <th>Completed Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($documents as $temp)
-                                        <tr>
-                                            <td>Sop-000{{ $temp->id }}</td>
-                                            <td>{{ $temp->document_name }}</td>
-                                            <th>1</th>
-                                            <td>{{ $temp->training?->status }}</td>
-                                            <td>Document</td>
-                                            <td>{{ $temp->due_dateDoc }}</td>
-                                            <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td><a
-                                                    href="{{ url('TMS-details', $temp->training?->training_plan) }}/{{ $temp->id }}"><i
-                                                        class="fa-solid fa-eye"></i></a></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
-
-                <div class="inner-block tms-block" id="tms-completed-block">
-                    @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Document Title</th>
-                                        <th>Document Type</th>
-                                        <th>Division</th>
-                                        <th>Training Status</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($complete as $temp)
-                                        <tr>
-                                            <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training ? $temp->training?->document_name : '' }}</td>
-                                            <td>{{ $temp->document_type_name }}</td>
-                                            <td>{{ $temp->division_name }}</td>
-                                            <td>{{ $temp->status }} </td>
-                                            <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
-                                        </tr>
-                                    @endforeach
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="block-table">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Document Number</th>
-                                        <th>Name</th>
-                                        <th>Revision</th>
-                                        <th>Training Status</th>
-                                        <th>Content Type</th>
-                                        <th>Due Date</th>
-                                        <th>Completed Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($documents as $temp)
-                                        <tr>
-                                            <td>Sop-000{{ $temp->id }}</td>
-                                            <td>{{ $temp->document_name }}</td>
-                                            <th>1</th>
-                                            <td>{{ $temp->training?->status }}</td>
-                                            <td>Document</td>
-                                            <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td><a
-                                                    href="{{ url('TMS-details', $temp->training?->training_plan) }}/{{ $temp->id }}"><i
-                                                        class="fa-solid fa-eye"></i></a></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div> --}}
-
-                {{-- <div class="row">
-                    <div class="col-lg-4">
-                        <div class="inner-block progress-block">
-                            <div class="head">
-                                Training Past Due11111
-                            </div>
-                            <div id="chart-tms1"></div>
-                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="inner-block speedometer-block">
-                            <div class="head">
-                                Training Completed
-                            </div>
-                            <div id="chart-tms2"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="inner-block progress-block">
-                            <div class="head">
-                                Training Pending
-                            </div>
-                            <div id="chart-tms3"></div>
-                        </div>
-                    </div>
-                </div> --}}
+                @endforeach
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const tabButtons = document.querySelectorAll(".tab-btn");
+                        const tabContents = document.querySelectorAll(".tms-block");
 
-                {{-- <div class="number-grid">
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-1">
-                                <i class="fa-regular fa-circle-question"></i>
-                            </div>
-                            <div>100</div>
-                        </div>
-                        <div class="title">
-                            Questions
-                        </div>
-                    </div>
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-2">
-                                <i class="fa-solid fa-person-chalkboard"></i>
-                            </div>
-                            <div>10</div>
-                        </div>
-                        <div class="title">
-                            Question Banks
-                        </div>
-                    </div>
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-3">
-                                <i class="fa-solid fa-gears"></i>
-                            </div>
-                            <div>20</div>
-                        </div>
-                        <div class="title">
-                            Quizzes
-                        </div>
-                    </div>
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-4">
-                                <i class="fa-solid fa-code-pull-request"></i>
-                            </div>
-                            <div>5</div>
-                        </div>
-                        <div class="title">
-                            Completed Trainigs
-                        </div>
-                    </div>
-                </div> --}}
+                        tabButtons.forEach((btn) => {
+                            btn.addEventListener("click", () => {
+                                const tabId = btn.getAttribute("data-tab");
 
-                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 30px;">
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms4"></div>
-                        </div>
+                                tabButtons.forEach(b => b.classList.remove("active"));
+                                btn.classList.add("active");
 
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Deviation Rate (Term)
-                            </div>
-                            <div id="chart-tms5"></div>
-                        </div>
+                                tabContents.forEach(content => {
+                                    content.style.display = (content.id === tabId) ? "block" : "none";
+                                });
+                            });
+                        });
+                    });
+                </script>
 
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Training Overdue
-                            </div>
-                            <div id="chart-tms6"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                SOP For Training
-                            </div>
-                            <div id="chart-tms7"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Completed Training
-                            </div>
-                            <div id="chart-tms8"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Department Trainees
-                            </div>
-                            <div id="chart-tms9"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Question Banks
-                            </div>
-                            <div id="chart-tms10"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Training Plan
-                            </div>
-                            <div id="chart-tms11"></div>
-                        </div>
-                </div> --}}
-                {{-- <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms12"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms13"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms14"></div>
-                        </div>
-                </div> --}}
-                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
-                        <div class="inner-block table-block">
-                            <div class="head">CAPA Extension Rate (Term)</div>
-                            <div class="dash-table">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Month</th>
-                                            <th>Number of Extension PR's</th>
-                                            <th>Number of CAPA PR's</th>
-                                            <th>Extension Rate</th>
-                                            <th>On Time Rate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="inner-block table-block">
-                            <div class="head">Change Control Extension Rate (Term)</div>
-                            <div class="dash-table">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Month</th>
-                                            <th>Number of Extension PR's</th>
-                                            <th>Number of Change Control PR's</th>
-                                            <th>Extension Rate</th>
-                                            <th>On Time Rate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                </div> --}}
-
+               
             </div>
         </div>
     </div>

@@ -67,7 +67,7 @@
             @endphp --}}
             @if(!$hideRecord || $userHasAllowedRole)
                 <tr>
-                    <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.editWithType', ['id' => $doc->id, 'type' => 'rev']) }}">
+                    <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.editWithType', ['id' => $doc->id, 'type' => 'doc']) }}">
                             000{{ $doc->id }}
                         </a>
                     </td>
