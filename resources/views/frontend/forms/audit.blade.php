@@ -581,6 +581,12 @@
                                         <label for="audit-agenda-grid">
                                             Audit Agenda<button type="button" name="audit-agenda-grid"
                                                 id="internalaudit-table">+</button>
+
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#Audit_Agenda_modal"
+                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                        (Launch Instruction)
+                                                    </span>
                                         </label>
                                         <table class="table table-bordered" id="internalaudit">
                                             <thead>
@@ -949,7 +955,7 @@
                                             <button type="button" name="audit-agenda-grid"
                                                 id="ObservationAdd">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
+                                                data-bs-target="#observationDetails_modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
