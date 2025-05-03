@@ -820,6 +820,11 @@ links.forEach(link => {
                 </div>
 
                 <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Row # :&nbsp;</strong>
+                        The serial number or sequence of the audit entry in the list.
+                    </div>
                     <div class="mb-2">
                         <strong>Area of Audit :&nbsp;</strong>
                         The department, section, or process area selected for auditing (e.g., Manufacturing, QA, Warehouse).
@@ -870,6 +875,11 @@ links.forEach(link => {
                 </div>
 
                 <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Row# :</strong>
+                        The serial number of the observation in the list for easy reference.
+                    </div>
                     <div class="mb-2">
                         <strong>Observation Details:&nbsp;</strong>
                         Detailed description of the observation or non-conformance identified during the audit.
