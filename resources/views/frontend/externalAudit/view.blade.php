@@ -873,7 +873,13 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Issues">Audit Agenda<button type="button" name="ann" id="auditAgendaData">+</button></label>
+                                            <label for="Issues">Audit Agenda<button type="button" name="ann" id="auditAgendaData">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#Audit_Agenda_modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                             </span>
+                                        </label>
                                             <table class="table table-bordered" id="auditAgendaDataTable">
                                                 <thead>
                                                     <tr>
@@ -1342,7 +1348,7 @@
                                                     name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     id="ObservationAdd">+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#observation-field-instruction-modal"
+                                                    data-bs-target="#observationDetails_modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                     (Launch Instruction)
                                                 </span>

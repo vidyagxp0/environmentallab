@@ -808,6 +808,104 @@ links.forEach(link => {
         </div>
     </div>
 
+
+
+    <div class="modal fade" id="Audit_Agenda_modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Row # :&nbsp;</strong>
+                        The serial number or sequence of the audit entry in the list.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Area of Audit :&nbsp;</strong>
+                        The department, section, or process area selected for auditing (e.g., Manufacturing, QA, Warehouse).
+                    </div>
+                    <div class="mb-2">
+                        <strong>Scheduled Start Date :</strong>
+                        The date on which the audit is planned to start.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Scheduled Start Time :&nbsp;</strong>
+                        The time at which the audit is scheduled to begin.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Scheduled End Date :&nbsp;</strong>
+                        The date on which the audit is expected to be completed.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Scheduled End Time :&nbsp;</strong>
+                        The time at which the audit is expected to end.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Auditor :&nbsp;</strong>
+                        Name of the person conducting the audit.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Auditee :&nbsp;</strong>
+                        Name of the person or department being audited.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Remarks :&nbsp;</strong>
+                        Additional comments or instructions related to the audit.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="observationDetails_modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Explanation of Data Fields</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="mb-2">
+                        <strong>Row# :</strong>
+                        The serial number of the observation in the list for easy reference.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Observation Details:&nbsp;</strong>
+                        Detailed description of the observation or non-conformance identified during the audit.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Pre Comments :</strong>
+                        Initial remarks or context provided at the time the observation was recorded.
+                    </div>
+                    <div class="mb-2">
+                        <strong>CAPA Details (if any):&nbsp;</strong>
+                        Explanation of any Corrective and Preventive Actions taken or proposed to address the observation.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Expected Date To Complete :&nbsp;</strong>
+                        The proposed date by which the CAPA or related action is expected to be completed.
+                    </div>
+                    <div class="mb-2">
+                        <strong>Post Comments :&nbsp;</strong>
+                        Follow-up remarks or final comments after closure or resolution of the observation.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     {{-- ============================================
                 MANAGEMENT REVIEW 1 INSTRUCTION MODAL
     ============================================= --}}
