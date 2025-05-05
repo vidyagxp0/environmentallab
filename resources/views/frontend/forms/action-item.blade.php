@@ -255,6 +255,10 @@
                                             <option value="Quality Control (Q15)">Quality Control (Q15)</option>
                                             <option value="QC Microbiology (B1)">QC Microbiology (B1)</option>
                                             <option value="QC Microbiology (B2)">QC Microbiology (B2)</option>
+                                            <option value="Microbiology Lab">Microbiology Lab</option>
+                                            <option value="Wet Chemistry Lab">Wet Chemistry Lab</option>
+                                            <option value="Intrument Lab">Intrument Lab</option>
+                                            <option value="Molecular Lab">Molecular Lab</option>
                                             <option value="Production (B1)">Production (B1)</option>
                                             <option value="Production (B2)">Production (B2)</option>
                                             <option value="Production (Packing)">Production (Packing)</option>

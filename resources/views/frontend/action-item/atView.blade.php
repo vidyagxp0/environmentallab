@@ -444,6 +444,18 @@
                                             <option {{ $data->departments == 'QC Microbiology (B2)' ? 'selected' : '' }}
                                                 value="QC Microbiology (B2)">
                                                 QC Microbiology (B2)</option>
+                                            <option {{ $data->departments == 'Microbiology Lab' ? 'selected' : '' }}
+                                                value="Microbiology Lab">
+                                                    Microbiology Lab</option>
+                                            <option {{ $data->departments == 'Wet Chemistry Lab' ? 'selected' : '' }}
+                                            value="Wet Chemistry Lab">
+                                                Wet Chemistry Lab</option>
+                                            <option {{ $data->departments == 'Intrument Lab' ? 'selected' : '' }}
+                                            value="Intrument Lab">
+                                                Intrument Lab</option>
+                                            <option {{ $data->departments == 'Molecular Lab' ? 'selected' : '' }}
+                                            value="Molecular Lab">
+                                                 Molecular Lab</option>
                                             <option {{ $data->departments == 'Production (B1)' ? 'selected' : '' }}
                                                 value="Production (B1)">
                                                 Production (B1)</option>

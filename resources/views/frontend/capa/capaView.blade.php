@@ -1867,6 +1867,10 @@
                                         <input type="radio" name="child_type" value="Action_Item">
                                         Action Item
                                     </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="RCA">
+                                        Root Cause Analysis
+                                    </label>
                                     <!-- <label for="major">
                                                     <input type="radio" name="child_type" value="extension">
                                                     Extension

@@ -410,7 +410,7 @@
                     </div>
                     <div class="copyright-bar">
                         <i class="fa-regular fa-copyright"></i>&nbsp;
-                        Copyright 2023 Connexo Asia Limited
+                        Copyright 2023 Connexo Co. Ltd.
                     </div>
                 </div>
 
