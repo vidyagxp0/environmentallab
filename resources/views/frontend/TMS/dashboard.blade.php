@@ -99,7 +99,7 @@
                             <div class="block-table" style="height: 250px; overflow-y: scroll;">
                             <table class="table table-bordered">
                                                 <thead>
-                                                    <tr>                                        
+                                                    <tr>
                                                         <th>S. No.</th>
                                                         <th>Training Plan</th>
                                                         <th>Number of SOPs</th>
@@ -158,7 +158,7 @@
                                                     <th>S. No.</th>
                                                         <th>Document Number</th>
                                                         <th>Document Title</th>
-                                                        <th>Training Status</th>
+                                                        <th>Overall Training Status</th>
                                                         <th>Content Type</th>
                                                         <th>Training Due Date</th>
                                                         <th>Completed Date</th>
@@ -274,7 +274,7 @@
                     });
                 </script>
 
-               
+
             </div>
         </div>
     </div>

@@ -896,6 +896,7 @@ class DocumentController extends Controller
                 // }
                 // $document->review_period = $request->review_period;
                 $document->training_required = $request->training_required;
+                $document->trainer = $request->trainer;
                 $document->attach_draft_doocument = $request->attach_draft_doocument;
                 $document->notify_to = json_encode($request->notify_to);
 
