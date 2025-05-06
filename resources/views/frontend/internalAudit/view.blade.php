@@ -805,6 +805,11 @@
                                                         name="audit-agenda-grid"
                                                         onclick="addAuditAgenda('audit-agenda-grid')"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                        <span class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#Audit_Agenda_modal"
+                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                        (Launch Instruction)
+                                                    </span>
                                                 </label>
                                                 <table class="table table-bordered" id="audit-agenda-grid">
                                                     <thead>
@@ -1394,7 +1399,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     id="ObservationAdd">+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#observation-field-instruction-modal"
+                                                    data-bs-target="#observationDetails_modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                     (Launch Instruction)
                                                 </span>

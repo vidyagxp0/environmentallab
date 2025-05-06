@@ -81,7 +81,7 @@
                                         <!-- {{-- <div class="static">{{ date('d-M-Y') }}</div> --}} -->
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -145,7 +145,7 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -153,7 +153,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_desc" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
@@ -228,9 +228,10 @@
                                         <label for="Incident Category">Incident Category</label>
                                         <select name="Incident_Category">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Biological">Biological</option>
+                                            <option value="Microbiological">Microbiological</option>
                                             <option value="Chemical">Chemical</option>
                                             <option value="Deviation">Deviation</option>
+                                            <option value="Work Injuries">Work Injuries</option>
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
@@ -252,9 +253,9 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </select>
-                                    </div> 
+                                    </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initial Attachment</label>
@@ -557,7 +558,7 @@
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
@@ -567,7 +568,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -580,19 +581,19 @@
                     <div class="modal fade" id="lab-incident-type-of-change-instruction-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                
+
                                 <div class="modal-header">
                                     <h4 class="modal-title">Instructions</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                
+
                                 <div class="modal-body">
                                     <h4>A. Equipment Malfunction or Failure:</h4>
                                     <p>
                                         This type might involve incidents related to the malfunction, failure, or breakdown of laboratory equipment or instruments. It could include situations where equipment doesn't perform as expected or required.
                                     </p>
-                
-                
+
+
                                     <h4>B. Procedural Error or Deviation:</h4>
                                     <p>
                                         This type could encompass incidents resulting from errors or deviations in standard operating procedures (SOPs), protocols, or methods. It might involve mistakes made during testing, analysis, or other laboratory proced.
@@ -602,9 +603,9 @@
 
                                         This type might involve incidents related to environmental conditions or contamination that affect laboratory processes, results, or safety. It could include situations such as cross-contamination of samples, exposure to environmental factors like humidity or temperature fluctuations beyond acceptable ranges, or contamination due to inadequate cleaning or maintenance of laboratory spaces.
                                     </p>
-                
+
                                 </div>
-                
+
                             </div>
                         </div>
                     </div>
@@ -671,7 +672,7 @@
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>  
+                                </div>
                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
@@ -695,7 +696,7 @@
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>

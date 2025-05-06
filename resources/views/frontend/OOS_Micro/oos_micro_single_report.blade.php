@@ -168,7 +168,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px;">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="" style="width: 60px;">
                     </div>
                 </td>
             </tr>
@@ -245,17 +245,17 @@
 @endphp
 
                     @foreach ($Preliminary_Lab_Investigation as $key => $value)
-                        @if(bcmod($loop->index, 2) == 0) 
+                        @if(bcmod($loop->index, 2) == 0)
                         <tr> @endif
                             <th class="w-20">{{$value}}</th>
                             <td class="w-80">@if($data->$key) {{ $data->$key}} @else
                                  Not Applicable @endif</td>
-                          @if(bcmod($loop->index, 2) == 1 || $loop->last) 
+                          @if(bcmod($loop->index, 2) == 1 || $loop->last)
                         </tr>
                         @endif
                     @endforeach
                 </table>
-               
+
 
 
 {{-- -------------------------Preliminary Lab Investigation------------------- --}}
@@ -282,13 +282,13 @@
 @endphp
 
                             @foreach ($Preliminary_Lab_Investigation_Conclusion as $key => $value)
-                            @if(bcmod($loop->index, 2) == 0) 
-                            <tr> 
+                            @if(bcmod($loop->index, 2) == 0)
+                            <tr>
                             @endif
                                 <th class="w-20">{{$value}}</th>
                                 <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
-                            @if(bcmod($loop->index, 2) == 1 || $loop->last) 
-                            </tr> 
+                            @if(bcmod($loop->index, 2) == 1 || $loop->last)
+                            </tr>
                             @endif
                             @endforeach
 
@@ -749,13 +749,13 @@ $OOS_CQ_Review = [
         ];
 @endphp
                             @foreach ($batchDisposition as $key => $value)
-                            @if(bcmod($loop->index, 2) == 0) 
+                            @if(bcmod($loop->index, 2) == 0)
                                 <tr>
                              @endif
                                     <th class="w-20">{{$value}}</th>
                                     <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
-                                @if(bcmod($loop->index, 2) == 1 || $loop->last)  
-                            </tr> 
+                                @if(bcmod($loop->index, 2) == 1 || $loop->last)
+                            </tr>
                             @endif
                             @endforeach
 
@@ -948,7 +948,7 @@ $OOS_CQ_Review = [
                                  <td class="w-20">Not Applicable</td>
                              </tr>
                          @endif
-    
+
                      </table>
                    </div>
             </div>
@@ -961,7 +961,7 @@ $OOS_CQ_Review = [
 
  {{-- -------------------------Preliminary Lab Investigation review------------------- --}}
 
-              
+
 
             <div class="block">
                 <div class="block-head">

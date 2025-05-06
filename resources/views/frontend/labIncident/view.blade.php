@@ -234,8 +234,8 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div> 
-                                
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -245,7 +245,7 @@
                                             name="due_date"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -313,13 +313,13 @@
                                         <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->initiator_group_code}}" readonly>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        
+
                                         <input name="short_desc" value="{{ $data->short_desc }}" id="docname" type="text" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -396,21 +396,24 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 </div>-->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
                                         <select {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="Incident_Category">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
-                                                Biological
+                                            <option value="Microbiological" @if ($data->Incident_Category== 'Microbiological') selected @endif>
+                                                Microbiological
                                             </option>
                                             <option value="Chemical" @if ($data->Incident_Category== 'Chemical') selected @endif>
                                                 Chemical
                                             </option>
                                             <option value="Deviation" @if ($data->Incident_Category== 'Deviation') selected @endif>
                                                 Deviation
+                                            </option>
+                                            <option value="Work Injuries" @if ($data->Incident_Category== 'Work Injuries') selected @endif>
+                                                Work Injuries
                                             </option>
                                             <option value="Others" @if ($data->Incident_Category== 'Others') selected @endif>
                                                 Others
@@ -441,7 +444,7 @@
                                         </select>
                                     </div>
                                 </div>
-                             
+
 
                                 @if ($data->Initial_Attachment)
                                     @foreach (json_decode($data->Initial_Attachment) as $file)
@@ -623,7 +626,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"                                                                    
+                                                            <a type="button" class="remove-file"
                                                                     data-remove-id="3-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -712,7 +715,7 @@
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"                                                                    
+                                                            <a type="button" class="remove-file"
                                                                     data-remove-id="4-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -823,7 +826,7 @@
                                             </option>
                                         </select>
                                     </div> -->
-                                </div> 
+                                </div>
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
@@ -840,7 +843,7 @@
                                             <input type="date" name="effectivess_check_creation_date"  value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>  -->
                                 <div class="col-12">
                                     <div class="group-input">
@@ -895,19 +898,19 @@
                     <div class="modal fade" id="lab-incident-type-of-change-instruction-modal">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                
+
                                 <div class="modal-header">
                                     <h4 class="modal-title">Instructions</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                
+
                                 <div class="modal-body">
                                     <h4>A. Equipment Malfunction or Failure:</h4>
                                     <p>
                                         This type might involve incidents related to the malfunction, failure, or breakdown of laboratory equipment or instruments. It could include situations where equipment doesn't perform as expected or required.
                                     </p>
-                
-                
+
+
                                     <h4>B. Procedural Error or Deviation:</h4>
                                     <p>
                                         This type could encompass incidents resulting from errors or deviations in standard operating procedures (SOPs), protocols, or methods. It might involve mistakes made during testing, analysis, or other laboratory proced.
@@ -918,7 +921,7 @@
                                         This type might involve incidents related to environmental conditions or contamination that affect laboratory processes, results, or safety. It could include situations such as cross-contamination of samples, exposure to environmental factors like humidity or temperature fluctuations beyond acceptable ranges, or contamination due to inadequate cleaning or maintenance of laboratory spaces.
                                     </p>
                                 </div>
-                
+
                             </div>
                         </div>
                     </div>
@@ -989,7 +992,7 @@
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1016,7 +1019,7 @@
                                         <div class="Date">{{ $data->qA_head_approval_completed_on }}</div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
@@ -1181,7 +1184,7 @@
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
-                              
+
                      </div>
                 </form>
             </div>
@@ -1231,14 +1234,14 @@
                     </div> -->
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-    
+
 
     <div class="modal fade" id="cancel-modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -1285,7 +1288,7 @@
                     </div> -->
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div>
                 </form>
             </div>
@@ -1320,7 +1323,7 @@
                     </div>
                     {{-- <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div> --}}
                 </form>
 
@@ -1352,10 +1355,10 @@
                     <div class="modal-footer">
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         <button type="submit">Continue</button>
-                    </div> 
+                    </div>
                     {{-- <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div> --}}
                 </form>
 

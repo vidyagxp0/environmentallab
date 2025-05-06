@@ -220,7 +220,8 @@
                     ' <td><input type="time" name="auditAgendaData[' + agendaIndex + '][startTime]"></td>' +
                     ' <td><input type="date" name="auditAgendaData[' + agendaIndex + '][endDate]"></td>' +
                     ' <td><input type="time" name="auditAgendaData[' + agendaIndex + '][endTime]"></td>' +
-                    '<td><select name="auditAgendaData[' + agendaIndex + '][auditor]" > <option value="">Select Option</option>'+ userOptionsHtml +' </select></td>' +
+                    // '<td><select name="auditAgendaData[' + agendaIndex + '][auditor]" > <option value="">Select Option</option>'+ userOptionsHtml +' </select></td>' +
+                    ' <td><input type="text" name="auditAgendaData[' + agendaIndex + '][auditor]"></td>' +
                     '<td><select name="auditAgendaData[' + agendaIndex + '][auditee]" > <option value="">Select Option</option>'+ userOptionsHtml +' </select></td>' +
                     '<td><input type="text" name="auditAgendaData[' + agendaIndex + '][remarks]"></td>' +
                     '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
@@ -872,7 +873,13 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Issues">Audit Agenda<button type="button" name="ann" id="auditAgendaData">+</button></label>
+                                            <label for="Issues">Audit Agenda<button type="button" name="ann" id="auditAgendaData">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#Audit_Agenda_modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                             </span>
+                                        </label>
                                             <table class="table table-bordered" id="auditAgendaDataTable">
                                                 <thead>
                                                     <tr>
@@ -900,14 +907,15 @@
                                                                 <td><input type="time" name="auditAgendaData[{{ $index }}][startTime]" value="{{ $row['startTime'] }}"></td>
                                                                 <td><input type="date" name="auditAgendaData[{{ $index }}][endDate]" value="{{ $row['endDate'] }}"></td>
                                                                 <td><input type="time" name="auditAgendaData[{{ $index }}][endTime]" value="{{ $row['endTime'] }}"></td>
-                                                                <td>
+                                                                {{-- <td>
                                                                     <select name="auditAgendaData[{{ $index }}][auditor]">
                                                                         <option value="">Select Option</option>
                                                                         @foreach($users as $user)
                                                                             <option value="{{ $user->id }}" {{ $row['auditor'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                </td>
+                                                                </td> --}}
+                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][auditor]" value="{{ $row['auditor'] }}"></td>
                                                                 <td>
                                                                     <select name="auditAgendaData[{{ $index }}][auditee]">
                                                                         <option value="">Select Option</option>
@@ -1340,7 +1348,7 @@
                                                     name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     id="ObservationAdd">+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#observation-field-instruction-modal"
+                                                    data-bs-target="#observationDetails_modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                     (Launch Instruction)
                                                 </span>

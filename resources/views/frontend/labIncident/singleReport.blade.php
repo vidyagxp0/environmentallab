@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt=""
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt=""
                             style="width: 200px;">
                     </div>
                 </td>
@@ -235,7 +235,7 @@
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">

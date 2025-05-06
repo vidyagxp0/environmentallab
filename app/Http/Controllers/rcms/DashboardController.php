@@ -734,7 +734,7 @@ class DashboardController extends Controller
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
+            $division_name = $division?->name;
         }
 
         $type = $type == 'Capa' ? 'CAPA' : $type;

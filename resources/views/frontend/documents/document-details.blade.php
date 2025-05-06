@@ -37,7 +37,7 @@
                                         <button onclick="location.href='{{ route('documents.editWithType', ['id' => $document->id, 'type' => 'doc']) }}';">Edit </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif
-                                    <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
+                                    <button  onclick="location.href='{{ secure_url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
                                     <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';" target="__blank">
                                             Print
@@ -45,7 +45,7 @@
                                     {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif --}}
-                                    @if ($document->stage >= 8 && $document->status !== 'Obsolete')
+                                    @if ($document->stage >= 8 && $document->status !== 'Obsolete' && Auth::user()->id == $document->originator_id)
                                         {{-- <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button> --}}
                                         <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Obsolete
@@ -106,13 +106,13 @@
                                     Record Workflow
                                 </div>
 
-                                @if ($document->stage == 1)
+                                @if ($document->stage == 1 && Auth::user()->id == $document->originator_id)
                                     <input type="hidden" name="stage_id" value="2" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Review<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
-                                @if($document->stage == 2)
+                                @if($document->stage == 2 && in_array(Auth::user()->id, explode(",", $document->reviewers)))
                                     <div class="buttons">
                                         @if (empty($review_reject))
                                             @if ($stagereview && empty($stagereview_submit))
@@ -144,13 +144,13 @@
                                         @endif
                                     </div>
                                 @endif
-                                @if ($document->stage == 3)
+                                @if ($document->stage == 3 && Auth::user()->id == $document->originator_id)
                                     <input type="hidden" name="stage_id" value="4" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Approval<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
-                                @if ($document->stage == 4)
+                                @if ($document->stage == 4 && in_array(Auth::user()->id, explode(",", $document->approvers)))
                                     @if (empty($stageapprove))
                                         @if (empty($approval_reject))
                                             <button style="margin-left: 483px;" class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-sign">
@@ -167,20 +167,20 @@
                                     @endif
                                 @endif
                                 @if ($document->training_required == 'yes')
-                                    @if ($document->stage == 5)
+                                    @if ($document->stage == 5 && Auth::user()->id == $document->trainer)
                                         <input type="hidden" name="stage_id" value="6" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Training<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
-                                    @if ($document->stage == 7)
+                                    @if ($document->stage == 7 && Auth::user()->id == $document->originator_id)
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
                                 @elseif($document->training_required == 'no')
-                                    @if ($document->stage == 5)
+                                    @if ($document->stage == 5 && Auth::user()->id == $document->originator_id)
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>

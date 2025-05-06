@@ -155,7 +155,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px;">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="" style="width: 60px;">
                     </div>
                 </td>
             </tr>
