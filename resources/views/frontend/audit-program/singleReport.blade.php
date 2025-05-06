@@ -456,7 +456,21 @@
                 </div>
             </div>
         </div>
-
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                <td class="w-30">
+                    <strong></strong>
+                </td>
+            </tr>
+        </table>
+    </footer>
 
 </body>
 
