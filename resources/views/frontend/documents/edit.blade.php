@@ -161,7 +161,7 @@
                                 });
                             </script>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -213,7 +213,7 @@
                                 });
                             </script>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -232,7 +232,7 @@
                                 <div class="group-input">
                                     <label for="sop_type">SOP Type</label>
                                     <select name="sop_type" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option  value="0">-- Select --</option>
                                         <option value="Chemistry SOP" @if ($document->sop_type == 'Chemistry SOP') selected @endif>Chemistry SOP</option>
                                         <option value="Instrument SOP" @if ($document->sop_type == 'Instrument SOP') selected @endif>Instrument SOP</option>
@@ -241,6 +241,7 @@
                                         <option value="Quality Policies" @if ($document->sop_type == 'Quality Policies') selected @endif>Quality Policies</option>
                                         <option value="Others" @if ($document->sop_type == 'Others') selected @endif>Others</option>
                                     </select>
+                                    <input type="hidden" name="sop_type" value="{{ $document->sop_type }}">
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'SOP Type' &&
@@ -261,7 +262,7 @@
                                     @endif
                                     @endforeach
                                 </div>
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -325,7 +326,7 @@
                                 </div>
                                 <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -346,7 +347,7 @@
                                     <label for="notify_to">Notify To</label>
                                     <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
                                         data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         @php
                                             $notify_user_id = explode(',', $document->notify_to);
                                         @endphp
@@ -356,6 +357,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="notify_to" value="{{ $document->notify_to }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Notify To' &&
@@ -377,7 +379,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -417,7 +419,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -469,7 +471,7 @@
                                     <label for="link-doc">Reference Record</label>
                                     <select multiple name="reference_record[]" placeholder="Select Reference Records"
                                         data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         @if (!empty($document_data))
                                             @foreach ($document_data as $temp)
 
@@ -479,6 +481,7 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="reference_record" value="{{ $document->reference_record }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reference Record' &&
@@ -500,7 +503,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -520,7 +523,7 @@
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}>
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}>
                                         <option value="">Enter your Selection</option>
                                             <option value="CQA"
                                                 @if ($document->department_id == 'CQA') selected @endif>Corporate
@@ -582,6 +585,7 @@
                                                 {{ $department->name }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="department_id" value="{{ $document->department_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Department' &&
@@ -605,7 +609,7 @@
                                 <p id="depart-nameError" style="color:red">**Department Name is required</p>
 
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -667,7 +671,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                 {{-- Add Comment  --}}
                                 <div class="comment">
                                     <div>
@@ -734,7 +738,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -751,7 +755,7 @@
                                 <div class="group-input">
                                     <label for="doc-type">Document Type</label>
                                     <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option value="">Enter your Selection</option>
                                         @foreach ($documentTypes as $type)
                                             <option data-id="{{ $type->typecode }}" value="{{ $type->id }}"
@@ -759,6 +763,7 @@
                                                 {{ $type->name }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="document_type_id" value="{{ $document->document_type_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document' &&
@@ -780,7 +785,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -847,7 +852,7 @@
 
 
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                  Add Comment
                                     <div class="comment">
                                         <div>
@@ -882,7 +887,7 @@
                                 <div class="group-input">
                                     <label for="doc-lang">Document Language</label>
                                     <select name="document_language_id" id="doc-lang" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option value="">Enter your Selection</option>
                                         @foreach ($documentLanguages as $lan)
                                             <option data-id="{{ $lan->lcode }}" value="{{ $lan->id }}"
@@ -891,6 +896,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="document_language_id" value="{{ $document->document_language_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document Language' &&
@@ -912,7 +918,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1184,7 +1190,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1231,7 +1237,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1259,7 +1265,7 @@
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
                                     <select   @if($document->stage != 1 && !Helpers::userIsQA() || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1279,6 +1285,7 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="reviewers" value="{{ $document->reviewers }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers' &&
@@ -1301,7 +1308,7 @@
                                 </div>
                                 <p id="reviewerError" style="color:red">**Reviewers are required</p>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1320,7 +1327,7 @@
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
                                     <select   @if($document->stage != 1 && !Helpers::userIsQA()  || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
@@ -1340,6 +1347,7 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="approvers" value="{{ $document->approvers }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers' &&
@@ -1362,7 +1370,7 @@
                                 </div>
                                 <p id="approverError" style="color:red">**Approvers are required</p>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1381,7 +1389,7 @@
                                 <div class="group-input">
                                     <label for="reviewers-group">Reviewers Group</label>
                                     <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewergroup))
                                             @foreach ($reviewergroup as $lan)
@@ -1401,6 +1409,8 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="reviewers_group" value="{{ $document->reviewers_group }}">
+
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers Group' &&
@@ -1422,7 +1432,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1441,7 +1451,7 @@
                                 <div class="group-input">
                                     <label for="approvers-group">Approvers Group</label>
                                     <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         placeholder="Select Approvers" multiple>
                                         @if (!empty($approversgroup))
                                             @foreach ($approversgroup as $lan)
@@ -1461,6 +1471,7 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="approver_group" value="{{ $document->approver_group }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers Group' &&
@@ -1483,7 +1494,7 @@
                                 </div>
 
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1501,7 +1512,7 @@
                                 <div class="group-input">
                                     <label for="revision-type">Revision Type</label>
                                     <select  name="revision_type" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option  value="0">-- Select --</option>
                                         <option @if ($document->revision_type =='minor') selected @endif
                                             value="minor">Minor</option>
@@ -1510,6 +1521,7 @@
                                         <option @if ($document->revision_type =='NA') selected @endif
                                             value="NA">NA</option>
                                     </select>
+                                    <input type="hidden" name="revision_type" value="{{ $document->revision_type }}">
                                     @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment) )
                                         @php
@@ -1527,7 +1539,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1565,7 +1577,7 @@
                                     @endforeach
                                 </div>
 
-                                @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1601,7 +1613,7 @@
                                 <div class="group-input">
                                     <label for="train-require">Training Required?</label>
                                     <select name="training_required" {{Helpers::isRevised($document->stage)}}  required
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option value="">Enter your Selection</option>
                                         @if ($document->training_required == 'yes')
                                             <option value="yes" selected>Yes</option>
@@ -1613,6 +1625,8 @@
                                         @endif
 
                                     </select>
+                                    <input type="hidden" name="training_required" value="{{ $document->training_required }}">
+
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Training Required' && !empty($tempHistory->comment) )
                                             @php
@@ -1776,7 +1790,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1814,7 +1828,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1899,7 +1913,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                 {{-- Add Comment  --}}
                                 <div class="comment">
                                     <div>
@@ -1970,7 +1984,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2041,7 +2055,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2131,7 +2145,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2188,7 +2202,7 @@
                                 @endif
                             @endforeach
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 <div class="comment">
                                     <div>
@@ -2297,7 +2311,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2390,7 +2404,7 @@
                                 </div>
                             </div>
 
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2551,7 +2565,7 @@
                                     </table>
                                 </div>
                             </div> --}}
-                            @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2717,7 +2731,7 @@
                         </div>
                     </div>
 
-                    @if(in_array($document->stage, [2, 3, 4, 5]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
+                    @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                         {{-- Add Comment
                         <div class="comment">
