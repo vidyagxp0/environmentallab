@@ -125,6 +125,7 @@
                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                 characters remaining
                                     <input type="text" name="document_name" id="docname" maxlength="255"
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
                                     {{Helpers::isRevised($document->stage)}}  value="{{ $document->document_name }}" required>
 
 
@@ -160,7 +161,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -180,6 +181,7 @@
                                     <span id="editrchars">255</span>
                                 characters remaining
                                     <input type="text" name="short_desc" id="short_desc" maxlength="255"
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
                                      {{Helpers::isRevised($document->stage)}}
                                         value="{{ $document->short_description }}">
                                     @foreach ($history as $tempHistory)
@@ -211,7 +213,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -229,7 +231,8 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="sop_type">SOP Type</label>
-                                    <select name="sop_type" {{Helpers::isRevised($document->stage)}} >
+                                    <select name="sop_type" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option  value="0">-- Select --</option>
                                         <option value="Chemistry SOP" @if ($document->sop_type == 'Chemistry SOP') selected @endif>Chemistry SOP</option>
                                         <option value="Instrument SOP" @if ($document->sop_type == 'Instrument SOP') selected @endif>Instrument SOP</option>
@@ -238,6 +241,7 @@
                                         <option value="Quality Policies" @if ($document->sop_type == 'Quality Policies') selected @endif>Quality Policies</option>
                                         <option value="Others" @if ($document->sop_type == 'Others') selected @endif>Others</option>
                                     </select>
+                                    <input type="hidden" name="sop_type" value="{{ $document->sop_type }}">
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'SOP Type' &&
@@ -258,7 +262,7 @@
                                     @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -293,6 +297,7 @@
                                         <!-- Hidden date input for form submission -->
                                         <input type="date" name="due_dateDoc"
                                                value="{{ $document->due_dateDoc ? \Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"
+                                               {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
                                                {{ Helpers::isRevised($document->stage) }}
                                                class="hide-input"
                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -321,7 +326,7 @@
                                 </div>
                                 <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -341,7 +346,8 @@
                                 <div class="group-input">
                                     <label for="notify_to">Notify To</label>
                                     <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
-                                        data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}} >
+                                        data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         @php
                                             $notify_user_id = explode(',', $document->notify_to);
                                         @endphp
@@ -351,6 +357,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="notify_to" value="{{ $document->notify_to }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Notify To' &&
@@ -372,7 +379,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -390,7 +397,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="description">Description</label>
-                                    <textarea name="description" {{Helpers::isRevised($document->stage)}} >{{ $document->description }}</textarea>
+                                    <textarea name="description" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} {{Helpers::isRevised($document->stage)}} >{{ $document->description }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Description' &&
@@ -412,7 +419,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -463,7 +470,8 @@
                                 <div class="group-input">
                                     <label for="link-doc">Reference Record</label>
                                     <select multiple name="reference_record[]" placeholder="Select Reference Records"
-                                        data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}} >
+                                        data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         @if (!empty($document_data))
                                             @foreach ($document_data as $temp)
 
@@ -473,6 +481,7 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="reference_record" value="{{ $document->reference_record }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reference Record' &&
@@ -494,7 +503,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -513,7 +522,8 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
-                                    <select name="department_id" id="depart-name" {{Helpers::isRevised($document->stage)}} >
+                                    <select name="department_id" id="depart-name" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}>
                                         <option value="">Enter your Selection</option>
                                             <option value="CQA"
                                                 @if ($document->department_id == 'CQA') selected @endif>Corporate
@@ -575,6 +585,7 @@
                                                 {{ $department->name }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="department_id" value="{{ $document->department_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Department' &&
@@ -598,7 +609,7 @@
                                 <p id="depart-nameError" style="color:red">**Department Name is required</p>
 
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -637,7 +648,8 @@
                                         style="font-size: 0.8rem; font-weight: 400;">
                                         (Launch Instruction) </span>
                                     </label>
-                                    <input type="number" name="major" id="major" min="0"  value="{{ $document->major }}" required {{Helpers::isRevised($document->stage)}} >
+                                    <input type="number" name="major" id="major" min="0"  value="{{ $document->major }}" required {{Helpers::isRevised($document->stage)}}
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
 
                                     @foreach ($history as $tempHistory)
                                     @if (
@@ -659,7 +671,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                 {{-- Add Comment  --}}
                                 <div class="comment">
                                     <div>
@@ -681,7 +693,8 @@
                                         (Launch Instruction)
                                         </span>
                                     </label>
-                                    <input type="number" name="minor" id="minor" min="0" max="9"  value="{{ $document->minor }}" required {{Helpers::isRevised($document->stage)}} >
+                                    <input type="number" name="minor" id="minor" min="0" max="9"  value="{{ $document->minor }}" required {{Helpers::isRevised($document->stage)}}
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
                                     {{-- <select  name="minor">
                                         <option  value="00">-- Select --</option>
                                         <option @if ($document->minor =='0') selected @endif
@@ -725,7 +738,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -741,7 +754,8 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-type">Document Type</label>
-                                    <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}} >
+                                    <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option value="">Enter your Selection</option>
                                         @foreach ($documentTypes as $type)
                                             <option data-id="{{ $type->typecode }}" value="{{ $type->id }}"
@@ -749,6 +763,7 @@
                                                 {{ $type->name }}</option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="document_type_id" value="{{ $document->document_type_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document' &&
@@ -770,7 +785,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -837,7 +852,7 @@
 
 
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                  Add Comment
                                     <div class="comment">
                                         <div>
@@ -871,7 +886,8 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-lang">Document Language</label>
-                                    <select name="document_language_id" id="doc-lang" {{Helpers::isRevised($document->stage)}} >
+                                    <select name="document_language_id" id="doc-lang" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option value="">Enter your Selection</option>
                                         @foreach ($documentLanguages as $lan)
                                             <option data-id="{{ $lan->lcode }}" value="{{ $lan->id }}"
@@ -880,6 +896,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <input type="hidden" name="document_language_id" value="{{ $document->document_language_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document Language' &&
@@ -901,7 +918,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -937,7 +954,8 @@
                                 <div class="group-input">
                                     <label for="keyword">Keywords</label>
                                     <div class="add-keyword">
-                                        <input type="text" id="sourceField" class="mb-0" maxlength="15" {{Helpers::isRevised($document->stage)}} >
+                                        <input type="text" id="sourceField" class="mb-0" maxlength="15" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
                                         <button id="addButton" type="button">ADD</button>
                                     </div>
                                     <ul id="displayField" class="d-flex justify-content-between align-items-center">
@@ -986,7 +1004,8 @@
                                     <label for="effective-date">Effective Date</label>
                                     <div><small class="text-primary">The effective date will be automatically populated once the record becomes effective</small></div>
                                     <div class="calenderauditee">
-                                        <input  @if($document->stage != 1) disabled @endif type="text"  id="effective_date" value="{{ $document->effective_date  ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : ''  }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
+                                        <input  @if($document->stage != 1) disabled @endif type="text"  id="effective_date" value="{{ $document->effective_date  ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : ''  }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}  />
                                         <input  @if($document->stage != 1) disabled @endif type="date" name="effective_date" value=""
                                         class="hide-input"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
@@ -1031,7 +1050,8 @@
                               <div class="col-md-2">
                                 <div class="group-input">
                                     <label for="review-period">Review Period (in years)</label>
-                                    <input  style="margin-top: 25px;"  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value={{ $document->review_period }}>
+                                    <input  style="margin-top: 25px;"  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value={{ $document->review_period }}
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}>
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Review Period' &&
@@ -1128,6 +1148,7 @@
                                 <div class="group-input">
                                     <label for="draft-doc">Attach Draft document</label>
                                     <input type="file" name="attach_draft_doocument"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}}
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
                                         value="{{ $document->attach_draft_doocument }}">
                                         @if($document->attach_draft_doocument)
                                             <input type="hidden" name="attach_draft_doocument" value="{{ $document->attach_draft_doocument }}">
@@ -1169,7 +1190,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1189,6 +1210,7 @@
                                 <div class="group-input">
                                     <label for="effective-doc">Attach Effective document</label>
                                     <input type="file" name="attach_effective_docuement"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}}
+                                    {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}
                                         value="{{ $document->attach_effective_docuement }}">
                                         @if($document->attach_effective_docuement)
                                             <input type="hidden" name="attach_effective_docuement" value="{{ $document->attach_effective_docuement }}">
@@ -1215,7 +1237,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1243,6 +1265,7 @@
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
                                     <select   @if($document->stage != 1 && !Helpers::userIsQA() || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1262,6 +1285,7 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="reviewers" value="{{ $document->reviewers }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers' &&
@@ -1284,7 +1308,7 @@
                                 </div>
                                 <p id="reviewerError" style="color:red">**Reviewers are required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1303,6 +1327,7 @@
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
                                     <select   @if($document->stage != 1 && !Helpers::userIsQA()  || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
@@ -1322,6 +1347,7 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="approvers" value="{{ $document->approvers }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers' &&
@@ -1344,7 +1370,7 @@
                                 </div>
                                 <p id="approverError" style="color:red">**Approvers are required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1363,6 +1389,7 @@
                                 <div class="group-input">
                                     <label for="reviewers-group">Reviewers Group</label>
                                     <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewergroup))
                                             @foreach ($reviewergroup as $lan)
@@ -1382,6 +1409,8 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="reviewers_group" value="{{ $document->reviewers_group }}">
+
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers Group' &&
@@ -1403,7 +1432,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1422,6 +1451,7 @@
                                 <div class="group-input">
                                     <label for="approvers-group">Approvers Group</label>
                                     <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}
                                         placeholder="Select Approvers" multiple>
                                         @if (!empty($approversgroup))
                                             @foreach ($approversgroup as $lan)
@@ -1441,6 +1471,7 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="approver_group" value="{{ $document->approver_group }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers Group' &&
@@ -1463,7 +1494,7 @@
                                 </div>
 
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1480,7 +1511,8 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="revision-type">Revision Type</label>
-                                    <select  name="revision_type" {{Helpers::isRevised($document->stage)}} >
+                                    <select  name="revision_type" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option  value="0">-- Select --</option>
                                         <option @if ($document->revision_type =='minor') selected @endif
                                             value="minor">Minor</option>
@@ -1489,6 +1521,7 @@
                                         <option @if ($document->revision_type =='NA') selected @endif
                                             value="NA">NA</option>
                                     </select>
+                                    <input type="hidden" name="revision_type" value="{{ $document->revision_type }}">
                                     @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment) )
                                         @php
@@ -1506,7 +1539,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1525,7 +1558,7 @@
                                 <div class="group-input">
                                     <label for="summary">Revision Summary</label>
 
-                                    <textarea name="revision_summary" {{Helpers::isRevised($document->stage)}} >{{ $document->revision_summary }}</textarea>
+                                    <textarea name="revision_summary" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $document->revision_summary }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Revision Summary' && !empty($tempHistory->comment) )
                                             @php
@@ -1544,7 +1577,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1579,7 +1612,8 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="train-require">Training Required?</label>
-                                    <select name="training_required" {{Helpers::isRevised($document->stage)}}  required>
+                                    <select name="training_required" {{Helpers::isRevised($document->stage)}}  required
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
                                         <option value="">Enter your Selection</option>
                                         @if ($document->training_required == 'yes')
                                             <option value="yes" selected>Yes</option>
@@ -1591,6 +1625,8 @@
                                         @endif
 
                                     </select>
+                                    <input type="hidden" name="training_required" value="{{ $document->training_required }}">
+
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Training Required' && !empty($tempHistory->comment) )
                                             @php
@@ -1612,7 +1648,8 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="link-doc">Trainer</label>
-                                    <select name="trainer" {{Helpers::isRevised($document->stage)}} >
+                                    <select name="trainer" {{Helpers::isRevised($document->stage)}}
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
                                         <option value="" selected>Enter your Selection</option>
                                         @foreach ($trainer as $temp)
                                             <option value="{{ $temp->id }}"
@@ -1711,7 +1748,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="comments">Comments</label>
-                                    <textarea name="comments" {{Helpers::isRevised($document->stage)}} >{{ $document->comments }}</textarea>
+                                    <textarea name="comments" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $document->comments }}</textarea>
 
                                 </div>
                             </div>
@@ -1733,7 +1770,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="purpose">Purpose</label>
-                                    <textarea name="purpose" {{Helpers::isRevised($document->stage)}}>{{ $document->document_content ? $document->document_content->purpose : '' }}</textarea>
+                                    <textarea name="purpose" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $document->document_content ? $document->document_content->purpose : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment) )
                                             @php
@@ -1753,7 +1790,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1771,7 +1808,7 @@
                                 <div class="group-input">
                                     <label for="scope">Scope</label>
 
-                                    <textarea name="scope" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content ? $document->document_content->scope : '' }}</textarea>
+                                    <textarea name="scope" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $document->document_content ? $document->document_content->scope : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment) )
                                             @php
@@ -1791,7 +1828,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1809,7 +1846,7 @@
                                 <div class="group-input">
                                     <label for="responsibility" id="responsibility">
                                         Responsibility<button type="button" id="responsibilitybtnadd"
-                                            name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                            name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     <div id="responsibilitydiv">
@@ -1819,22 +1856,22 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <textarea name="responsibility[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                <textarea name="responsibility[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
-                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="responsibility[]" class="myclassname" {{Helpers::isRevised($document->stage)}} >{{ $data }}</textarea>
+                                                                <textarea name="responsibility[]" class="myclassname" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                                <button class="btn btn-dark subResponsibilityAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -1844,13 +1881,13 @@
                                             <div class="singleResponsibilityBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <textarea name="responsibility[]" class="myclassname"></textarea>
+                                                        <textarea name="responsibility[]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-dark subResponsibilityAdd" {{Helpers::isRevised($document->stage)}}>+</button>
+                                                        <button class="btn btn-dark subResponsibilityAdd" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                        <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1876,7 +1913,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
                                 {{-- Add Comment  --}}
                                 <div class="comment">
                                     <div>
@@ -1893,7 +1930,7 @@
                                 <div class="group-input">
                                     <label for="abbreviation" id="abbreviation">
                                         Abbreviation<button type="button" id="abbreviationbtnadd"
-                                            name="button" {{Helpers::isRevised($document->stage)  }} >+</button>
+                                            name="button" {{ Helpers::isRevised($document->stage) }} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
 
@@ -1904,22 +1941,22 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <textarea name="abbreviation[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                <textarea name="abbreviation[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
-                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="abbreviation[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                <textarea name="abbreviation[]" class="myclassname" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-dark subAbbreviationAdd" {{Helpers::isRevised($document->stage)}} >+</button>
+                                                                <button class="btn btn-dark subAbbreviationAdd" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -1947,7 +1984,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1964,7 +2001,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="abbreviation" id="definition">
-                                        Definition<button type="button" id="Definitionbtnadd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                        Definition<button type="button" id="Definitionbtnadd" name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
 
@@ -1975,22 +2012,22 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <textarea name="defination[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                <textarea name="defination[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
-                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                <textarea name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-dark subDefinitionAdd" {{Helpers::isRevised($document->stage)}}>+</button>
+                                                                <button class="btn btn-dark subDefinitionAdd" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -2018,7 +2055,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2036,7 +2073,7 @@
                                 <div class="group-input">
                                     <label for="reporting" id="newreport">
                                         Materials and Equipments<button type="button" id="materialsbtadd"
-                                            name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                            name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->materials_and_equipments))
@@ -2046,24 +2083,24 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <textarea name="materials_and_equipments[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                <textarea name="materials_and_equipments[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
-                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="materials_and_equipments[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                <textarea name="materials_and_equipments[]" class="myclassname" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
 
                                                             <div class="col-sm-1">
-                                                                <button type="button" class="subMaterialsAdd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                                                <button type="button" class="subMaterialsAdd" name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                             </div>
 
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -2074,11 +2111,11 @@
                                         <div class="singleMaterialBlock">
                                             <div class="row">
                                                 <div class="col-sm-10">
-                                                    <textarea name="materials_and_equipments[]" class="myclassname"></textarea>
+                                                    <textarea name="materials_and_equipments[]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} ></textarea>
                                                 </div>
 
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="subMaterialsAdd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                                    <button type="button" class="subMaterialsAdd" name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                 </div>
 
                                                 <div class="col-sm-1">
@@ -2108,7 +2145,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2128,7 +2165,7 @@
                                     <div class="group-input">
                                         <label for="procedure">Safety & Precautions</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea name="safety_precautions" class="summernote">{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
+                                        <textarea name="safety_precautions" class="summernote" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}>{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment) )
                                                 @php
@@ -2165,7 +2202,7 @@
                                 @endif
                             @endforeach
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 <div class="comment">
                                     <div>
@@ -2180,7 +2217,7 @@
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea name="procedure" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->procedure : '' }}</textarea>
+                                    <textarea name="procedure" id="summernote" class="summernote" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $document->document_content ? $document->document_content->procedure : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment) )
                                             @php
@@ -2205,7 +2242,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="reporting" id="newreport">
-                                        Reporting<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
+                                        Reporting<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
 
@@ -2216,23 +2253,23 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <textarea name="reporting[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                <textarea name="reporting[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
-                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                             </div>
                                                         </div>
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
                                                                 <textarea type="text" name="reporting[]" class=""
-                                                                {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                         </div>
                                                         <div class="col-sm-1">
-                                                                <button class="btn btn-dark subReportingAdd">+</button>
+                                                                <button class="btn btn-dark subReportingAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                             </div>
                                                         <div class="col-sm-1">
-                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                            <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                         </div>
                                                         </div>
                                                     @endif
@@ -2242,13 +2279,13 @@
                                             <div class="singleReportingBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <textarea type="text" name="reporting[]" class=""></textarea>
+                                                        <textarea type="text" name="reporting[]" class="" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} ></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-dark subReportingAdd">+</button>
+                                                        <button class="btn btn-dark subReportingAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}>+</button>
                                                     </div>
                                                 <div class="col-sm-1">
-                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                 </div>
                                                 </div>
                                             </div>
@@ -2274,7 +2311,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2292,7 +2329,7 @@
                                 <div class="group-input">
 
                                     <label for="references" id="references">
-                                        References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
+                                        References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
 
@@ -2304,22 +2341,22 @@
                                                         @if (str_contains($key, 'sub'))
                                                             <div class="resrow row">
                                                                 <div class="col-6">
-                                                                    <textarea name="references[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    <textarea name="references[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}>{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-1">
-                                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                                 </div>
                                                             </div>
                                                         @else
                                                             <div class="row">
                                                                 <div class="col-sm-10">
-                                                                    <textarea name="references[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                    <textarea name="references[]" class="myclassname" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    <button class="btn btn-dark subReferencesAdd">+</button>
+                                                                    <button class="btn btn-dark subReferencesAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                                 </div>
                                                             </div>
                                                         @endif
@@ -2330,13 +2367,13 @@
                                             <div class="singleReferencesBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <textarea name="references[]" class="myclassname"></textarea>
+                                                        <textarea name="references[]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} ></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-dark subReferencesAdd">+</button>
+                                                        <button class="btn btn-dark subReferencesAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                        <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2367,7 +2404,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2421,7 +2458,7 @@
                                 <div class="group-input">
 
                                     <label for="ann" id="ann">
-                                        Annexure<button type="button" id="annbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
+                                        Annexure<button type="button" id="annbtadd" name="button" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
 
@@ -2433,22 +2470,22 @@
                                                         @if (str_contains($key, 'sub'))
                                                             <div class="resrow row">
                                                                 <div class="col-6">
-                                                                    <textarea name="ann[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    <textarea name="ann[{{ $key }}]" class="myclassname" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-1">
-                                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    <button class="btn btn-danger abbreviationbtnRemove" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                                 </div>
                                                             </div>
                                                         @else
                                                             <div class="row">
                                                                 <div class="col-sm-10">
-                                                                    <textarea name="ann[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                                    <textarea name="ann[]" class="myclassname" {{Helpers::isRevised($document->stage)}} {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    <button class="btn btn-dark subAnnexureAdd">+</button>
+                                                                    <button class="btn btn-dark subAnnexureAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    <button class="btn btn-danger removeAllBlocks" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >Remove</button>
                                                                 </div>
                                                             </div>
                                                         @endif
@@ -2459,10 +2496,10 @@
                                             <div class="singleAnnexureBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="ann[]" class="myclassname">
+                                                        <input type="text" name="ann[]" class="myclassname" {{ $document->stage == 1  && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-dark subAnnexureAdd">+</button>
+                                                        <button class="btn btn-dark subAnnexureAdd" {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >+</button>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn-btn-danger abbreviationbtnRemove">Remove</button>
@@ -2495,7 +2532,7 @@
                                 </div>
                             </div>
 
-                            {{-- @if (Auth::user()->role != 3 && $document->stage < 8)
+                            {{-- @if (Auth::user()->role != 3 && $document->stage < 8 )
                                 <div class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -2528,7 +2565,7 @@
                                     </table>
                                 </div>
                             </div> --}}
-                            @if (Auth::user()->role != 3 && $document->stage < 8)
+                            @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2694,7 +2731,7 @@
                         </div>
                     </div>
 
-                    @if (Auth::user()->role != 3 && $document->stage < 8)
+                    @if(in_array($document->stage, [2, 4]) && (in_array(Auth::user()->id, explode(',', $document->reviewers)) || in_array(Auth::user()->id, explode(',', $document->approvers))))
 
                         {{-- Add Comment
                         <div class="comment">

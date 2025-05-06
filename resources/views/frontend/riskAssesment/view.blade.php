@@ -79,47 +79,47 @@
         .w-10 {
             width: 10%;
         }
-    
+
         .w-20 {
             width: 20%;
         }
-    
+
         .w-25 {
             width: 25%;
         }
-    
+
         .w-30 {
             width: 30%;
         }
-    
+
         .w-40 {
             width: 40%;
         }
-    
+
         .w-50 {
             width: 50%;
         }
-    
+
         .w-60 {
             width: 60%;
         }
-    
+
         .w-70 {
             width: 70%;
         }
-    
+
         .w-80 {
             width: 80%;
         }
-    
+
         .w-90 {
             width: 90%;
         }
-    
+
         .w-100 {
             width: 100%;
         }
-    
+
     </style>
     <script>
         function addWhyField(con_class, name) {
@@ -230,7 +230,7 @@
                     <div class="d-flex" style="gap:20px;">
                         @php
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray(); 
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
                             class="new-doc-btn">Print</button></a> --}}
@@ -454,7 +454,7 @@
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"  
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date">
 
                                             </div>
@@ -523,7 +523,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code" 
+                                                <input type="text" name="initiator_group_code"
                                                     value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
@@ -541,7 +541,7 @@
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                
+
                                                 <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                             </div>
                                                   <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -551,11 +551,11 @@
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label><span id="rchars">255</span>
                                             characters remaining
-                                            
+
                                             <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                         </div>
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
-    
+
                                     </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
@@ -565,7 +565,7 @@
                                                     <option  value="">-- Select --</option>
                                                     <option @if ($data->severity2_level == 'minor') selected @endif
                                                      value="minor">Minor</option>
-                                                    <option  @if ($data->severity2_level == 'major') selected @endif 
+                                                    <option  @if ($data->severity2_level == 'major') selected @endif
                                                     value="major">Major</option>
                                                     <option @if ($data->severity2_level == 'critical') selected @endif
                                                     value="critical">Critical</option>
@@ -580,7 +580,7 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    
+
                                                     <option value="QA"
                                                         {{ in_array('QA', explode(',', $data->departments)) ? 'selected' : '' }}>
                                                         QA
@@ -772,7 +772,7 @@
                                                 <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Risk/Opportunity Comments</label>
@@ -827,7 +827,7 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    
+
                                                     <option value="QA"
                                                         {{ in_array('QA', explode(',', $data->departments2)) ? 'selected' : '' }}>
                                                         QA
@@ -1231,9 +1231,9 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}" 
+                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}"
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input" 
+                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date1}}"> --}}
@@ -1243,7 +1243,7 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}" 
+                                                    <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}"
                                                         placeholder="DD-MMM-YYYY" />
                                                     <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
@@ -1419,7 +1419,7 @@
                                                                     <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
                                                                     <input type="date" name="deadline[]" class="hide-input" value="{{ unserialize($action_plan->deadline)[$key] }}"
                                                                     oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /></div></div></div></td>
-                                                                
+
                                                                 <td><input type="text" name="item_static[]"
                                                                         value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : '' }}">
                                                                 </td>
@@ -1492,18 +1492,17 @@
                                                 <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
-                                                    <option value="">-- Select --</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Why-Why Chart"
+                                                        {{ in_array('Why-Why Chart', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Why-Why Chart</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Failure Mode and Efect Analysis"
+                                                        {{ in_array('Failure Mode and Efect Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Failure Mode and Efect Analysis</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Fishbone or Ishikawa Diagram"
+                                                        {{ in_array('Fishbone or Ishikawa Diagram', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Fishbone or Ishikawa Diagram</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    <option value="Is/Is Not Analysis"
+                                                        {{ in_array('Is/Is Not Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Is/Is Not Analysis</option>
 
 
@@ -1593,7 +1592,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <input name="risk_control_measure[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}" >
-                                                                         
+
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]">
@@ -1602,7 +1601,7 @@
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
                                                                             <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                         </select>
-                                                                        
+
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]">
@@ -1611,9 +1610,9 @@
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
                                                                             <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                         </select>
-                                                                         
+
                                                                     </td>
-    
+
                                                                     <td>
                                                                         <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]">
                                                                             <option value="">-- Select --</option>
@@ -1635,7 +1634,7 @@
                                                                     <td>
                                                                         <input name="mitigation_proposal[]" type="text" value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}" >
                                                                     </td>
-                                                                </tr>    
+                                                                </tr>
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -1749,7 +1748,7 @@
                                                         <th style="width:150px; color: #393cd4;">
                                                             Why 1 <span
                                                                 onclick= "{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addWhyField('why_1_block', 'why_1[]')"}}">+</span>
-                                                                
+
                                                         </th>
                                                         <td>
                                                             <div class="why_1_block">
@@ -1995,7 +1994,7 @@
                                             <div class="group-input">
                                                 <label for="RPN">RPN</label>
                                                 <div><small class="text-primary">Auto - Calculated</small></div>
-                                                    
+
                                                     <input readonly type="text" name="rpn" id="analysisRPN" value="{{$data->rpn}}">
 
                                             </div>
@@ -2100,7 +2099,7 @@
                                                     Mitigation Plan Details<button type="button" name="ann"
                                                         id="action_plan2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} >+</button>
 
-                                                        
+
 
 
 
@@ -2207,7 +2206,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="mitigation_due_date" readonly value="{{ Helpers::getdateFormat($data->mitigation_due_date)}}"
                                                         name="mitigation_due_date" placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="mitigation_due_date" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $data->mitigation_due_date }}" class="hide-input"  
+                                                    <input type="date" name="mitigation_due_date" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $data->mitigation_due_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'mitigation_due_date')" />
                                                 </div>
                                                 {{-- <input type="date" name="mitigation_due_date"
@@ -2345,7 +2344,7 @@
                                                     id="reference_record" name="refrence_record[]"
                                                     placeholder="Select Reference Records">
                                                     <option value="">--Select---</option>
-        
+
                                                     @if (!empty($old_record))
                                                         @foreach ($old_record as $new)
                                                             @php
@@ -2489,7 +2488,7 @@
                                                 <label for="All Actions Completed">All Actions Completed On</label>
                                                 <div class="static">{{ $data->all_actions_completed_on }}</div>
                                             </div>
-                                        </div> 
+                                        </div>
 
 
                                         <div class="col-lg-6">
@@ -2559,7 +2558,7 @@
                                                 <label for="Cancel">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancel">Cancelled On</label>
@@ -2567,7 +2566,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>
@@ -2770,10 +2769,10 @@
                             '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="mitigation_steps[]"></td>' +
-                                // '<td><input type="date" name="deadline2[]"></td>' 
+                                // '<td><input type="date" name="deadline2[]"></td>'
                                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                                
-                                
+
+
                                 +
                                 '<td><select name="responsible_person[]">' +
                                     '<option value="">Select a value</option>';
@@ -2901,8 +2900,8 @@
             <script>
                 $(document).ready(function() {
                     var loc = new locationInfo();
-                    var countryDropdown = $("#country"); 
-                    var desiredValue = '{{$data->country}}'; 
+                    var countryDropdown = $("#country");
+                    var desiredValue = '{{$data->country}}';
                      setTimeout(function() {
                         countryDropdown.find('option[value="{{$data->country}}"]').prop('selected', true);
                          var countryId = jQuery("option:selected", this).attr('countryid');
@@ -2912,7 +2911,7 @@
                             else{
                                 jQuery(".states option:gt(0)").remove();
                             }
-                        var stateDropdown = $("#state");     
+                        var stateDropdown = $("#state");
                         stateDropdown.find('option[value="{{$data->state}}"]').prop('selected', true);
                         var stateId = jQuery("option:selected", this).attr('stateid');
                         if(stateId != ''){
@@ -2921,7 +2920,7 @@
                         else{
                             jQuery(".cities option:gt(0)").remove();
                         }
-                        var cityDropdown = $("#city");     
+                        var cityDropdown = $("#city");
                         cityDropdown.find('option[value="{{$data->city}}"]').prop('selected', true);
                     }, 1000);
                 });
@@ -2950,12 +2949,12 @@
                <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     const removeButtons = document.querySelectorAll('.remove-file');
-    
+
                     removeButtons.forEach(button => {
                         button.addEventListener('click', function () {
                             const fileName = this.getAttribute('data-file-name');
                             const fileContainer = this.closest('.file-container');
-    
+
                             // Hide the file container
                             if (fileContainer) {
                                 fileContainer.style.display = 'none';

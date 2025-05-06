@@ -155,6 +155,49 @@
     }
 </style>
 
+<style>
+    .tableFMEA {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 7px;
+        table-layout: fixed; /* Ensures columns are evenly distributed */
+    }
+
+    .thFMEA,
+    .tdFMEA {
+        border: 1px solid black;
+        padding: 5px;
+        word-wrap: break-word;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 6px; /* Apply the same font size for all cells */
+    }
+
+    /* Rotating specific headers */
+    .rotate {
+        transform: rotate(-90deg);
+        white-space: nowrap;
+        width: 10px;
+        height: 100px;
+    }
+
+    /* Ensure the "Traceability Document" column fits */
+    .tdFMEA:last-child,
+    .thFMEA:last-child {
+        width: 80px; /* Allocate more space for "Traceability Document" */
+    }
+
+    /* Adjust for smaller screens to fit */
+    @media (max-width: 1200px) {
+        .tdFMEA:last-child,
+        .thFMEA:last-child {
+            font-size: 6px;
+            width: 70px; /* Shrink width further for smaller screens */
+        }
+    }
+
+</style>
+
 <body>
 
     <header>
@@ -215,7 +258,7 @@
                             <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
 
                     </tr>
-                    
+
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -228,7 +271,7 @@
                     </tr> --}}
                         <tr>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> 
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>                  </tr>
                         </tr>
@@ -261,7 +304,7 @@
                      <tr>
                         <th class="w-20">Priority Level</th>
                         <td class="w-80">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <th class="w-20">Risk/Opportunity Description</th>
                         <td class="w-30" colspan="3">@if($data->description){{ $data->description }} @else Not Applicable @endif</td>
@@ -291,7 +334,7 @@
                     {{-- <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                        
+
                     </tr> --}}
                     {{-- <tr>
                             <th class="w-20">Priority Level</th>
@@ -299,11 +342,11 @@
                             <th class="w-20">Source of Risk/Opportunity</th>
                             <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>/
                         </tr>  --}}
-                    
+
                 </table>
             </div>
 
-           
+
                         <div class="block">
                 <div class="block-head">
                     Risk/Opportunity details
@@ -313,7 +356,7 @@
                             <th class="w-20">Department(s)</th>
                             <td class="w-80">@if($data->departments2){{  $data->departments2 }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
-                            <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->source_of_risk2){{ $data->source_of_risk2 }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Site Name</th>
@@ -345,7 +388,7 @@
                             {{-- <th class="w-20">Number of Employees</th>
                             <td class="w-80">@if($data->Number_of_employees){{ $data->Number_of_employees }}@else Not Applicable @endif</td> --}}
                         </tr>
-                        
+
                         <tr>
                             <th class="w-20">Number of Employees</th>
                             <td class="w-80">@if($data->Number_of_employees){{ $data->Number_of_employees }}@else Not Applicable @endif</td>
@@ -358,7 +401,7 @@
 
            <div class="block">
                 <div class="block-head">
-                    Assignment Details  
+                    Assignment Details
                 </div>
                 <table>
                     <tr>
@@ -384,7 +427,7 @@
                     <tr>
                         <th class="w-20">Justification/Rationale</th>
                         <td class="w-30" colspan="3">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
-                        
+
                     </tr>
                     <!-- <tr>
                         <th class="w-20">Action Plan</th>
@@ -483,13 +526,13 @@
                         <td>Not Applicable</td>
                         <td>Not Applicable</td>
                         <td>Not Applicable</td>
-                        
+
                     </tr>
                 @endif
                 </table>
             </div>
         </div>
-      
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -498,20 +541,74 @@
                     <table>
                       <tr>
                             <th class="w-20">Root Cause Methodology</th>
-                            <td class="w-30">
-                                @if($data->root_cause_methodology == 1)
-                                Why-Why Chart
-                                @elseif($data->root_cause_methodology == 2)
-                                Failure Mode and Efect Analysis
-                                @elseif($data->root_cause_methodology == 3)
-                                Fishbone or Ishikawa Diagram
-                                @elseif($data->root_cause_methodology == 4)
-                                Is/Is Not Analysis
+                            <td class="w-30" colspan="3">
+                                @if($data->root_cause_methodology)
+                                    {{ str_replace(',', ', ', $data->root_cause_methodology)}}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
                        </tr>
+                    </table>
+
+                    <div class="block-head">Failure Mode and Effect Analysis</div>
+                    <div class="table-responsive">
+                        <table class="tableFMEA">
+                            <thead>
+                                <tr class="table_bg">
+                                    <th class="thFMEA" >Row #</th>
+                                    <th class="thFMEA" >Risk Factor</th>
+                                    <th class="thFMEA" >Risk element </th>
+                                    <th class="thFMEA" >Probable cause of risk element</th>
+                                    <th class="thFMEA" >Existing Risk Controls</th>
+                                    <th class="thFMEA" >Initial Severity- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Initial Probability- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Initial Detectability- H(1)/M(2)/L(3)</th>
+                                    <th class="thFMEA" >Initial RPN</th>
+                                    <th class="thFMEA" >Risk Acceptance (Y/N)</th>
+                                    <th class="thFMEA" >Proposed Additional Risk control measure (Mandatory for Risk elements having RPN>4)</th>
+                                    <th class="thFMEA" >Residual Severity- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Residual Probability- H(3)/M(2)/L(1)</th>
+                                    <th class="thFMEA" >Residual Detectability- H(1)/M(2)/L(3)</th>
+                                    <th class="thFMEA" >Residual RPN</th>
+                                    <th class="thFMEA" >Risk Acceptance (Y/N)</th>
+                                    <th class="thFMEA" >Mitigation proposal (Mention either CAPA reference number, IQ, OQ or PQ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($riskEffectAnalysis->risk_factor))
+                                    @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                        <tr>
+                                            <td class="tdFMEA">{{ $key + 1 }}</td>
+                                            <td class="tdFMEA">{{ $riskFactor }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null }}</td>
+                                            <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
+                                        </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="17">No data available.</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <table>
                         <tr>
                             <th class="w-20">Root Cause Description</th>
                             <td class="w-30" colspan="3">@if($data->root_cause_description){{ $data->root_cause_description}}@else Not Applicable @endif</td>
@@ -520,13 +617,14 @@
                             <th class="w-20">Investigation Summary</th>
                             <td class="w-30" colspan="3">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
-                        
+
                         <tr>
                         </table>
                             <div class="block-head">
                                 Risk Analysis
                             </div>
-                            <table>
+                        <table>
+                        <tr>
                             <th class="w-20">Severity Rate </th>
                             <td class="w-30">
                                 @if($data->severity_rate == 1)
@@ -581,9 +679,9 @@
                             <td class="w-80">@if($data->rpn){{ $data->rpn }}@else Not Applicable @endif</td>
                         </tr>
                     </table>
-            
+
                     <div class="block-head">
-                        Fishbone or Ishikawa Diagram 
+                        Fishbone or Ishikawa Diagram
                     </div>
                     <table>
                     - <tr>
@@ -593,7 +691,7 @@
                             @php
                                 $measurement = unserialize($riskgrdfishbone->measurement);
                             @endphp
-                            
+
                             @if(is_array($measurement))
                                 @foreach($measurement as $value)
                                     {{ htmlspecialchars($value) }}
@@ -610,7 +708,7 @@
                             @php
                                 $materials = unserialize($riskgrdfishbone->materials);
                             @endphp
-                            
+
                             @if(is_array($materials))
                                 @foreach($materials as $value)
                                     {{ htmlspecialchars($value) }}
@@ -621,7 +719,7 @@
                                 Not Applicable
                             @endif
                                </td>
-                        
+
                     </tr>
                        <tr>
                         <th class="w-20">Methods</th>
@@ -630,7 +728,7 @@
                             @php
                                 $methods = unserialize($riskgrdfishbone->methods);
                             @endphp
-                            
+
                             @if(is_array($methods))
                                 @foreach($methods as $value)
                                     {{ htmlspecialchars($value) }}
@@ -647,7 +745,7 @@
                             @php
                                 $environment = unserialize($riskgrdfishbone->environment);
                             @endphp
-                            
+
                             @if(is_array($environment))
                                 @foreach($environment as $value)
                                     {{ htmlspecialchars($value) }}
@@ -666,7 +764,7 @@
                             @php
                                 $manpower = unserialize($riskgrdfishbone->manpower);
                             @endphp
-                            
+
                             @if(is_array($manpower))
                                 @foreach($manpower as $value)
                                     {{ htmlspecialchars($value) }}
@@ -683,7 +781,7 @@
                             @php
                                 $machine = unserialize($riskgrdfishbone->machine);
                             @endphp
-                            
+
                             @if(is_array($machine))
                                 @foreach($machine as $value)
                                     {{ htmlspecialchars($value) }}
@@ -696,14 +794,14 @@
                           </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Problem Statement1</th>
-                        <td class="w-80" colspan="3">@if($riskgrdfishbone->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
-                      
-                    </tr> 
+                        <th class="w-20">Problem Statement</th>
+                        <td class="w-80" colspan="3">@if($riskgrdfishbone->problem_statement){{ $riskgrdfishbone->problem_statement }}@else Not Applicable @endif</td>
+
+                    </tr>
              </table>
-                        
+
              <div class="block-head">
-                Why-Why Chart 
+                Why-Why Chart
             </div>
             <table>
             - <tr>
@@ -717,7 +815,7 @@
                     @php
                         $why_1 = unserialize($riskgrdwhy_chart->why_1);
                     @endphp
-                    
+
                     @if(is_array($why_1))
                         @foreach($why_1 as $value)
                             {{ htmlspecialchars($value) }}
@@ -736,7 +834,7 @@
                     @php
                         $why_2 = unserialize($riskgrdwhy_chart->why_2);
                     @endphp
-                    
+
                     @if(is_array($why_2))
                         @foreach($why_2 as $value)
                             {{ htmlspecialchars($value) }}
@@ -755,7 +853,7 @@
                     @php
                         $why_3 = unserialize($riskgrdwhy_chart->why_3);
                     @endphp
-                    
+
                     @if(is_array($why_3))
                         @foreach($why_3 as $value)
                             {{ htmlspecialchars($value) }}
@@ -774,7 +872,7 @@
                     @php
                         $why_4 = unserialize($riskgrdwhy_chart->why_4);
                     @endphp
-                    
+
                     @if(is_array($why_4))
                         @foreach($why_4 as $value)
                             {{ htmlspecialchars($value) }}
@@ -793,7 +891,7 @@
                     @php
                         $why_5 = unserialize($riskgrdwhy_chart->why_5);
                     @endphp
-                    
+
                     @if(is_array($why_5))
                         @foreach($why_5 as $value)
                             {{ htmlspecialchars($value) }}
@@ -808,8 +906,8 @@
             <tr>
                 <th class="w-20">Root Cause :	</th>
                 <td class="w-80" colspan="3">@if($riskgrdwhy_chart->why_root_cause){{ $riskgrdwhy_chart->why_root_cause }}@else Not Applicable @endif</td>
-              
-            </tr> 
+
+            </tr>
      </table>
      <div class="block-head">
         Is/Is Not Analysis
@@ -862,11 +960,11 @@
     <tr>
         <th class="w-20">Coverage Will Rationale </th>
         <td class="w-80" colspan="3">@if($riskgrdwhat_who_where->coverage_rationable){{ $riskgrdwhat_who_where->coverage_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
+
+    </tr>
     <tr>
         <th class="w-20">Who Will Be</th>
-        <td class="w-80" colspan="3">@if($riskgrdwhat_who_where->who_will_be){{ $riskgrdwhat_who_where->wh0_will_be }}@else Not Applicable @endif</td>
+        <td class="w-80" colspan="3">@if($riskgrdwhat_who_where->who_will_be){{ $riskgrdwhat_who_where->who_will_be }}@else Not Applicable @endif</td>
     </tr>
     <tr>
         <th class="w-20">Who Will Not Be </th>
@@ -875,9 +973,9 @@
     <tr>
         <th class="w-20">Who Will Rationale </th>
         <td class="w-80" colspan="3">@if($riskgrdwhat_who_where->who_rationable){{ $riskgrdwhat_who_where->who_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
-</table>        
+
+    </tr>
+</table>
                 </div>
             </div>
 
@@ -1000,7 +1098,7 @@
                                 @elseif($data->detection2 == 3)
                                 Unlikely
                                 @elseif($data->detection2 == 4)
-                                Rare 
+                                Rare
                                  @elseif($data->detection2 == 5)
                                 Impossible
                                 @else
@@ -1013,12 +1111,47 @@
                     <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-30" colspan="3">@if($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
-                        
+
                     </tr>
-                    
+
                   </table>
                 </div>
             </div>
+
+            <div class="border-table  tbl-bottum">
+                <div class="block-head">
+                    Mitigation Plan Details
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-10">Row #</th>
+                        <th class="w-20">Mitigation Steps</th>
+                        <th class="w-10">Deadline</th>
+                        <th class="w-20">Responsible Person</th>
+                        <th class="w-20">Status</th>
+                        <th class="w-20">Remarks </th>
+                    </tr>
+
+                    @if (!empty($mitigation_plan_details->mitigation_steps))
+                    @foreach (unserialize($mitigation_plan_details->mitigation_steps) as $key => $temps)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $temps ? $temps : ' ' }}</td>
+                        <td>{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) ? Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) : '' }}
+                        <td>{{ Helpers::getInitiatorName(unserialize($mitigation_plan_details->responsible_person)[$key]) ? Helpers::getInitiatorName(unserialize($mitigation_plan_details->responsible_person)[$key]) : '' }}</td>
+                        <td>{{ unserialize($mitigation_plan_details->status)[$key] ? unserialize($mitigation_plan_details->status)[$key] : '' }}</td>
+                        <td>{{ unserialize($mitigation_plan_details->remark)[$key] ? unserialize($mitigation_plan_details->remark)[$key] : '' }}</td>
+                    </tr>
+                    @endforeach
+                    @else
+                    @endif
+
+                </table>
+
+            </div><br>
+
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -1049,7 +1182,7 @@
                     </tr>
                 </table>
                     <div class="block-head">
-                        Overall Assessment  
+                        Overall Assessment
                     </div>
                     <table>
                     <tr>
@@ -1076,7 +1209,7 @@
             </div>
         </div>
                     <div class="block-head">
-                        Extension Justification   
+                        Extension Justification
                     </div>
                     <table>
                     <tr>
@@ -1179,7 +1312,7 @@
         </div>
     </div>
 
-    
+
 
    
 

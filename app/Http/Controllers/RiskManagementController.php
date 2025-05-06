@@ -3381,15 +3381,15 @@ class RiskManagementController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Submitted', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
-            
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3480,11 +3480,11 @@ class RiskManagementController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'evaluated', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -3577,11 +3577,11 @@ class RiskManagementController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -3675,11 +3675,11 @@ class RiskManagementController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'Plan Approved', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -3775,11 +3775,11 @@ class RiskManagementController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -3811,11 +3811,11 @@ class RiskManagementController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'All Actions Completed', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -3957,11 +3957,11 @@ class RiskManagementController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -4044,11 +4044,11 @@ class RiskManagementController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -4128,11 +4128,11 @@ class RiskManagementController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -4214,11 +4214,11 @@ class RiskManagementController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Risk Assessment','history' => 'More Information', 'process' => 'Risk Assessment', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Risk Assessment');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -4286,12 +4286,14 @@ class RiskManagementController extends Controller
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
             $data->action_plan = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', "action_plan")->first();
+            $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id',$id)->where('type',"effect_analysis")->first();
+            $mitigation_plan_details = RiskAssesmentGrid::where('risk_id',$id)->where('type',"Mitigation_Plan_Details")->first();
 
              //dd($riskgrd);
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where'))
+            $pdf = PDF::loadview('frontend.riskAssesment.singleReport', compact('data','riskgrdfishbone','riskgrdwhy_chart','riskgrdwhat_who_where', 'riskEffectAnalysis', 'mitigation_plan_details',))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
