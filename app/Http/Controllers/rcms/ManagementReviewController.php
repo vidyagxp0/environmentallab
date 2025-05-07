@@ -1552,7 +1552,6 @@ class ManagementReviewController extends Controller
         }
         $lastDocument = ManagementReview::find($id);
         $management = ManagementReview::find($id);
-        $management->initiator_id = Auth::user()->id;
         $management->division_code = $request->division_code;
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;

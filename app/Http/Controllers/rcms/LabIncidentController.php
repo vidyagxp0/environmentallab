@@ -690,7 +690,6 @@ class LabIncidentController extends Controller
 
         $lastDocument = LabIncident::find($id);
         $data = LabIncident::find($id);
-        $data->initiator_id = Auth::user()->id;
         $data->short_desc = $request->short_desc;
         $data->Initiator_Group= $request->Initiator_Group;
         $data->initiator_group_code= $request->initiator_group_code;
@@ -1443,11 +1442,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -1504,15 +1503,15 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
-                        
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1605,11 +1604,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Incident Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -1706,11 +1705,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Investigation Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -1830,11 +1829,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -1915,11 +1914,11 @@ class LabIncidentController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -1976,11 +1975,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data =  ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2037,11 +2036,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data =  ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2175,11 +2174,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Request More Info', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2299,11 +2298,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2361,11 +2360,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data =  ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2422,11 +2421,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2588,11 +2587,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2650,11 +2649,11 @@ class LabIncidentController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }

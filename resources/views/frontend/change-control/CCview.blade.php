@@ -357,7 +357,7 @@
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>
                                                     <div class="static"><input disabled type="text"
-                                                            value="{{ Auth::user()->name }}"></div>
+                                                            value="{{Helpers::getInitiatorName($data->initiator_id)}}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
