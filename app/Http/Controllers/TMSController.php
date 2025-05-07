@@ -28,6 +28,8 @@ use Helpers;
 class TMSController extends Controller
 {
     public function index(){
+        $all_trainings = Training::get();
+
         if(Helpers::checkRoles(role: 6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
             $documents = DocumentTraining::with('root_document')->orderByDesc('id')->get();
 
@@ -47,52 +49,6 @@ class TMSController extends Controller
                         $temp->minor = $temp->training->minor;
                     }
                 }
-            }
-
-            $all_trainings = $documents;
-
-            $due = DocumentTraining::where('trainer',Auth::user()->id)->orderByDesc('id')->get();
-            if(!empty($due)){
-                foreach($due as $temp){
-                $temp->training = Document::find($temp->document_id);
-                if($temp->training){
-                $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
-                $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
-                $temp->division_name = Helpers::getDivisionName($temp->training->id);
-                }
-            }
-
-            }
-
-            $pending = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Pending")->orderByDesc('id')->get();
-            if($pending){
-                foreach($pending as $temp){
-
-                $temp->training = Document::find($temp->document_id);
-                 if($temp->training){
-                $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
-                $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
-                $temp->division_name = Helpers::getDivisionName($temp->training->id);
-                 }
-            }
-
-
-            }
-
-            $complete = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Complete")->orderByDesc('id')->get();
-            if($complete){
-                 foreach($complete as $temp){
-
-                $temp->training = Document::find($temp->document_id);
-                 if($temp->training){
-                $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
-                $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
-                $temp->division_name = Helpers::getDivisionName($temp->training->id);
-                 }
-            }
             }
 
             $documents2 =[];
@@ -133,7 +89,7 @@ class TMSController extends Controller
 
 
 
-            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete', 'all_trainings'));
+            return view('frontend.TMS.dashboard', compact('documents2','documents', 'all_trainings'));
         }
         else{
             $train = [];
@@ -507,33 +463,38 @@ class TMSController extends Controller
                 $TrainingHistory->user_name = Auth::user()->name;
                 $TrainingHistory->origin_state = "Assigned";
                 $TrainingHistory->save();
+                
+                $trainnigData = Training::find($request->training_id);
+                $sops = explode(',', $trainnigData->sops);
 
-                $document->doc = Document::find($id);
-                $document->doc->stage = 8;
-                $document->doc->status = "Effective";
-                $document->doc->update();
-
-                $user_data = User::find($document->doc->originator_id);
-                try {
-                    Mail::send('mail.complete-training', ['document' => $document],
-                      function ($message) use ($user_data) {
-                              $message->to($user_data->email)
-                              ->subject("Training is Completed.");
-
-                      });
-                } catch (\Exception $e) {
-                    // log
+                $document->doc = Document::whereIn('id', $sops)->get();
+                foreach($document->doc as $doc){
+                    $doc->stage = 8;
+                    $doc->status = "Effective";
+                    $doc->update();
+                    $user_data = User::find($doc->originator_id);
+                    try {
+                        Mail::send('mail.complete-training', ['document' => $doc],
+                          function ($message) use ($user_data) {
+                                  $message->to($user_data->email)
+                                  ->subject("Training is Completed.");
+    
+                          });
+                    } catch (\Exception $e) {
+                        // log
+                    }
+    
+                    try {
+                        Mail::send('mail.effective', ['document' => $doc],
+                        function ($message) use ($user_data) {
+                                $message->to($user_data->email)
+                                ->subject("Document Effective Now.");
+                        });
+                    } catch (\Exception $e) {
+                        // log
+                    }
                 }
 
-                try {
-                    Mail::send('mail.effective', ['document' => $document],
-                    function ($message) use ($user_data) {
-                            $message->to($user_data->email)
-                            ->subject("Document Effective Now.");
-                    });
-                } catch (\Exception $e) {
-                    // log
-                }
 
                 $doc = Training::find($request->training_id);
                 $sop = explode(',',$doc->sops);

@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -184,6 +184,36 @@
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+              <td class="w-30">
+                    <strong></strong>
+                </td>
+            </tr>
+        </table>
+    </footer>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{--  <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td>  --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -203,7 +233,7 @@
                         <td class="w-80">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-80">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
@@ -261,7 +291,7 @@
                             Investigation Details
                             </div>
                             <table>
-                    
+
                                 <tr>
                                     <th class="w-20">Description</th>
                                     <td class="w-80" colspan="3">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
@@ -269,12 +299,12 @@
                                 <tr>
                                     <th class="w-20">Comments</th>
                                     <td class="w-80" colspan="3">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                                </tr>                       
+                                </tr>
                                 <tr>
                                     <th class="w-20">Related URL</th>
                                     <td class="w-80">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
                                 </tr>
-                    
+
                            </table>
                 <div class="border-table">
                     <div class="block-head">
@@ -330,7 +360,7 @@
                             <th class="w-20">Comments</th>
                             <td class="w-80" colspan="3">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                         </tr>
-                     
+
                     </table>
 
                     <div class="border-table tbl-bottum ">
@@ -338,7 +368,7 @@
                           Root Cause
                         </div>
                         <table>
-        
+
                             <tr class="table_bg">
                                 <th class="w-10">Row #</th>
                                 <th class="w-30">Root Cause Category</th>
@@ -365,9 +395,9 @@
                                 </tr>
                                  @endforeach
                                 @else
-                                
+
                             @endif
-        
+
                         </table>
                     </div><br>
 
@@ -376,7 +406,7 @@
                             Failure Mode and Effect Analysis
                         </div>
                         <table>
-        
+
                             <tr class="table_bg">
                                 <th class="w-10">Row #</th>
                                 <th class="w-30">Risk Factor</th>
@@ -403,7 +433,7 @@
                                 </tr>
                                  @endforeach
                                 @else
-                                
+
                               @endif
 
                         </table>
@@ -430,7 +460,7 @@
                            </tr>
                             @endforeach
                            @else
-                           
+
                          @endif
                         </table>
                     </div><br>
@@ -455,7 +485,7 @@
                            </tr>
                             @endforeach
                            @else
-                           
+
                          @endif
                         </table>
                     </div><br>
@@ -479,13 +509,13 @@
                            </tr>
                             @endforeach
                            @else
-                           
+
                          @endif
                         </table>
                     </div><br>
 
                     <div class="block-head">
-                        Fishbone or Ishikawa Diagram 
+                        Fishbone or Ishikawa Diagram
                     </div>
                     <table>
                     - <tr>
@@ -495,7 +525,7 @@
                             @php
                                 $measurement = unserialize($data->measurement);
                             @endphp
-                            
+
                             @if(is_array($measurement))
                                 @foreach($measurement as $value)
                                     {{ htmlspecialchars($value) }}
@@ -514,7 +544,7 @@
                             @php
                                 $materials = unserialize($data->materials);
                             @endphp
-                            
+
                             @if(is_array($materials))
                                 @foreach($materials as $value)
                                     {{ htmlspecialchars($value) }}
@@ -525,7 +555,7 @@
                                 Not Applicable
                             @endif
                                </td>
-                        
+
                     </tr>
                        <tr>
                         <th class="w-20">Methods</th>
@@ -534,7 +564,7 @@
                             @php
                                 $methods = unserialize($data->methods);
                             @endphp
-                            
+
                             @if(is_array($methods))
                                 @foreach($methods as $value)
                                     {{ htmlspecialchars($value) }}
@@ -553,7 +583,7 @@
                             @php
                                 $environment = unserialize($data->environment);
                             @endphp
-                            
+
                             @if(is_array($environment))
                                 @foreach($environment as $value)
                                     {{ htmlspecialchars($value) }}
@@ -572,7 +602,7 @@
                             @php
                                 $manpower = unserialize($data->manpower);
                             @endphp
-                            
+
                             @if(is_array($manpower))
                                 @foreach($manpower as $value)
                                     {{ htmlspecialchars($value) }}
@@ -591,7 +621,7 @@
                             @php
                                 $machine = unserialize($data->machine);
                             @endphp
-                            
+
                             @if(is_array($machine))
                                 @foreach($machine as $value)
                                     {{ htmlspecialchars($value) }}
@@ -603,7 +633,7 @@
                             @endif
                           </td>
                     </tr>
-                    
+
              </table>
              <div class="inner-block">
                 <label class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
@@ -615,10 +645,10 @@
                         Not Applicable
                     @endif
                 </span>
-            </div> 
+            </div>
 
              <div class="block-head mt-1">
-                Why-Why Chart 
+                Why-Why Chart
             </div>
 
             <div class="inner-block">
@@ -631,21 +661,21 @@
                         Not Applicable
                     @endif
                 </span>
-            </div> 
+            </div>
 
-            
+
             <table>
 
-               
+
                 <tr>
-                        
+
                             <th class="w-20">Why 1 </th>
                             {{-- <td class="w-80">@if($data->why_1){{ $data->why_1 }}@else Not Applicable @endif</td> --}}
                             <td class="w-80" >
                                 @php
                                     $why_1 = unserialize($data->why_1);
                                 @endphp
-                                
+
                                 @if(is_array($why_1))
                                     @foreach($why_1 as $value)
                                         {{ htmlspecialchars($value) }}
@@ -664,7 +694,7 @@
                         @php
                             $why_2 = unserialize($data->why_2);
                         @endphp
-                        
+
                         @if(is_array($why_2))
                             @foreach($why_2 as $value)
                                 {{ htmlspecialchars($value) }}
@@ -677,14 +707,14 @@
                     </td>
                 </tr>
                <tr>
-                
+
                 <th class="w-20">Why 3</th>
                 {{-- <td class="w-80">@if($data->why_3){{ $data->why_3 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80">
                     @php
                         $why_3 = unserialize($data->why_3);
                     @endphp
-                    
+
                     @if(is_array($why_3))
                         @foreach($why_3 as $value)
                             {{ htmlspecialchars($value) }}
@@ -703,7 +733,7 @@
                     @php
                         $why_4 = unserialize($data->why_4);
                     @endphp
-                    
+
                     @if(is_array($why_4))
                         @foreach($why_4 as $value)
                             {{ htmlspecialchars($value) }}
@@ -716,14 +746,14 @@
                       </td>
                </tr>
               <tr>
-              
+
                 <th class="w-20">Why5</th>
                 {{-- <td class="w-80">@if($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td> --}}
                 <td class="w-80" colspan="3">
                     @php
                         $why_5 = unserialize($data->why_5);
                     @endphp
-                    
+
                     @if(is_array($why_5))
                         @foreach($why_5 as $value)
                             {{ htmlspecialchars($value) }}
@@ -754,7 +784,7 @@
     </div>
 
 
-    
+
     <table>
     <tr>
         <th class="w-20">What Will Be</th>
@@ -779,7 +809,7 @@
      <tr>
             <th class="w-20">Where Will Rationale </th>
             <td class="w-80">@if($data->where_rationable){{ $data->where_rationable }}@else Not Applicable @endif</td>
-    
+
        <tr>
         <th class="w-20">When Will Be</th>
         <td class="w-80">@if($data->when_will_be){{ $data->when_will_be }}@else Not Applicable @endif</td>
@@ -803,24 +833,24 @@
     <tr>
         <th class="w-20">Coverage Will Rationale </th>
         <td class="w-80">@if($data->coverage_rationable){{ $data->coverage_rationable }}@else Not Applicable @endif</td>
-    </tr> 
+    </tr>
     <tr>
         <th class="w-20">Who Will Be</th>
         <td class="w-80">@if($data->who_will_be){{ $data->who_will_be }}@else Not Applicable @endif</td>
     </tr>
 
     <tr>
- 
+
         <th class="w-20">Who Will Not Be </th>
         <td class="w-80">@if($data->who_will_not_be){{ $data->who_will_not_be }}@else Not Applicable @endif</td>
     </tr>
     <tr>
-      
+
         <th class="w-20">Who Will Rationale </th>
         <td class="w-80">@if($data->who_rationable){{ $data->who_rationable }}@else Not Applicable @endif</td>
-      
-    </tr> 
-</table>        
+
+    </tr>
+</table>
                 </div>
             </div>
             <div class="block">
@@ -829,12 +859,12 @@
                 </div>
 
                     <table>
-                    
+
                         <tr>
                             <th class="w-20">Final Comments</th>
                               <td class="w-80">@if($data->cft_comments_new){{ $data->cft_comments_new }}@else Not Applicable @endif</td>
                         </tr>
-                       
+
                     </table>
                     <div class="border-table">
                         <div class="block-head">
@@ -842,7 +872,7 @@
 
                         </div>
                         <table>
-    
+
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Batch No</th>
@@ -860,12 +890,12 @@
                                 <td class="w-20">Not Applicable</td>
                             </tr>
                             @endif
-    
+
                         </table>
                     </div>
                 </div>
-            
-                
+
+
                 <div class="block">
                     <div class="block-head">
                         Activity log
@@ -908,27 +938,13 @@
                         <th class="w-20">Cancelled On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
                     </tr>
-                    
+
                 </table>
             </div>
         </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{--  <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>  --}}
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 

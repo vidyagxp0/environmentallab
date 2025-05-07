@@ -89,7 +89,7 @@
                         '<td><input type="time" name="auditAgendaData[' + auditAgendaIndex + '][startTime]"></td>' +
                         '<td><input type="date" name="auditAgendaData[' + auditAgendaIndex + '][endDate]"></td>' +
                         '<td><input type="time" name="auditAgendaData[' + auditAgendaIndex + '][endTime]"></td>' +
-                        '<td> <select name="auditAgendaData[' + auditAgendaIndex + '][auditor]" > <option value="">Select Option</option>' + userOptionsHtml + ' </select> </td>' +
+                        '<td><input type="text" name="auditAgendaData[0][auditor]"></td>' +
                         '<td> <select name="auditAgendaData[' + auditAgendaIndex + '][auditee]" > <option value="">Select Option</option>' + userOptionsHtml + ' </select> </td>' +
                         '<td><input type="text" name="auditAgendaData[' + auditAgendaIndex + '][remarks]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
@@ -668,6 +668,12 @@
                                     <div class="group-input">
                                         <label for="Issues">Audit Agenda <button type="button" name="ann"
                                                 id="auditAgendaData">+</button>
+
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#Audit_Agenda_modal"
+                                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                    (Launch Instruction)
+                                                </span>
                                         </label>
                                         <table class="table table-bordered" id="auditAgendaDataTable">
                                             <thead>
@@ -692,7 +698,7 @@
                                                     <td><input type="time" name="auditAgendaData[0][startTime]"></td>
                                                     <td><input type="date" name="auditAgendaData[0][endDate]"></td>
                                                     <td><input type="time" name="auditAgendaData[0][endTime]"></td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <select name="auditAgendaData[0][auditor]">
                                                             <option value="">Select Option</option>
                                                             @if (count($users) > 0)
@@ -702,7 +708,9 @@
                                                                 @endforeach
                                                             @endif
                                                         </select>
-                                                    </td>
+                                                    </td> --}}
+                                                    <td><input type="text" name="auditAgendaData[0][auditor]"></td>
+
                                                     <td>
                                                         <select name="auditAgendaData[0][auditee]">
                                                             <option value="">Select Option</option>
@@ -822,7 +830,7 @@
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Group Name">Group Name</label>
@@ -1043,7 +1051,7 @@
                                         Observation Details
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
+                                            data-bs-target="#observationDetails_modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>

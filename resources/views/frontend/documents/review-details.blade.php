@@ -15,7 +15,7 @@
                                     {{ $document->document_name }}
                                 </div>
                                 <div class="buttons">
-                                    <button onclick="location.href='{{ url('audit-trial', $document->id) }}';" style="cursor:pointer;">
+                                    <button onclick="location.href='{{ url('audit-trial', $document->id) }}'" style="cursor:pointer;">
                                         Audit Trail
                                     </button>
                                     @php $showEdit = false; @endphp
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) )
+                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) AND  $document->stage == 2)
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -187,7 +187,7 @@
                             </div>
                         </div>
                     @endif
-                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
+                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document) AND  $document->stage == 4)
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">

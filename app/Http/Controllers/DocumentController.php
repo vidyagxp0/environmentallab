@@ -354,7 +354,7 @@ class DocumentController extends Controller
 
                 $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
 
-                $reviewer = User::whereIn('id', $reviewer_ids)->get();
+                $reviewer = User::where('is_active', 1)->whereIn('id', $reviewer_ids)->get();
 
                 $approver_users = UserRole::where([
                     'q_m_s_divisions_id' => $checkDivision,
@@ -364,7 +364,7 @@ class DocumentController extends Controller
 
                     $approver_ids = $approver_users->pluck('user_id')->toArray();
 
-                    $approvers = User::whereIn('id', $approver_ids)->get();
+                    $approvers = User::where('is_active', 1)->whereIn('id', $approver_ids)->get();
 
 
                     // return $reviewer_users;
@@ -419,7 +419,7 @@ class DocumentController extends Controller
 
                         // dd($reviewer, $approvers);
 
-                        $trainer = DB::table('users')
+                        $trainer = DB::table('users')->where('is_active', 1)
                         ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
                         ->where('user_roles.q_m_s_roles_id', 6)
                         ->select('users.*')
@@ -628,25 +628,25 @@ class DocumentController extends Controller
             $content->procedure = $request->procedure;
             $content->safety_precautions = $request->safety_precautions;
 
-            if (! empty($request->materials_and_equipments)) {
+            if (!empty($request->materials_and_equipments)) {
                 $content->materials_and_equipments = serialize($request->materials_and_equipments);
             }
-            if (! empty($request->responsibility)) {
+            if (!empty($request->responsibility)) {
                 $content->responsibility = serialize($request->responsibility);
             }
-            if (! empty($request->abbreviation)) {
+            if (!empty($request->abbreviation)) {
                 $content->abbreviation = serialize($request->abbreviation);
             }
-            if (! empty($request->defination)) {
+            if (!empty($request->defination)) {
                 $content->defination = serialize($request->defination);
             }
-            if (! empty($request->reporting)) {
+            if (!empty($request->reporting)) {
                 $content->reporting = serialize($request->reporting);
             }
-            if (! empty($request->references)) {
+            if (!empty($request->references)) {
                 $content->references = serialize($request->references);
             }
-            if (! empty($request->ann)) {
+            if (!empty($request->ann)) {
                 $content->ann = serialize($request->ann);
             }
             // if ($request->hasfile('references')) {
@@ -661,13 +661,13 @@ class DocumentController extends Controller
 
             //     $content->references = $image_name;
             // }
-            if (! empty($request->ann)) {
+            if (!empty($request->ann)) {
                 $content->ann = serialize($request->ann);
             }
-            if (! empty($request->annexuredata)) {
+            if (!empty($request->annexuredata)) {
                 $content->annexuredata = serialize($request->annexuredata);
             }
-            if (! empty($request->distribution)) {
+            if (!empty($request->distribution)) {
                 $content->distribution = serialize($request->distribution);
             }
 
@@ -731,7 +731,7 @@ class DocumentController extends Controller
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
         $document['division'] = QMSDivision::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
-        $trainer = DB::table('users')
+        $trainer = DB::table('users')->where('is_active', 1)
                         ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
                         ->where('user_roles.q_m_s_roles_id', 6)
                         ->select('users.*')
@@ -766,7 +766,7 @@ class DocumentController extends Controller
 
 	    $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
 
-	    $reviewer = User::whereIn('id', $reviewer_ids)->get();
+	    $reviewer = User::where('is_active', 1)->whereIn('id', $reviewer_ids)->get();
 
         $approver_users = UserRole::where([
             'q_m_s_divisions_id' => $document->division_id,
@@ -776,7 +776,7 @@ class DocumentController extends Controller
 
         $approver_ids = $approver_users->pluck('user_id')->toArray();
 
-	    $approvers = User::whereIn('id', $approver_ids)->get();
+	    $approvers = User::where('is_active', 1)->whereIn('id', $approver_ids)->get();
 
         // $reviewer = DB::table('user_roles')
         //             ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -896,6 +896,7 @@ class DocumentController extends Controller
                 // }
                 // $document->review_period = $request->review_period;
                 $document->training_required = $request->training_required;
+                $document->trainer = $request->trainer;
                 $document->attach_draft_doocument = $request->attach_draft_doocument;
                 $document->notify_to = json_encode($request->notify_to);
 

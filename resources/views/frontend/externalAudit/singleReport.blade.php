@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt=""
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt=""
                             style="width: 200px;">
                     </div>
                 </td>
@@ -195,9 +195,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
+                <td class="w-30">
+                    <strong></strong> 
+                </td> 
             </tr>
         </table>
     </footer>
@@ -568,9 +568,9 @@
                                 @foreach ($auditAgenda as $item)
                                     <tr style="color: black; font-weight: normal;">
                                         <td>{{ $counter++ }}</td>
-                                        <td> {{ $item['auditArea'] }} </td>
-                                        <td> {{ Helpers::getdateFormat($item['startDate']) }} </td>
-                                        <td> {{ $item['startTime'] }} </td>
+                                        <td> {{ $item['auditArea'] ?? 'Not Applicable' }} </td>
+                                        <td> {{ Helpers::getdateFormat($item['startDate']) ? Helpers::getdateFormat($item['startDate']) : 'Not Applicable' }} </td>
+                                        <td> {{ $item['startTime'] ?? 'Not Applicable' }} </td>
                                     </tr>
                                 @endforeach
                             @else
@@ -590,18 +590,18 @@
                         <table>
                             <tr class="table_bg">
                                 <th>Row #</th>
-                                <th>Scheduled Start Date</th>
-                                <th>Scheduled Start Time</th>
-                                <th>Remarks</th>
+                                <th>Scheduled End Date</th>
+                                <th>Scheduled End Time</th>
+                                <th>Auditor</th>
                             </tr>
                             @php $counter = 1; @endphp
                             @if (!empty($auditAgenda))
                                 @foreach ($auditAgenda as $item)
                                     <tr style="color: black; font-weight: normal;">
                                         <td>{{ $counter++ }}</td>
-                                        <td> {{ Helpers::getdateFormat($item['endDate']) }} </td>
-                                        <td> {{ $item['endTime'] }} </td>
-                                        <td> {{ $item['remarks'] }} </td>
+                                        <td> {{ Helpers::getdateFormat($item['endDate']) ? Helpers::getdateFormat($item['endDate']) : 'Not Applicable' }} </td>
+                                        <td> {{ $item['endTime'] ?? 'Not Applicable' }} </td>
+                                        <td> {{ Helpers::getInitiatorName($item['auditor']) ?? 'Not Applicable' }} </td>
                                     </tr>
                                 @endforeach
                             @else
@@ -613,7 +613,36 @@
                     </div>
                 </div>
 
-               
+                <div class="block">
+                    <div class="block-head">
+                        Audit Agenda - Part 3
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th>Auditee</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @php $counter = 1; @endphp
+                            @if (!empty($auditAgenda))
+                                @foreach ($auditAgenda as $item)
+                                    <tr style="color: black; font-weight: normal;">
+                                        <td>{{ $counter++ }}</td>
+                                        <td> {{ Helpers::getInitiatorName($item['auditee']) ?? 'Not Applicable' }} </td>
+                                        <td> {{ $item['remarks'] ?? 'Not Applicable' }} </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+
+
             </div>
 
 
@@ -881,18 +910,20 @@
                                             <th>Observation Details</th>
                                             <th>Pre Comments</th>
                                             <th>CAPA Details if any</th>
+                                            <th>Expected Date To Complete</th>
                                             <th>Post Comments</th>
                                         </tr>
                                         @if ($grid_data1->observation_id)
                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
                                                 <tr style="color: black; font-weight: normal;">
                                                     <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $tempData ? $tempData : '' }}</td>
-                                                    <td>{{ unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key] : '' }}
+                                                    <td>{{ $tempData ? $tempData : 'Not Applicable' }}</td>
+                                                    <td>{{ unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key] : 'Not Applicable' }}
                                                     </td>
-                                                    <td>{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : '' }}
+                                                    <td>{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : 'Not Applicable' }}
                                                     </td>
-                                                    <td>{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}
+                                                    <td>{{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) ? Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) : 'Not Applicable' }}</td>
+                                                    <td>{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : 'Not Applicable' }}
                                                     </td>
                                                 </tr>
                                             @endforeach

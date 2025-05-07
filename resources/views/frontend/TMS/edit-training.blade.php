@@ -53,7 +53,7 @@
                                     <p id="trainingType" style="color: red">
                                         ** Training type is missing...
                                     </p>
-                                </div> 
+                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -76,7 +76,7 @@
                                     <label for="classRoom_trainingName">Training Due Date <span class="text-danger">*</span></label>
                                     <input type="datetime-local" name="training_end_date" value="{{$train->training_end_date}}">
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-6">
                                 <div class="group-input"  id="assessmentBlock" @if($train->training_plan_type != "Classroom Training") style="display: none" @endif>
                                     <label for="classRoom_trainingName">Assessment Required?  <span class="text-danger">*</span></label>
@@ -99,7 +99,7 @@
                                             @endphp
                                             @if ($user)
                                                 <option @if($train->classRoom_training == $user->id) selected @endif value="{{ $user->id }}">{{ $user->name }}</option>
-                                                
+
                                                 @endif
                                         @endforeach
 
@@ -117,14 +117,14 @@
                                     // Add elements with class 'facility-name' to inputsToToggle
                                     var facilityNameInputs = document.getElementsByClassName('assessment_required');
                                     var facilityNameInputs1 = document.getElementsByClassName('classRoom_training');
-                                    
+
                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                         inputsToToggle.push(facilityNameInputs[i]);
                                     }
                                     for (var i = 0; i < facilityNameInputs.length; i++) {
                                         inputsToToggle.push(facilityNameInputs1[i]);
                                     }
-                                                                    
+
                                     selectField.addEventListener('change', function () {
                                         var isRequired = this.value === 'Classroom Training';
 
@@ -135,14 +135,14 @@
                                 });
                             </script>
 
-                            
+
                             <script>
                                 function toggleMultiSelect() {
                                   var selectedValue = document.getElementById("training-select").value;
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
                                   var multiSelectField1 = document.getElementById("assessmentBlock");
                                   var AssessmentQuiz = document.getElementById("AssessmentQuiz");
-                                
+
                                   if (selectedValue === "Classroom Training") {
                                     multiSelectField.style.display = "block";
                                     multiSelectField1.style.display = "block";
@@ -171,8 +171,22 @@
                                     <input type="datetime-local" name="training_end_date" value="{{ $train->training_end_date }}">
                                 </div>
                             </div> --}}
+                            <div class="col-6" style="margin-bottom: 10px;">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Select Trainees</label>
+                                    <select id="trainee" name="trainees[]" multiple>
+                                        @foreach ($users->where('is_active', 1) as $value)
+                                            <option value="{{ $value->id }}" {{ in_array($value->id, explode(',', $train->trainees)) ? 'selected' : '' }}>
+                                                {{ $value->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+
                             <div class="col-12">
-                                <div class="group-input"> 
+                                <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
                                     <textarea name="desc">{{ $train->desc }}</textarea>
                                 </div>
@@ -232,9 +246,9 @@
                                         let files = input.files;
                                         for (let i = 0; i < files.length; i++) {
                                             let div = document.createElement('div');
-                                            div.className = 'attachment-item'; 
+                                            div.className = 'attachment-item';
                                             div.innerHTML = files[i].name;
-                            
+
                                             let viewLink = document.createElement("a");
                                             viewLink.href = URL.createObjectURL(files[i]);
                                             viewLink.textContent = "</View>";
@@ -242,31 +256,31 @@
                                                 e.preventDefault();
                                                 window.open(viewLink.href,'_blank');
                                             });
-                            
-                                          
+
+
                                             let removeButton = document.createElement("a");
                                             removeButton.className = 'remove-button';
                                             removeButton.textContent = "</Remove>";
                                             removeButton.addEventListener('click', function() {
                                                 div.remove();
-                                                input.value = ''; 
+                                                input.value = '';
                                             });
 
                                             console.log(removeButton)
-                            
+
                                             div.appendChild(viewLink);
                                             div.appendChild(removeButton);
                                             block.appendChild(div);
                                         }
                                     }
-                                    
+
                             </script>
                             <script>
                                 function toggleAssessmentQuiz() {
                                     console.log('enter');
                                   var selectedValue = document.getElementById("assessment_required").value;
                                   var AssessmentQuiz = document.getElementById("AssessmentQuiz");
-                                
+
                                   if (selectedValue === "yes") {
                                     AssessmentQuiz.style.display = "block";
                                   } else {
@@ -294,7 +308,7 @@
                             <script>
                                 $(document).ready(function() {
                                     $('#quizz').hide();
-                            
+
                                     $('[name="classRoom_training[]"]').change(function() {
                                         if ($(this).val() === 'yes') {
                                             $('#quizz').show();
@@ -315,7 +329,7 @@
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Status </label>
-                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >                
+                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >
                                         <option value="active"> Active</option>
                                         <option value="inactive"> Inactive</option>
                                     </select>
@@ -340,7 +354,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting SOP's
@@ -374,7 +388,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting Trainees
@@ -405,7 +419,7 @@
                                                     @endphp
 
                                                     <td class="text-center"><input type="checkbox" id="trainee" name="trainees[]"
-                                                        @if ($traineesCount == $temp->id) checked @endif 
+                                                        @if ($traineesCount == $temp->id) checked @endif
                                                             value="{{ $temp->id }}"></td>
                                                     <td>{{ $temp->name }}</td>
                                                     <td>{{ $temp->department }}</td>
@@ -419,7 +433,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 {{-- <div class="inner-block add-question" id="question-select">
@@ -535,7 +549,7 @@
     </script>
      <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training' 
+            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training, #trainee'
         });
     </script>
 @endsection

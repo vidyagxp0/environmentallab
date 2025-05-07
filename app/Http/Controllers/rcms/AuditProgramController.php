@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class AuditProgramController extends Controller
 {
@@ -968,15 +969,44 @@ class AuditProgramController extends Controller
         if($AuditProgramGrid->end_date){
             $enddate = unserialize($AuditProgramGrid->end_date);
         }
-        $client = new Client();
-        $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
-        $data->stateArr = json_decode($stateList->getBody(), true);
-        $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
-        $data->cityArr = json_decode($cityList->getBody(), true);
-        $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
-        $data->countryArr = json_decode($countryList->getBody(), true);
-        $old_record = AuditProgram::select('id', 'division_id', 'record', 'created_at')->get();
 
+        $client = new Client();
+
+        // Get Country List
+        try {
+            $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
+            $data->countryArr = json_decode($countryList->getBody(), true);
+        } catch (RequestException $e) {
+            $data->countryArr = [];
+            // You can log the error if needed
+        }
+
+        // Get State List (only if countryId exists)
+        if (!empty($data->country)) {
+            try {
+                $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId=' . $data->country);
+                $data->stateArr = json_decode($stateList->getBody(), true);
+            } catch (RequestException $e) {
+                $data->stateArr = [];
+            }
+        } else {
+            $data->stateArr = [];
+        }
+
+        // Get City List (only if stateId exists)
+        if (!empty($data->state)) {
+            try {
+                $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&stateId=' . $data->state);
+                $data->cityArr = json_decode($cityList->getBody(), true);
+            } catch (RequestException $e) {
+                $data->cityArr = [];
+            }
+        } else {
+            $data->cityArr = [];
+        }
+
+        // Fetch old records
+        $old_record = AuditProgram::select('id', 'division_id', 'record', 'created_at')->get();
 
         return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid', 'startdate', 'enddate', 'old_record'));
     }
@@ -1370,6 +1400,21 @@ class AuditProgramController extends Controller
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "Page " . $pageNumber . " of " . $pageCount;
+                $font = $fontMetrics->getFont("Helvetica", "bold");
+                $size = 12;
+                $color = [0, 0, 0];
+            
+                $width = $canvas->get_width();
+                $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
+            
+                // RIGHT ALIGN (20px from right edge)
+                $x = $width - $textWidth -80;
+                $y = $canvas->get_height() -37;
+            
+                $canvas->text($x, $y, $text, $font, $size, $color);
+            });
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Audit-Program' . $id . '.pdf');

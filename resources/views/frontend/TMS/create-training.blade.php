@@ -12,6 +12,8 @@
     {{-- ======================================
                 CREATING TRAINING
     ======================================= --}}
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <div id="create-training-plan">
         <div class="container-fluid">
 
@@ -168,6 +170,19 @@
                                 </div>
                             </div> --}}
 
+                            <div class="col-6" style="margin-bottom: 10px;">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Select Trainees</label>
+                                    <select id="trainee" name="trainees[]" multiple>
+                                        @foreach ($users->where('is_active', 1) as $temp)
+                                            <option value="{{ $temp->id }}">{{ $temp->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
@@ -232,6 +247,7 @@
                                 </div>
                             </div>
 
+
                             <script>
                                 function toggleAssessmentQuiz() {
                                   var selectedValue = document.getElementById("assessment_required").value;
@@ -285,7 +301,7 @@
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Status </label>
-                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >
+                                    <select class="assessment_required" id="status" name="status" placeholder="Select Stauts" >
                                         <option value="active"> Active</option>
                                         <option value="inactive"> Inactive</option>
                                     </select>
@@ -301,6 +317,8 @@
                                     }
                                 }
                             </script>
+
+
                             {{-- <div class="col-lg-6" id="trainee-criteria">
                                 <div class="group-input">
                                     <label for="trainee-criteria">Trainee Criteria(in %)</label>
@@ -318,20 +336,29 @@
                         </div>
                     </div>
                 </div>
+                <style>
+                    #documentTable_filter{
+                        margin-bottom: 20px;
+                    }
+                    #documentTable{
+                        border-top: 1px solid rgb(85 75 75 / 30%);
+                    }
+                </style>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting SOP's
                             </div>
                             <div class="inner-block-content">
-                                <div class="search-bar">
+                                {{-- <div class="search-bar">
                                     <input type="text" name="search" placeholder="Search SOP's">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                </div>
+                                </div> --}}
                                 <div class="selection-table">
-                                    <table class="table table-bordered">
+                                                {{-- <th class="modify-date">Modify Date Time</th> --}}
+                                    <table class="table table-bordered" id="documentTable">
                                         <thead>
                                             <tr>
                                                 <th>&nbsp;</th>
@@ -408,7 +435,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+
+                    <!-- jQuery (Ensure this is loaded first) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+<!-- DataTables JS (Ensure this is loaded after jQuery) -->
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<!-- Your Custom Script -->
+<script>
+    $(document).ready(function () {
+        new DataTable('#documentTable', {
+            pageLength: 5,
+            order: [[0, 'desc']]
+        });
+    });
+</script>
+                    <!-- <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">
                                 Selecting Trainees
@@ -426,7 +472,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 {{-- <div class="inner-block add-question" id="question-select">
@@ -576,7 +622,7 @@
     </script>
       <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training, #trainee'
         });
     </script>
 @endsection

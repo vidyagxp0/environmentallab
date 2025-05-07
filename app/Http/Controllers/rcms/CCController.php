@@ -16,7 +16,7 @@ use App\Models\DocumentType;
 use App\Models\Evaluation;
 use App\Models\Extension;
 use App\Models\GroupComments;
-use App\Models\GroupPermission;
+use App\Models\Grouppermission;
 use App\Models\QaApprovalComments;
 use App\Models\Qareview;
 use App\Models\QMSDivision;
@@ -4110,7 +4110,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
             $documentTypes = DocumentType::all();
             $documentLanguages = DocumentLanguage::all();
-            $reviewergroup = GroupPermission::where('role_id', 2)->get();
+            $reviewergroup = Grouppermission::where('role_id', 2)->get();
             $approversgroup = Grouppermission::where('role_id', 1)->get();
             $trainer = DB::table('users')
             ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
@@ -4391,6 +4391,21 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "Page " . $pageNumber . " of " . $pageCount;
+                $font = $fontMetrics->getFont("Helvetica", "bold");
+                $size = 12;
+                $color = [0, 0, 0];
+            
+                $width = $canvas->get_width();
+                $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
+            
+                // RIGHT ALIGN (20px from right edge)
+                $x = $width - $textWidth -80;
+                $y = $canvas->get_height() -37;
+            
+                $canvas->text($x, $y, $text, $font, $size, $color);
+            });
 
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 

@@ -492,7 +492,7 @@
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
                     </td>
                     <td class="title w-60"
                     style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
@@ -869,7 +869,7 @@
                                         @endif --}}
                                         @if ($data->document_content && !empty($data->document_content->procedure))
                                         {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->procedure)),
-                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><strong><ol><li>') !!}
+                                            '<br><table><th><td><tbody><tr><p><img><a><span style="font-family:&quot;Times New Roman&quot;;"><h1><h2><h3><h4><h5><h6><div><strong><ol><li>') !!}
                                         @else
                                             <div style="position: relative;">
                                                 <span style="position: absolute; left: -2.5rem; top: 0;"></span> Not Applicable <br>
@@ -1187,12 +1187,12 @@
 
                                                     $signatureReviewerData = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
-                                                ->where('stage', 'Reviewed')
+                                                ->where('stage', 'Review-Submit')
                                                 ->get();
 // dd($signatureReviewerData);
                                                     $signatureApprovalData = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
-                                                ->where('stage', 'Approved')
+                                                ->where('stage', 'Approval-Submit')
                                                 ->latest()
                                                 ->first();
                 @endphp
@@ -1258,13 +1258,14 @@
                                             $date = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
-                                                ->where('stage', 'Reviewed')
+                                                ->where('stage', 'Review-Submit')
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
 
                                                 $comment = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
+                                                ->whereIn('stage', ['Review-Submit', 'Reviewed'])
                                                 ->where('user_id', $reviewer[$i])
                                                 ->latest()
                                                 ->first();
@@ -1290,13 +1291,11 @@
                                                 <td class="text-left w-25">Review Pending</td>
                                             @endif
 
-                                            <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">{{ $comment ? $user->email : '' }}</td>
                                             <td class="text-left w-25">
                                             @if($comment)
                                                 {{ $comment->comment }}
                                             @endif</td>
-                                            {{-- <td class="text-left w-25">{{ !$comment || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td> --}}
-
                                         </tr>
                                     @endfor
                                 @endif
@@ -1361,14 +1360,6 @@
                                 @endif
 
                             </tbody>
-                            {{-- <tbody>
-                                    <tr>
-                                        <td class="text-left w-25">Vivek</td>
-                                        <td class="text-left w-25">Quality Control</td>
-                                        <td class="text-left w-25">12-12-2023 11:12PM</td>
-                                        <td class="text-left w-25">vivek@gmail.com</td>
-                                    </tr>
-                                </tbody> --}}
                         </table>
                     </div>
                 </div>
@@ -1404,15 +1395,16 @@
                                             $date = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
-                                                ->where('stage', 'Approved')
+                                                ->where('stage', 'Approval-Submit')
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                                 $comment = DB::table('stage_manages')
-                                                ->where('document_id', $data->id)
-                                                ->where('user_id', $reviewer[$i])
-                                                ->latest()
-                                                ->first();
+                                                    ->where('document_id', $data->id)
+                                                    ->whereIn('stage', ['Approval-Submit', 'Approved'])
+                                                    ->where('user_id', $reviewer[$i])
+                                                    ->latest()
+                                                    ->first();
                                             $reject = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
@@ -1433,7 +1425,7 @@
                                                 <td class="text-left w-25">Approval Pending</td>
                                             @endif
 
-                                            <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">{{ $comment ? $user->email : '' }}</td>
                                             <td class="text-left w-25">
                                                 @if($comment)
                                                 {{ $comment->comment }}

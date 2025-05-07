@@ -2390,6 +2390,10 @@ class CapaController extends Controller
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
         }
+
+        if ($request->child_type == "RCA") {
+            return view('frontend.forms.root-cause-analysis', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
         $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         if ($request->child_type == "Action_Item") {
             $parent_name = "CAPA";
@@ -2439,6 +2443,21 @@ class CapaController extends Controller
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "Page " . $pageNumber . " of " . $pageCount;
+                $font = $fontMetrics->getFont("Helvetica", "bold");
+                $size = 12;
+                $color = [0, 0, 0];
+            
+                $width = $canvas->get_width();
+                $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
+            
+                // RIGHT ALIGN (20px from right edge)
+                $x = $width - $textWidth -80;
+                $y = $canvas->get_height() -37;
+            
+                $canvas->text($x, $y, $text, $font, $size, $color);
+            });
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('CAPA' . $id . '.pdf');

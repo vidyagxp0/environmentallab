@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -205,13 +205,13 @@
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-                    
+
                     <tr>
                        <th class="w-20">Current Parent DueDate</th>
                         <td class="w-30">@if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                         <th class="w-20">Revised Due Date</th>
                         <td class="w-80"> @if($data->revised_date){{ Helpers::getdateFormat($data->revised_date) }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                      <tr>
                         <th class="w-20">Short Description</th>
@@ -225,15 +225,15 @@
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>                       
+                    <tr>
                         <th class="w-20">Approver</th>
-                        <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>                  
+                        <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Reference Record</th>
-                        <td class="w-80" colspan="3"> @if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td> 
+                        <td class="w-80" colspan="3"> @if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
                     </tr>
-                   
+
                 </table>
             </div>
             <div class="block-head">
@@ -273,7 +273,7 @@
                         <td class="w-80">@if($data->approver_comments){{ $data->approver_comments }}@else Not Applicable @endif</td>
                      </tr>
                   </table>
-                
+
                     <div class="block-head">
                     Closure Attachments
                     </div>
@@ -300,7 +300,7 @@
                         </table>
                       </div>
 </div>
-               
+
             <div class="block">
                 <div class="block-head">
                 Activity Log
@@ -346,7 +346,7 @@
                         Rejected On</th>
                         <td class="w-30">{{ $data->rejected_on }}</td>
                     </tr>
-                   
+
                 </table>
             </div>
         </div>
@@ -361,9 +361,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
+               <td class="w-30">
+                    <strong></strong> 
+                </td> 
             </tr>
         </table>
     </footer>

@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -184,7 +184,21 @@
             </tr>
         </table>
     </header>
-
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                <!-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> -->
+            </tr>
+        </table>
+    </footer>
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -205,12 +219,12 @@
                         <td class="w-30">@if($data->Initiator_Group){{ Helpers::getInitiatorGroupFullName($data->Initiator_Group)}} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        
+
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
@@ -225,32 +239,32 @@
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <th class="w-20">Type(Others)</th>
                         <td class="w-30" colspan="3">@if($data->type_other){{ $data->type_other }}@else Not Applicable @endif</td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30" colspan="3">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
-                    </tr>                    
+                    </tr>
                         <tr>
                          <th class="w-20">Quarter</th>
                          <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
                          <th class="w-20">Year</th>
                          <td class="w-30">@if($data->year){{ $data->year }}@else Not Applicable @endif</td>
-                         </tr>                    
+                         </tr>
                         <tr>
                           <th class="w-20">URl's Description</th>
                           <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
                           <th class="w-20">Severity Level</th>
                           <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
-                        </tr>  
+                        </tr>
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80" colspan="3">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                        </tr> 
-                        <tr>  
+                        </tr>
+                        <tr>
                             <th class="w-20">Others</th>
                             <td class="w-30" colspan="3">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
                         </tr>
@@ -260,7 +274,7 @@
                             <th class="w-20">Initiated Through</th>
                             <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                         </tr>
-                                            
+
                      </table>
                      <div class="border-table">
                     <div class="block-head">
@@ -290,8 +304,8 @@
                 </div>
             </div>
                 </div>
-              
-             
+
+
         <!-- ------------------------------- audit program grid--------------------------------------- -->
         @php
         $users = DB::table('users')
@@ -339,7 +353,7 @@
                                                                 </select></td>
                             <td class="w-15"><input type="text" name="comment[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                             value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}"></td>   -->
-                            
+
                         </tr>
                         @endforeach
                         @else
@@ -377,8 +391,8 @@
 
                             <td class="w-5">{{ unserialize($AuditProgramGrid->end_date)[$key] ? Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) : '' }}</td>
                             <td class="w-15">{{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? Helpers::getInitiatorName(unserialize($AuditProgramGrid->lead_investigator)[$key]) : '' }}</td>
-                            <td class="w-15">{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}</td>  
-                            
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}</td>
+
                         </tr>
                         @endforeach
                         @else
@@ -393,7 +407,7 @@
             </div>
 
 
-                
+
      <!--  ------------------------------- audit program grid--------------------------------------- -->
 
 
@@ -411,7 +425,7 @@
                             Submitted On</th>
                         <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20">Audit Completed By</th>
                         <td class="w-30">{{ $data->Audit_Completed_By }}</td>
@@ -451,9 +465,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <!-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> -->
+                <td class="w-30">
+                    <strong></strong>
+                </td>
             </tr>
         </table>
     </footer>

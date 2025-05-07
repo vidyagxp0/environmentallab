@@ -403,14 +403,17 @@
                                         <label for="Incident Category">Incident Category</label>
                                         <select {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="Incident_Category">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
-                                                Biological
+                                            <option value="Microbiological" @if ($data->Incident_Category== 'Microbiological') selected @endif>
+                                                Microbiological
                                             </option>
                                             <option value="Chemical" @if ($data->Incident_Category== 'Chemical') selected @endif>
                                                 Chemical
                                             </option>
                                             <option value="Deviation" @if ($data->Incident_Category== 'Deviation') selected @endif>
                                                 Deviation
+                                            </option>
+                                            <option value="Work Injuries" @if ($data->Incident_Category== 'Work Injuries') selected @endif>
+                                                Work Injuries
                                             </option>
                                             <option value="Others" @if ($data->Incident_Category== 'Others') selected @endif>
                                                 Others
