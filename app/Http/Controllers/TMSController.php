@@ -275,8 +275,7 @@ class TMSController extends Controller
         }
     }
     public function training($id, $trainingId){
-        $id_array = explode(',', $id); // Convert "1,2,3,4,5,6,7,8" to an array
-// dd(explode(',', urldecode($id)));
+        $id_array = explode(',', $id);
         $documents = Document::whereIn('id', $id_array)->get();
        $training = Training::find($trainingId);
        $countAudit = TrainingAudit::where('trainee_id',Auth::user()->id)->where('sop_id',$id)->count();
@@ -398,64 +397,20 @@ class TMSController extends Controller
 
     // }
     public function trainingStatus(Request $request,$id){
-
         if(Auth::user()->email == $request->email && Hash::check($request->password,Auth::user()->password)){
-            $document = DocumentTraining::where('document_id',$id)->first();
-            $document->train = Training::find($request->training_id);
-
+            $train = Training::find($request->training_id);
             $trainingStatus = new TrainingStatus();
             $trainingStatus->user_id = Auth::user()->id;
-            $trainingStatus->sop_id = $id;
+            $trainingStatus->sop_id = $request->sop_id;
             $trainingStatus->training_id = $request->training_id;
             $trainingStatus->status = "Complete";
             $trainingStatus->save();
-
-            $TrainingHistory = new TrainingHistory();
-            $TrainingHistory->plan_id =  $request->training_id;
-            $TrainingHistory->sop_id =  $id;
-            $TrainingHistory->activity_type = "Training Complete by " . Auth::user()->name;
-            $TrainingHistory->previous = "Assigned";
-            $TrainingHistory->current ="Complete";
-            $TrainingHistory->comment = "NULL";
-            $TrainingHistory->user_id = Auth::user()->id;
-            $TrainingHistory->user_name = Auth::user()->name;
-            $TrainingHistory->origin_state = "Assigned";
-            $TrainingHistory->save();
-
-            $history = new DocumentHistory();
-            $history->document_id = $id;
-            $history->activity_type = "Training Complete";
-            $history->previous ="Training pending";
-            $history->current = "Training Completed by " .Auth::user()->name;
-            $history->comment = "Training Completed by " .Auth::user()->name;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = "Pending-Training";
-            $history->save();
-
-            $criteria = $this->effective($id, $request->training_id);
-            if(count(TrainingStatus::where('sop_id',$id)->where('training_id',$request->training_id)->where('status',"Complete")->get()) >= $criteria){
-                $document = DocumentTraining::where('document_id',$id)->first();
-                $document->status = "Complete";
-                $document->update();
-
-                $history = new DocumentHistory();
-                $history->document_id = $id;
-                $history->activity_type = "Training Complete";
-                $history->previous ="Training pending";
-                $history->current = "Training Completed by " ."All trainees";
-                $history->comment = "Training Completed by " ."All trainees";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = "Pending-Training";
-                $history->save();
-
+            $sops = explode(',', $request->sop_id);
+            foreach($sops as $doc){
                 $TrainingHistory = new TrainingHistory();
                 $TrainingHistory->plan_id =  $request->training_id;
-                $TrainingHistory->sop_id =  $id;
-                $TrainingHistory->activity_type = "Training Complete for one Document ";
+                $TrainingHistory->sop_id =  $doc;
+                $TrainingHistory->activity_type = "Training Complete by " . Auth::user()->name;
                 $TrainingHistory->previous = "Assigned";
                 $TrainingHistory->current ="Complete";
                 $TrainingHistory->comment = "NULL";
@@ -463,12 +418,53 @@ class TMSController extends Controller
                 $TrainingHistory->user_name = Auth::user()->name;
                 $TrainingHistory->origin_state = "Assigned";
                 $TrainingHistory->save();
-                
+
+                $history = new DocumentHistory();
+                $history->document_id = $doc;
+                $history->activity_type = "Training Complete";
+                $history->previous ="Training pending";
+                $history->current = "Training Completed by " .Auth::user()->name;
+                $history->comment = "Training Completed by " .Auth::user()->name;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = "Pending-Training";
+                $history->save();
+            }
+            $criteria = $this->effective($id, $request->training_id);
+            if(count(TrainingStatus::where('sop_id',$request->sop_id)->where('training_id',$request->training_id)->where('status',"Complete")->get()) >= $criteria){
                 $trainnigData = Training::find($request->training_id);
                 $sops = explode(',', $trainnigData->sops);
+                foreach($sops as $doc){
+                    $history = new DocumentHistory();
+                    $history->document_id = $id;
+                    $history->activity_type = "Training Complete";
+                    $history->previous ="Training pending";
+                    $history->current = "Training Completed by " ."All trainees";
+                    $history->comment = "Training Completed by " ."All trainees";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Pending-Training";
+                    $history->save();
 
-                $document->doc = Document::whereIn('id', $sops)->get();
-                foreach($document->doc as $doc){
+                    $TrainingHistory = new TrainingHistory();
+                    $TrainingHistory->plan_id =  $request->training_id;
+                    $TrainingHistory->sop_id =  $id;
+                    $TrainingHistory->activity_type = "Training Complete for one Document ";
+                    $TrainingHistory->previous = "Assigned";
+                    $TrainingHistory->current ="Complete";
+                    $TrainingHistory->comment = "NULL";
+                    $TrainingHistory->user_id = Auth::user()->id;
+                    $TrainingHistory->user_name = Auth::user()->name;
+                    $TrainingHistory->origin_state = "Assigned";
+                    $TrainingHistory->save();
+                }
+
+
+
+                $documentDoc = Document::whereIn('id', $sops)->get();
+                foreach($documentDoc as $doc){
                     $doc->stage = 8;
                     $doc->status = "Effective";
                     $doc->update();
@@ -478,12 +474,12 @@ class TMSController extends Controller
                           function ($message) use ($user_data) {
                                   $message->to($user_data->email)
                                   ->subject("Training is Completed.");
-    
+
                           });
                     } catch (\Exception $e) {
                         // log
                     }
-    
+
                     try {
                         Mail::send('mail.effective', ['document' => $doc],
                         function ($message) use ($user_data) {
@@ -506,23 +502,23 @@ class TMSController extends Controller
                         array_push($trainingArray,$documentTrain);
                     }
                     if(count($trainingArray) == count($sop)){
-                        $document->train = Training::find($request->training_id);
-                        $document->train->status = "Complete";
-                        $document->train->update();
-                        $user = User::find($document->train->trainner_id);
-                        try {
-                            Mail::send('mail.training', ['document' => $document],
-                              function ($message) use ($user) {
-                                      $message->to($user->email)
-                                      ->subject("Training is Completed.");
+                        $train = Training::find($request->training_id);
+                        $train->status = "Complete";
+                        $train->update();
+                        $user = User::find($train->trainner_id);
+                        // try {
+                        //     Mail::send('mail.training', ['document' => $document],
+                        //       function ($message) use ($user) {
+                        //               $message->to($user->email)
+                        //               ->subject("Training is Completed.");
 
-                              });
-                        } catch (\Exception $e) {
-                            //
-                        }
+                        //       });
+                        // } catch (\Exception $e) {
+                        //     //
+                        // }
                               $TrainingHistory = new TrainingHistory();
                               $TrainingHistory->plan_id =  $request->training_id;
-                              $TrainingHistory->sop_id =  $document->train->sops;
+                              $TrainingHistory->sop_id =  $request->sop_id;
                               $TrainingHistory->activity_type = "Training Complete for all SOPs";
                               $TrainingHistory->previous = "Assigned";
                               $TrainingHistory->current ="Complete";
@@ -537,23 +533,9 @@ class TMSController extends Controller
                 return redirect()->route('TMS.index');
             }
             else{
-                $user = User::find($document->train->trainner_id);
-                 try {
-                    Mail::send('mail.training', ['document' => $document],
-                    function ($message) use ($user) {
-                            $message->to($user->email)
-                            ->subject("Training is Completed by ".Auth::user()->name. " .");
-
-                    });
-                 } catch (\Exception $e) {
-                    //
-                 }
                   toastr()->success('Training Complete Successfully !!');
                   return redirect()->route('TMS.index');
             }
-
-
-
         }
         else{
             toastr()->error('E-signature not match');
@@ -563,7 +545,6 @@ class TMSController extends Controller
      }
 
      public function effective($id, $training_id){
-        $documentTraining = DocumentTraining::where('document_id', $id)->first();
         $training = Training::find($training_id);
 
         $trainees = explode(',',$training->trainees);

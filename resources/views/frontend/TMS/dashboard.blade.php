@@ -171,7 +171,6 @@
                                                         $AssignedTrainings = DB::table('trainings')
                                                             ->whereRaw("FIND_IN_SET(?, trainees)", [$userId])
                                                             ->get();
-
                                                     @endphp
                                                     @foreach ($AssignedTrainings as $index => $temp)
                                                         @php
@@ -185,6 +184,7 @@
                                                             $completedTrainees = DB::table('training_statuses')
                                                                 ->whereIn('user_id', $trainees) // Match trainees from the plan
                                                                 ->where('training_id', $temp->id)
+                                                                ->where('sop_id', $temp->sops)
                                                                 ->where('status', 'Complete')
                                                                 ->count();
 
@@ -226,9 +226,6 @@
                                                             'training_id' => $temp->id,
                                                             'status' => 'Complete'
                                                             ])->first();
-                                                            if($temp->id == 4){
-                                                            // dd($trainingStatusCheck, $temp->sops == "1,2,3,4,5,6,7,8");
-                                                            }
                                                             @endphp
                                                                 <tr>
                                                         <td>{{ $index + 1 }}</td>

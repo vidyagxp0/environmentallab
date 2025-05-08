@@ -57,7 +57,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="due-date">Due Date</label>
-                                <div class="static">{{ \Carbon\Carbon::parse($doc->due_dateDoc)->format('d M Y') }}</div>
+                                <div class="static">{{ \Carbon\Carbon::parse($trainning->training_end_date)->format('d M Y') }}</div>
 
 
                             </div>
@@ -67,13 +67,9 @@
             </div>
             @if(!in_array(auth()->user()->id, explode(',', $trainning->trainees)) || !$trainingCompleted)
                 <div class="foot-btns">
-                    @if ($trainning->status == 'Complete')
-                        <a href="{{ route('TMS.index') }}">Already Completed</a>
-                    @else
                         <a href="{{ route('TMS.index') }}">Continue Later</a>
 
                         <a href="{{ url('training', $sopId) }}/{{ $trainning->id }}">Start Training</a>
-                    @endif
                 </div>
             @endif
 
