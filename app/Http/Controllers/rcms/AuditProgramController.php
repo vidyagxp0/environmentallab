@@ -561,7 +561,6 @@ class AuditProgramController extends Controller
         $lastDocument = AuditProgram::find($id);
         $data = AuditProgram::find($id);
         // $data->record = ((RecordNumber::first()->value('counter')) + 1);
-        $data->initiator_id = Auth::user()->id;
         $data->short_description = $request->short_description;
 
         $data->initiated_through = $request->initiated_through;

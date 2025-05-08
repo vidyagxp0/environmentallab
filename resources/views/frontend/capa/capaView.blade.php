@@ -241,7 +241,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator">Initiator</label>
                                                 <input disabled type="text" name="initiator_id"
-                                                    value="{{ $data->initiator_name }}">
+                                                    value="{{ $data->initiator_name}}">
                                                 {{-- <div class="static"> </div> --}}
                                             </div>
                                         </div>

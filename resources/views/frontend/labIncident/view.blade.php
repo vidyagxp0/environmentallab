@@ -209,7 +209,7 @@
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" name="division_code"
-                                            value="{{ $data->initiator_name }}">
+                                            value="{{ $data->initiator_name}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

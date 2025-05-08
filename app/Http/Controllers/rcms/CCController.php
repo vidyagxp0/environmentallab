@@ -1347,7 +1347,6 @@ class CCController extends Controller
         // $lastcftReviewerNames = implode(', ', $lastcftReviewers);
 
 
-        $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->short_description = $request->short_description;
