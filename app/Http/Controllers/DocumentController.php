@@ -944,18 +944,27 @@ class DocumentController extends Controller
                 $document->minor = $request->minor;
 
 
-                if (! empty($request->reviewers)) {
-                    $document->reviewers = implode(',', $request->reviewers);
+                if (!empty($request->reviewers)) {
+                    $document->reviewers = is_array($request->reviewers)
+                        ? implode(',', $request->reviewers)
+                        : $request->reviewers;
                 }
-                if (! empty($request->approvers)) {
-                    $document->approvers = implode(',', $request->approvers);
+                if (!empty($request->approvers)) {
+                    $document->approvers = is_array($request->approvers)
+                        ? implode(',', $request->approvers)
+                        : $request->approvers;
                 }
-                if (! empty($request->reviewers_group)) {
-                    $document->reviewers_group = implode(',', $request->reviewers_group);
+                if (!empty($request->reviewers_group)) {
+                    $document->reviewers_group = is_array($request->reviewers_group)
+                        ? implode(',', $request->reviewers_group)
+                        : $request->reviewers_group;
                 }
-                if (! empty($request->approver_group)) {
-                    $document->approver_group = implode(',', $request->approver_group);
+                if (!empty($request->approver_group)) {
+                    $document->approver_group = is_array($request->approver_group)
+                        ? implode(',', $request->approver_group)
+                        : $request->approver_group;
                 }
+
             }
 
 

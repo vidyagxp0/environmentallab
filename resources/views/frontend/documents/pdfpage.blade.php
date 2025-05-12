@@ -881,6 +881,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
 
 
             {{-- PROCEDURE END --}}
@@ -1510,8 +1512,8 @@
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 788;
-                    $x = 485;
+                    $y = 799;
+                    $x = 490;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }
             ');
