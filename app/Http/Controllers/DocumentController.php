@@ -532,6 +532,7 @@ class DocumentController extends Controller
                 $document->reference_record = implode(',', $request->reference_record);
             }
 
+
             if ($request->hasfile('attach_draft_doocument')) {
 
                 $image = $request->file('attach_draft_doocument');
@@ -909,9 +910,11 @@ class DocumentController extends Controller
                 }
 
                 if ($request->reference_record) {
-                    $document->reference_record = implode(',', $request->reference_record);
+                    $document->reference_record = is_array($request->reference_record)
+                        ? implode(',', $request->reference_record)
+                        : $request->reference_record;
                 }
-
+  
 
                 if ($request->hasfile('attach_draft_doocument')) {
 
