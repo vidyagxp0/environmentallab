@@ -14,18 +14,17 @@
 
     <style>
 
-        @font-face {
-            font-family: 'times-roman';
-            src: url("{{ asset('fonts/Times New Roman.ttf') }}"");
-        }
-        * {
-            font-family: times-roman, "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: normal;
-            font-variation-settings:
-                "wdth" 100;
-        }
+       @font-face {
+        font-family: 'times-roman';
+        src: url("{{ asset('fonts/Times New Roman.ttf') }}");
+    }
+    
+    * {
+        font-family: times-roman, "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #333;
+    }
 
         p {
             font-size: 12px;
@@ -47,6 +46,7 @@
             text-align: center;
 
         }
+      
 
         .w-5 {
             width: 5%;
@@ -534,6 +534,7 @@
             </tbody>
         </table>
     </header>
+
     <footer class="footer">
         <table class="border p-20">
             <tbody>
@@ -861,25 +862,37 @@
                     </table>
                     <div class="procedure-block">
                         <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
-                                        {{-- @if ($data->document_content)
-                                            {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->procedure)), '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
-                                        @endif --}}
-                                        @if ($data->document_content && !empty($data->document_content->procedure))
-                                        {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->procedure)),
-                                            '<br><table><th><td><tbody><tr><p><img><a><span style="font-family:&quot;Times New Roman&quot;;"><h1><h2><h3><h4><h5><h6><div><strong><ol><li>') !!}
-                                        @else
-                                            <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;"></span> Not Applicable <br>
-                                            </div>
-                                        @endif
-                                    </div>
+                          <div class="w-100" style="display:inline-block;">
+
+                 
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:auto; width:650px; margin-left: 2.5rem;" class="symbol-support">
+                                    @if ($data->document_content && !empty($data->document_content->procedure))
+                                        {!! 
+                                            str_replace(
+                                                ['<table', '<th', '<td', '<tr'],
+                                                [
+                                                    '<table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;"',
+                                                    '<th style="border: 1px solid #ccc; padding: 8px; background-color: #f9f9f9;"',
+                                                    '<td style="border: 1px solid #ccc; padding: 8px;"',
+                                                    '<tr style="border: 1px solid #ccc;"'
+                                                ],
+                                                strip_tags(
+                                                    str_replace("−", "-", html_entity_decode($data->document_content->procedure)),
+                                                    '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><strong><ol><li>'
+                                                )
+                                            )
+                                        !!}
+                                    @else
+                                        <div style="position: relative;">
+                                            <span style="position: absolute; left: -2.5rem; top: 0;"></span> Not Applicable <br>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                  
+
+
                 </div>
             </div>
 
