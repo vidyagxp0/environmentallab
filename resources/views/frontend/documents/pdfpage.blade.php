@@ -535,8 +535,9 @@
         </table>
     </header>
 
+
     <footer class="footer">
-        <table class="border p-20">
+        <table class="border p-10">
             <tbody>
                 <tr>
                     <td class="text-left w-36">
