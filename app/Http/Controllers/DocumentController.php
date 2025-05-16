@@ -1635,19 +1635,76 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
-            if ($lastContent->distribution != $documentcontet->distribution || ! empty($request->distribution_comment)) {
-                $history = new DocumentHistory;
-                $history->document_id = $id;
-                $history->activity_type = 'Distribution';
-                $history->previous = $lastContent->distribution;
-                $history->current = $documentcontet->distribution;
-                $history->comment = $request->distribution_comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->save();
-            }
+
+              $annexureRaw = $documentcontet->annexuredata;
+$lastAnnexureRaw = $lastContent->annexuredata;
+
+// Extract content inside <p> tags for both current and previous data
+preg_match_all('/<p[^>]*>(.*?)<\/p>/i', $annexureRaw, $currentMatches);
+preg_match_all('/<p[^>]*>(.*?)<\/p>/i', $lastAnnexureRaw, $lastMatches);
+
+// Just the inner content from matches
+$currentAnnexures = $currentMatches[1];
+$lastAnnexures = $lastMatches[1];
+
+// Ensure both arrays have 20 elements
+$currentAnnexures = array_pad($currentAnnexures, 20, '');
+$lastAnnexures = array_pad($lastAnnexures, 20, '');
+
+for ($i = 0; $i < 20; $i++) {
+    $current = strip_tags($currentAnnexures[$i]);
+    $previous = strip_tags($lastAnnexures[$i]);
+
+    if ($current !== $previous || !empty($request->annexuredata_comment)) {
+        $history = new DocumentHistory;
+        $history->document_id = $id;
+        $history->activity_type = 'Annexure ' . ($i + 1); // e.g., "Annexure 1"
+        $history->previous = $previous;
+        $history->current = $current;
+        $history->comment = $request->annexuredata_comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->save();
+    }
+}
+
+
+         $lastDistributionRaw = $lastContent->distribution;
+$currentDistributionRaw = $documentcontet->distribution;
+
+// Extract individual <p> fields
+preg_match_all('/<p[^>]*>(.*?)<\/p>/i', $lastDistributionRaw, $lastMatches);
+preg_match_all('/<p[^>]*>(.*?)<\/p>/i', $currentDistributionRaw, $currentMatches);
+
+$lastItems = $lastMatches[1];
+$currentItems = $currentMatches[1];
+
+// Pad to avoid index errors
+$maxCount = max(count($lastItems), count($currentItems));
+$lastItems = array_pad($lastItems, $maxCount, '');
+$currentItems = array_pad($currentItems, $maxCount, '');
+
+for ($i = 0; $i < $maxCount; $i++) {
+    $prevField = strip_tags($lastItems[$i]);
+    $currField = strip_tags($currentItems[$i]);
+
+    if ($prevField !== $currField || !empty($request->distribution_comment)) {
+        $history = new DocumentHistory;
+        $history->document_id = $id;
+        $history->activity_type = 'Distribution - Field ' . ($i + 1);
+        $history->previous = $prevField;
+        $history->current = $currField;
+        $history->comment = $request->distribution_comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->save();
+    }
+}
+
 
             toastr()->success('Document Updated');
             DocumentService::update_document_numbers();
