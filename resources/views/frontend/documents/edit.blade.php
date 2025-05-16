@@ -241,7 +241,7 @@
                                         <option value="Quality Policies" @if ($document->sop_type == 'Quality Policies') selected @endif>Quality Policies</option>
                                         <option value="Others" @if ($document->sop_type == 'Others') selected @endif>Others</option>
                                     </select>
-                                    <input type="hidden" name="sop_type" value="{{ $document->sop_type }}">
+                                    <input type="hidden" name="sop_type1" value="{{ $document->sop_type }}">
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'SOP Type' &&
@@ -357,7 +357,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" name="notify_to" value="{{ $document->notify_to }}">
+                                    <input type="hidden" name="notify_to1" value="{{ $document->notify_to }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Notify To' &&
@@ -481,7 +481,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    <input type="hidden" name="reference_record" value="{{ $document->reference_record }}">
+                                    <input type="hidden" name="reference_record1" value="{{ $document->reference_record }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reference Record' &&
@@ -523,7 +523,7 @@
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }}>
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }}>
                                         <option value="">Enter your Selection</option>
                                             <option value="CQA"
                                                 @if ($document->department_id == 'CQA') selected @endif>Corporate
@@ -585,7 +585,7 @@
                                                 {{ $department->name }}</option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" name="department_id" value="{{ $document->department_id }}">
+                                    <input type="hidden" name="department_id1" value="{{ $document->department_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Department' &&
@@ -755,7 +755,7 @@
                                 <div class="group-input">
                                     <label for="doc-type">Document Type</label>
                                     <select name="document_type_id" id="doc-type" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
                                         <option value="">Enter your Selection</option>
                                         @foreach ($documentTypes as $type)
                                             <option data-id="{{ $type->typecode }}" value="{{ $type->id }}"
@@ -763,7 +763,7 @@
                                                 {{ $type->name }}</option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" name="document_type_id" value="{{ $document->document_type_id }}">
+                                    <input type="hidden" name="document_type_id1" value="{{ $document->document_type_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document' &&
@@ -896,7 +896,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" name="document_language_id" value="{{ $document->document_language_id }}">
+                                    <input type="hidden" name="document_language_id1" value="{{ $document->document_language_id }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document Language' &&
@@ -1285,7 +1285,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                    <input type="hidden" name="reviewers" value="{{ $document->reviewers }}">
+                                    <input type="hidden" name="reviewers1" value="{{ $document->reviewers }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers' &&
@@ -1347,7 +1347,7 @@
                                         @endforeach
                                         @endif
                                     </select>
-                                    <input type="hidden" name="approvers" value="{{ $document->approvers }}">
+                                    <input type="hidden" name="approvers1" value="{{ $document->approvers }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers' &&
@@ -1409,7 +1409,7 @@
                                         @endforeach
                                         @endif
                                     </select>
-                                    <input type="hidden" name="reviewers_group" value="{{ $document->reviewers_group }}">
+                                    <input type="hidden" name="reviewers_group1" value="{{ $document->reviewers_group }}">
 
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -1471,7 +1471,7 @@
                                         @endforeach
                                         @endif
                                     </select>
-                                    <input type="hidden" name="approver_group" value="{{ $document->approver_group }}">
+                                    <input type="hidden" name="approver_group1" value="{{ $document->approver_group }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers Group' &&
@@ -1512,7 +1512,7 @@
                                 <div class="group-input">
                                     <label for="revision-type">Revision Type</label>
                                     <select  name="revision_type" {{Helpers::isRevised($document->stage)}}
-                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'disabled' }} >
+                                        {{ $document->stage == 1 || $document->stage == 3 && Auth::user()->id == $document->originator_id ? '' : 'readonly' }} >
                                         <option  value="0">-- Select --</option>
                                         <option @if ($document->revision_type =='minor') selected @endif
                                             value="minor">Minor</option>
@@ -1521,7 +1521,7 @@
                                         <option @if ($document->revision_type =='NA') selected @endif
                                             value="NA">NA</option>
                                     </select>
-                                    <input type="hidden" name="revision_type" value="{{ $document->revision_type }}">
+                                    <input type="hidden" name="revision_type1" value="{{ $document->revision_type }}">
                                     @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment) )
                                         @php
@@ -1625,7 +1625,7 @@
                                         @endif
 
                                     </select>
-                                    <input type="hidden" name="training_required" value="{{ $document->training_required }}">
+                                    <input type="hidden" name="training_required1" value="{{ $document->training_required }}">
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Training Required' && !empty($tempHistory->comment) )

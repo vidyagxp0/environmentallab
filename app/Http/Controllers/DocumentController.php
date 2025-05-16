@@ -869,6 +869,7 @@ class DocumentController extends Controller
      */
     public function update($id, Request $request)
     {
+      
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
             $lastContent = DocumentContent::firstOrNew([
@@ -1089,12 +1090,14 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+   
+
             if ($lastDocument->notify_to != $document->notify_to || ! empty($request->notify_to_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
                 $history->activity_type = 'Notify To';
-                $history->previous = $lastDocument->notify_to;
-                $history->current = $document->notify_to;
+                $history->previous = Helpers::getInitiatorName ($lastDocument->notify_to);
+                $history->current = Helpers::getInitiatorName( $document->notify_to);
                 $history->comment = $request->notify_to_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1102,6 +1105,8 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+
+
             if ($lastDocument->description != $document->description || ! empty($request->description_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
@@ -1116,20 +1121,34 @@ class DocumentController extends Controller
                 $history->save();
             }
 
+              if ($lastDocument->department_id != $document->department_id || ! empty($request->department_id_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Department Name';
+                $history->previous = Helpers::getDepartmentWithString($lastDocument->department_id);
+                $history->current = Helpers::getDepartmentWithString($document->department_id);
+                $history->comment = $request->department_id_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
 
-             if ($lastDocument->department_id != $document->department_id || ! empty($request->department_id_comment)) {
-                 $history = new DocumentHistory;
-                 $history->document_id = $id;
-                 $history->activity_type = 'Department';
-                 $history->previous = Department::where('id', $lastDocument->department_id)->value('name');
-                 $history->current = Department::where('id', $document->department_id)->value('name');
-                 $history->comment = $request->department_id_comment;
-                 $history->user_id = Auth::user()->id;
-                 $history->user_name = Auth::user()->name;
-                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                 $history->origin_state = $lastDocument->status;
-                 $history->save();
-             }
+              if ($lastDocument->document_type_id != $document->document_type_id || ! empty($request->document_type_id_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Document Type';
+                $history->previous = DocumentType::where('id',$lastDocument->document_type_id)->value('name');
+                $history->current = DocumentType::where('id' , $document->document_type_id)->value('name');
+                $history->comment = $request->document_type_id_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+
             // if ($lastDocument->document_type_id != $document->document_type_id || ! empty($request->document_type_id_comment)) {
             //     $history = new DocumentHistory;
             //     $history->document_id = $id;
@@ -1156,19 +1175,21 @@ class DocumentController extends Controller
             //     $history->origin_state = $lastDocument->status;
             //     $history->save();
             // }
-            // if ($lastDocument->document_language_id != $document->document_language_id || ! empty($request->document_language_id_comment)) {
-            //     $history = new DocumentHistory;
-            //     $history->document_id = $id;
-            //     $history->activity_type = 'Document Language';
-            //     $history->previous = DocumentLanguage::where('id', $lastDocument->document_language_id)->value('name');
-            //     $history->current = DocumentLanguage::where('id', $document->document_language_id)->value('name');
-            //     $history->comment = $request->document_language_id_comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->save();
-            // }
+            if ($lastDocument->document_language_id != $document->document_language_id || ! empty($request->document_language_id_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Document Language';
+                $history->previous = DocumentLanguage::where('id', $lastDocument->document_language_id)->value('name');
+                $history->current = DocumentLanguage::where('id', $document->document_language_id)->value('name');
+                $history->comment = $request->document_language_id_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+
+
             if ($lastDocument->effective_date != $document->effective_date || ! empty($request->effective_date_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
@@ -1380,6 +1401,9 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+
+             
+
             if ($lastDocument->revision_summary != $document->revision_summary || ! empty($request->revision_summary_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
@@ -1387,6 +1411,34 @@ class DocumentController extends Controller
                 $history->previous = $lastDocument->revision_summary;
                 $history->current = $document->revision_summary;
                 $history->comment = $request->revision_summary_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+
+             if ($lastDocument->training_required != $document->training_required || ! empty($request->training_required_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Training Required';
+                $history->previous = $lastDocument->training_required;
+                $history->current = $document->training_required;
+                $history->comment = $request->training_required_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+
+             if ($lastDocument->trainer != $document->trainer || ! empty($request->trainer_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Trainer';
+                $history->previous = Helpers::getInitiatorName($lastDocument->trainer);
+                $history->current = Helpers::getInitiatorName($document->trainer);
+                $history->comment = $request->trainer_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
