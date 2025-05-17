@@ -790,7 +790,7 @@
                                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}" style="@if ($data->stage == 0 || $data->stage == 7) pointer-events: none; @endif"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                        @endforeach
                                                             @endif
@@ -1454,7 +1454,7 @@
                                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}" style="@if ($data->stage == 0  || $data->stage == 7) pointer-events: none; @endif"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                        @endforeach
                                                             @endif
@@ -2356,7 +2356,7 @@
                                                                     Helpers::recordFormat($new->record);
                                                                 $selected = in_array(
                                                                     $recordValue,
-                                                                    explode(',', $data->Reference_Recores1)
+                                                                    explode(',', $data->refrence_record)
 )
                                                                     ? 'selected'
                                                                     : '';

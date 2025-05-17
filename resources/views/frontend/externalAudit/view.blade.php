@@ -785,7 +785,7 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                        data-file-name="{{ $file }}" style="@if ($data->stage == 0  || $data->stage == 6) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -870,10 +870,11 @@
                                         </div>
                                     </div>
 
+                                    
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Issues">Audit Agenda<button type="button" name="ann" id="auditAgendaData">+</button>
+                                            <label for="Issues">Audit Agenda<button type="button" name="ann" {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} id="auditAgendaData">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#Audit_Agenda_modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -901,12 +902,12 @@
                                                     @if(!empty($auditAgenda))
                                                         @foreach($auditAgenda as $index => $row)
                                                             <tr>
-                                                                <td><input type="text" name="serial[]" value="{{ $loop->index + 1 }}" readonly></td>
-                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][auditArea]" value="{{ $row['auditArea'] }}"></td>
-                                                                <td><input type="date" name="auditAgendaData[{{ $index }}][startDate]" value="{{ $row['startDate'] }}"></td>
-                                                                <td><input type="time" name="auditAgendaData[{{ $index }}][startTime]" value="{{ $row['startTime'] }}"></td>
-                                                                <td><input type="date" name="auditAgendaData[{{ $index }}][endDate]" value="{{ $row['endDate'] }}"></td>
-                                                                <td><input type="time" name="auditAgendaData[{{ $index }}][endTime]" value="{{ $row['endTime'] }}"></td>
+                                                                <td><input type="text" name="serial[]" {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} value="{{ $loop->index + 1 }}" readonly></td>
+                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][auditArea]" {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} value="{{ $row['auditArea'] }}"></td>
+                                                                <td><input type="date" name="auditAgendaData[{{ $index }}][startDate]" {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} value="{{ $row['startDate'] }}"></td>
+                                                                <td><input type="time" name="auditAgendaData[{{ $index }}][startTime]" {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} value="{{ $row['startTime'] }}"></td>
+                                                                <td><input type="date" name="auditAgendaData[{{ $index }}][endDate]"  {{$data->stage == 0 || $data-> stage == 6 ? 'readonly' : '' }}  value="{{ $row['endDate'] }}"></td>
+                                                                <td><input type="time" name="auditAgendaData[{{ $index }}][endTime]"  {{$data->stage == 0 || $data-> stage == 6 ? 'readonly' : '' }} value="{{ $row['endTime'] }}"></td>
                                                                 {{-- <td>
                                                                     <select name="auditAgendaData[{{ $index }}][auditor]">
                                                                         <option value="">Select Option</option>
@@ -915,16 +916,16 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </td> --}}
-                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][auditor]" value="{{ $row['auditor'] }}"></td>
+                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][auditor]" {{$data->stage == 0 || $data-> stage == 6 ? 'readonly ' : '' }} value="{{ $row['auditor'] }}"></td>
                                                                 <td>
                                                                     <select name="auditAgendaData[{{ $index }}][auditee]">
                                                                         <option value="">Select Option</option>
                                                                         @foreach($users as $user)
-                                                                            <option value="{{ $user->id }}" {{ $row['auditee'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                                            <option value="{{ $user->id }}"  {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} {{ $row['auditee'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
-                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][remarks]" value="{{ $row['remarks'] }}"></td>
+                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][remarks]" {{$data->stage == 0 || $data-> stage == 6 ? 'disabled' : '' }} value="{{ $row['remarks'] }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
                                                         @endforeach
@@ -1028,7 +1029,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-file-name="{{ $file }}" style="@if ($data->stage == 0  || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -1226,7 +1227,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-file-name="{{ $file }}" style="@if ($data->stage == 0 || $data->stage == 2 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
