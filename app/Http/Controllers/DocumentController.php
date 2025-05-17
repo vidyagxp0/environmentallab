@@ -2257,7 +2257,6 @@ class DocumentController extends Controller
     public function revision(Request $request, $id)
     {
         $document = Document::find($id);
-
         if (!$document) {
             toastr()->error('Document not found!');
             return redirect()->back();
@@ -2287,12 +2286,14 @@ class DocumentController extends Controller
         }
 
         $document->revision = 'Yes';
+        $document->revised = 'Yes';
         $document->revision_policy = $request->revision;
         $document->update();
 
         $newdoc = $document->replicate();
-        $newdoc->revised = 'Yes';
+        $newdoc->revised = 'No';
         $newdoc->revised_doc = $document->id;
+        $newdoc->originator_id = Auth::user()->id;
         $newdoc->major = $requestedMajor;
         $newdoc->minor = $requestedMinor;
         $newdoc->trainer = $request->trainer;
@@ -2327,7 +2328,7 @@ class DocumentController extends Controller
         DocumentService::update_document_numbers();
 
         toastr()->success('Document has been revised successfully! You can now edit the content.');
-        return redirect()->route('documents.editWithType', ['id' => $document->id, 'type' => 'doc']);
+        return redirect()->route('documents.editWithType', ['id' => $newdoc->id, 'type' => 'doc']);
     }
 
     public function exportPdf()

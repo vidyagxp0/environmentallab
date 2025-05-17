@@ -45,13 +45,13 @@
                                     {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif --}}
-                                    @if ($document->stage >= 8 && $document->status !== 'Obsolete' && Auth::user()->id == $document->originator_id)
-                                        {{-- <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button> --}}
+                                    @if ($document->stage >= 8 && $document->status !== 'Obsolete')
                                         <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Obsolete
                                         </button>
-                                        {{-- <button>Obsolete</button> --}}
-                                        <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
+                                        @if($document->revised == 'No')
+                                            <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
+                                        @endif
                                     @endif
 
                                 </div>
@@ -153,6 +153,7 @@
                                 @if ($document->stage == 4 && in_array(Auth::user()->id, explode(",", $document->approvers)))
                                     @if (empty($stageapprove))
                                         @if (empty($approval_reject))
+                                        <div>
                                             <button style="margin-left: 483px;" class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-sign">
                                                 Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                             </button>
@@ -163,11 +164,12 @@
                                             <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                 Approve&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>--}}
+                                        </div>
                                         @endif
                                     @endif
                                 @endif
                                 @if ($document->training_required == 'yes')
-                                    @if ($document->stage == 5 && Auth::user()->id == $document->trainer)
+                                    @if ($document->stage == 5 && (Auth::user()->id == $document->trainer ||  Auth::user()->id == $document->originator_id))
                                         <input type="hidden" name="stage_id" value="6" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Training<i class="fa-regular fa-paper-plane"></i>
@@ -1049,12 +1051,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
             </div>
-
-            @if($document->revised === 'Yes')
-                <form method="POST" action="{{ url('revision', $document->revised_doc) }}">
-            @else
                 <form method="POST" action="{{ url('revision', $document->id) }}">
-            @endif
 
             @csrf
 

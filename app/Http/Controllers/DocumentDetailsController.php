@@ -69,7 +69,7 @@ class DocumentDetailsController extends Controller
         // $fullPermission = UserRole::where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])->get();
         // $fullPermissionIds = $fullPermission->pluck('q_m_s_roles_id')->toArray();
 
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 || $request->stage_id == 8 || $request->stage_id == 11) {
+        if ($document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 || $request->stage_id == 8 || $request->stage_id == 11) {
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
@@ -174,7 +174,7 @@ class DocumentDetailsController extends Controller
         }
 
 
-        if (Helpers::checkRoles(2) && $document->stage == 2 && in_array(Auth::user()->id, explode(",", $document->reviewers))) {
+        if ($document->stage == 2 && in_array(Auth::user()->id, explode(",", $document->reviewers))) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
             $document->stage = 1;
             $document->status = "Draft";
@@ -319,7 +319,7 @@ class DocumentDetailsController extends Controller
             }
           }
         }
-        if (Helpers::checkRoles(1) && $document->stage == 4 && in_array(Auth::user()->id, explode(",", $document->approvers))) {
+        if ($document->stage == 4 && in_array(Auth::user()->id, explode(",", $document->approvers))) {
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = 1;
@@ -463,7 +463,7 @@ class DocumentDetailsController extends Controller
             }
           }
         }
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 11) {
+        if ($document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 11) {
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
             $document->status = Stage::where('id', $request->stage_id)->value('name');

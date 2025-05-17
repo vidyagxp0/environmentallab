@@ -100,6 +100,7 @@
                             <label for="username">Username</label>
                             <input type="text" name="email" required>
                             <input hidden type="text" name="training_id" value="{{$training->id}}">
+                            <input hidden type="text" name="sop_id" value="{{$id}}">
 
                         </div>
                         <div class="group-input">
@@ -136,31 +137,31 @@
         var userAnswers = [];
 
 // Local Serve
-// fetch("{{ url('example', [$id, $training->id]) }}")
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     quizData = data;
-//     loadQuestion();
-//   })
-//   .catch(function(error) {
-//     console.log('Error fetching quiz data:', error);
-//   });
+ fetch("{{ url('example', [$id, $training->id]) }}")
+   .then(function(response) {
+     return response.json();
+   })
+   .then(function(data) {
+     quizData = data;
+     loadQuestion();
+   })
+   .catch(function(error) {
+     console.log('Error fetching quiz data:', error);
+   });
 
   // Live serve api https
 
-  fetch("{{ secure_url('example', [$id, $training->id]) }}")
-    .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    quizData = data;
-    loadQuestion();
-  })
-  .catch(function(error) {
-    console.log('Error fetching quiz data:', error);
-  });
+//   fetch("{{ secure_url('example', [$id, $training->id]) }}")
+ //   .then(function(response) {
+  //  return response.json();
+  // })
+ // .then(function(data) {
+ //   quizData = data;
+  //  loadQuestion();
+ // })
+  //.catch(function(error) {
+  //  console.log('Error fetching quiz data:', error);
+  //});
 
 function loadQuestion() {
   var question = quizData[currentQuestion];

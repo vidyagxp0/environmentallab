@@ -194,36 +194,28 @@ links.forEach(link => {
                     </div>
                     <div><a href="/rcms/qms-dashboard">QMS-Dashboard</a></div>
                     @if (Auth::user())
-                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
+                        @if (Helpers::check_roles_documents(3, Auth::user()->id) || Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(2, Auth::user()->id)  || Helpers::check_roles_documents(18, Auth::user()->id))
                             <div>
                                 <a href="/mydms">My DMS</a>
                             </div>
                         @endif
-                        @if (Helpers::checkRoles(3) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
+                        @if (Helpers::check_roles_documents(3, Auth::user()->id) && Helpers::check_roles_documents(7, Auth::user()->id) && Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(18, Auth::user()->id))
                             <div>
                                 <a href="{{ route('documents.index') }}">Documents</a>
                             </div>
                         @endif
-                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2))
+                        @if (Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(2, Auth::user()->id)  || Helpers::check_roles_documents(18, Auth::user()->id))
                             <div>
                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                             </div>
                         @endif
-                        {{-- @if (Helpers::checkRoles(4) ||Helpers::checkRoles(5) || Helpers::checkRoles(3))
-                            <div>
-                                <a href="{{ route('change-control.index') }}">Change Control</a>
-                            </div>
-                        @endif --}}
                     @endif
-
-
-                    {{-- <div class="notification">
-                        <a href="/notifications"><i class="fa-solid fa-bell"></i></a>
-                    </div> --}}
-                    <div id="create-record-button">
-                        <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
-                                Record</button> </a>
-                    </div>
+                    @if (Helpers::check_roles_qms(3, Auth::user()->id)  || Helpers::check_roles_documents(18, Auth::user()->id))
+                        <div id="create-record-button">
+                            <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
+                                    Record</button> </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

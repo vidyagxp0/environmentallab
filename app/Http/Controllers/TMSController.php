@@ -124,7 +124,7 @@ class TMSController extends Controller
             }
            }
            $documents2 =$documents;
-           return view('frontend.TMS.dashboard',compact('documents','documents2'));
+           return view('frontend.TMS.dashboard',compact('documents','documents2', 'all_trainings'));
 
         }
     }
@@ -389,7 +389,7 @@ class TMSController extends Controller
         toastr()->error('Training not specified');
         return back();
     }
-}
+    }
 
 
     // public function trainingSubmitData(Request $request,$id){
@@ -465,9 +465,12 @@ class TMSController extends Controller
 
                 $documentDoc = Document::whereIn('id', $sops)->get();
                 foreach($documentDoc as $doc){
-                    $doc->stage = 8;
-                    $doc->status = "Effective";
-                    $doc->update();
+                $doc->stage = 8;
+                $doc->status = "Effective";
+                $doc->effective_date = now()->format('Y-m-d');
+                $reviewPeriod = (int) $doc->review_period;
+                $doc->next_review_date = now()->addYears($reviewPeriod)->format('Y-m-d');
+                $doc->update();
                     $user_data = User::find($doc->originator_id);
                     try {
                         Mail::send('mail.complete-training', ['document' => $doc],

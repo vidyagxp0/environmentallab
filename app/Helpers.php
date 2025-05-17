@@ -1069,5 +1069,48 @@ public static function getInitiatorGroupFullName($shortName)
         }
     }
 
+    public static function check_roles_documents($role_id, $user_id, $division_id = 6, $process_name = "New Document")
+    {
+
+        $process = QMSProcess::where([
+            'division_id' => $division_id,
+            'process_name' => $process_name
+        ])->first();
+
+        $roleExists = DB::table('user_roles')->where([
+            'user_id' => $user_id ? $user_id : Auth::user()->id,
+            'q_m_s_divisions_id' => $division_id,
+            'q_m_s_processes_id' => $process ? $process->id : 0,
+            'q_m_s_roles_id' => $role_id
+        ])->first();
+
+        return $roleExists ? true : false;
+    }
+    public static function check_roles_qms($role_id, $user_id = null, $division_id = [1,2,3,4,5,6,7,8], $process_names = ['Effective Check', 'Lab Incident', 'CAPA', 'Audit Program', 'Action Item', 'Internal Audit', 'External Audit', 'Deviation', 'Change Control', 'Risk Assessment', 'Root Cause Analysis', 'Observation', 'Extension'])
+    {
+        // Get user ID if not passed
+        $user_id = $user_id ?? Auth::id();
+
+        // Get all matching process IDs
+        $process_ids = QMSProcess::whereIn('division_id', $division_id)
+            ->whereIn('process_name', $process_names)
+            ->pluck('id');
+
+        if ($process_ids->isEmpty()) {
+            return false;
+        }
+
+        // Check if user has the role for any of the matching processes
+        $roleExists = DB::table('user_roles')
+            ->where('user_id', $user_id)
+            ->whereIn('q_m_s_divisions_id', $division_id)
+            ->whereIn('q_m_s_processes_id', $process_ids)
+            ->where('q_m_s_roles_id', $role_id)
+            ->exists();
+
+        return $roleExists;
+    }
+
+
 
 }

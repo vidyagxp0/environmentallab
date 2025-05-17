@@ -13,9 +13,11 @@
                     <div class="document-left-block">
                         <div class="inner-block create-block">
                             <div class="head text-right mb-0">
+                            @if(Helpers::check_roles_documents(3,Auth::user()->id))
                                 <a href="#" id="set-division">
                                     <i class="fa-solid fa-plus"></i> Create Document
                                 </a>
+                            @endif
                                 {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Import Data
                                     </button> --}}
@@ -328,7 +330,7 @@
 <script>
     $(document).ready(function() {
         // let postUrl = "{{ route('record.filter') }}";
-        let postUrl = "https://environmentallab.doculife.co.in/api/filter-records";
+        let postUrl = "http://environmentallab.doculife.co.in/api/filter-records";
         $('.loadingRecords').hide();
 
         // Function to update records
