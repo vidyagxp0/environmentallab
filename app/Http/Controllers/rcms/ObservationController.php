@@ -857,9 +857,9 @@ class ObservationController extends Controller
             $data->attach_files2 = json_encode($files);
         }
 
-        $data->status = 'Opened';
-        $data->stage = 1;
-        $data->update();
+        // $data->status = 'Opened';
+        // $data->stage = 1;
+        // $data->update();
         $data1 = ObservationGrid::find($id);
         $data1->observation_id = $data->id;
         if (!empty($request->action)) {
@@ -1549,11 +1549,11 @@ class ObservationController extends Controller
                                         $email = Helpers::getAllUserEmail($u->user_id);
                                         if ($email !== null) {
                                             $data = ['data' => $changestage,'site'=>'Observation','history' => 'Report Issued', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                                
+
                                             SendMail::dispatch($data, $email, $changestage, 'Observation');
                                         }
                                     } catch (\Exception $e) {
-                                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                         continue;
                                     }
                                 }
@@ -1652,11 +1652,11 @@ class ObservationController extends Controller
                     $email = Helpers::getAllUserEmail($u->user_id);
                     if ($email !== null) {
                         $data = ['data' => $changestage,'site'=>'Observation','history' => 'Complete', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-            
+
                         SendMail::dispatch($data, $email, $changestage, 'Observation');
                     }
                 } catch (\Exception $e) {
-                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                     continue;
                 }
             }
@@ -1756,15 +1756,15 @@ class ObservationController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
- 
+
                         $list = Helpers::getLeadAuditorUserList($changestage->division_id);
 
                         $userIds = collect($list)->pluck('user_id')->toArray();
@@ -1818,11 +1818,11 @@ class ObservationController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -1921,11 +1921,11 @@ class ObservationController extends Controller
                             $email = Helpers::getAllUserEmail($u->user_id);
                             if ($email !== null) {
                                 $data = ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                    
+
                                 SendMail::dispatch($data, $email, $changestage, 'Observation');
                             }
                         } catch (\Exception $e) {
-                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                             continue;
                         }
                     }
@@ -1984,11 +1984,11 @@ class ObservationController extends Controller
                             $email = Helpers::getAllUserEmail($u->user_id);
                             if ($email !== null) {
                                 $data = ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                    
+
                                 SendMail::dispatch($data, $email, $changestage, 'Observation');
                             }
                         } catch (\Exception $e) {
-                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                             continue;
                         }
                     }
@@ -2087,11 +2087,11 @@ class ObservationController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2149,11 +2149,11 @@ class ObservationController extends Controller
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
                                     $data = ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                        
+
                                     SendMail::dispatch($data, $email, $changestage, 'Observation');
                                 }
                             } catch (\Exception $e) {
-                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                                 continue;
                             }
                         }
@@ -2270,11 +2270,11 @@ class ObservationController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changestage, 'Observation');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -2353,11 +2353,11 @@ class ObservationController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -2416,11 +2416,11 @@ class ObservationController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -2503,11 +2503,11 @@ class ObservationController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Observation','history' => 'More Info Required', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -2589,11 +2589,11 @@ class ObservationController extends Controller
                         $email = Helpers::getAllUserEmail($u->user_id);
                         if ($email !== null) {
                             $data = ['data' => $changeControl,'site'=>'Observation','history' => 'Final Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                
+
                             SendMail::dispatch($data, $email, $changeControl, 'Observation');
                         }
                     } catch (\Exception $e) {
-                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                         continue;
                     }
                 }
@@ -2688,11 +2688,11 @@ class ObservationController extends Controller
                             $email = Helpers::getAllUserEmail($u->user_id);
                             if ($email !== null) {
                                 $data = ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                    
+
                                 SendMail::dispatch($data, $email, $changeControl, 'Observation');
                             }
                         } catch (\Exception $e) {
-                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                             continue;
                         }
                     }
@@ -2751,11 +2751,11 @@ class ObservationController extends Controller
                             $email = Helpers::getAllUserEmail($u->user_id);
                             if ($email !== null) {
                                 $data = ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name];
-                    
+
                                 SendMail::dispatch($data, $email, $changeControl, 'Observation');
                             }
                         } catch (\Exception $e) {
-                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                            \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
                             continue;
                         }
                     }
@@ -2874,14 +2874,14 @@ class ObservationController extends Controller
                 $font = $fontMetrics->getFont("Helvetica", "bold");
                 $size = 12;
                 $color = [0, 0, 0];
-            
+
                 $width = $canvas->get_width();
                 $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
-            
+
                 // RIGHT ALIGN (20px from right edge)
                 $x = $width - $textWidth -80;
                 $y = $canvas->get_height() -37;
-            
+
                 $canvas->text($x, $y, $text, $font, $size, $color);
             });
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
