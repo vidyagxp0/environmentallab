@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
+                        <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -222,25 +222,30 @@
                     Investigation
                 </div>
                 <table>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Initiator</th>
-                        <td class="w-80">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-80">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-80">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group</th>
-                        <td class="w-80">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-80">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        {{ $data->created_at }} added by {{ $data->originator }}
+                        <th class="w-20">Initiator</th>
+                        <td class="w-80">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
+                    </tr>
+                      <tr>
 
+                        <th class="w-20">Initiator Group</th>
+                        <td class="w-80">@if($data->initiator_Group){{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiator Group Code</th>
+                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -248,16 +253,12 @@
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
                     </tr>
-
-                    <tr>
-                        <th class="w-20">Initiator Group Code</th>
-                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
-                    </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-80">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+
+                        <th class="w-20">Due Date</th>
+                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                    </tr>
                    <tr>
                    <th class="w-20">Others</th>

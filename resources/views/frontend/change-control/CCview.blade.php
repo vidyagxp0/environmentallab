@@ -799,8 +799,7 @@
                                                     <label for="current-practice">
                                                         Current Practice
                                                     </label>
-                                                    <textarea name="current_practice" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        {{ $docdetail->current_practice }}</textarea>
+                                                    <textarea name="current_practice" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -808,8 +807,7 @@
                                                     <label for="proposed_change">
                                                         Proposed Change
                                                     </label>
-                                                    <textarea name="proposed_change" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        {{ $docdetail->proposed_change }}</textarea>
+                                                    <textarea name="proposed_change" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $docdetail->proposed_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -955,7 +953,7 @@
                                                                             data-remove-id="3-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
+                                                                                style="color:red; font-size:20px;" style="@if ($data->stage == 0 || $data->stage == 3 || $data->stage == 6) pointer-events: none; @endif"></i></a>
                                                                     </h6>
                                                                 @endforeach
                                                             @endif
@@ -1741,8 +1739,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    {{ $due_date_extension }}</textarea>
+                                                <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $due_date_extension }}</textarea>
                                             </div>
                                         </div>
                                     </div>

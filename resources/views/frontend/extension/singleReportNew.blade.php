@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vidyagxp - Software</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
 <style>
@@ -206,12 +206,12 @@
         <div class="block">
             <div class="block-head">Reviewer Feedbacks</div>
             <table>
-                
+
                 <tr>
                     <th class="w-20">Reviewer Remarks   </th>
                     <td class="w-80">@if($data->reviewer_remarks){{ $data->reviewer_remarks }}@else Not Applicable @endif</td>
                 </tr>
-               
+
             </table>
         </div>
         <div class="block">
@@ -242,12 +242,12 @@
         <div class="block">
             <div class="block-head">Approver Feedbacks</div>
             <table>
-                
+
                 <tr>
                     <th class="w-20">Approver Remarks   </th>
                     <td class="w-80">@if($data->approver_remarks){{ $data->approver_remarks }}@else Not Applicable @endif</td>
                 </tr>
-               
+
             </table>
         </div>
         <div class="block">
@@ -295,7 +295,7 @@
                     <th class="w-20">Approved On</th>
                     <td class="w-30">{{ $data->submit_on_approved }}</td>
                 </tr>
-               
+
             </table>
         </div>
     </div>
