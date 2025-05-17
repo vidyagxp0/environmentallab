@@ -108,6 +108,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('analytics', [DashboardController::class, 'analytics']);
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
+
     Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
     Route::get('training/{id}/{training_id}', [TMSController::class, 'training']);
@@ -123,6 +124,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     //     return redirect()->back()->with('success', 'Data Imported Successfully');
     // });
     Route::get('example/{id}/{training_id}', [TMSController::class, 'example']);
+    Route::get('/dashboard/export-tms-create-pdf', [TMSController::class, 'exportCreateTrainingByme'])->name('dashboard.export-create-tms-pdf');
+    Route::get('/dashboard/export-tms-assignBy-pdf', [TMSController::class, 'exportAssignByTrainingByme'])->name('dashboard.export-assignby-tms-pdf');
 
     // Questions Part
     Route::resource('question', QuestionController::class);

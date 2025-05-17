@@ -104,9 +104,14 @@
                                                         <th>Training Plan</th>
                                                         <th>Number of SOPs</th>
                                                         <th>Effective Criteria</th>
-                                                        <th>Number of Trainees </th>
+                                                        <th>Number of Trainees</th>
                                                         <th>Status</th>
                                                         <th>&nbsp;</th>
+                                                       <th> <div style="display: flex; justify-content: flex-end;">
+                                                            <a href="{{ route('dashboard.export-create-tms-pdf') }}" class="btn btn-primary" style="margin-left: 20px;">Export</a>
+                                                           </div>
+                                                        </th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -163,6 +168,10 @@
                                                         <th>Training Due Date</th>
                                                         <th>Completed Date</th>
                                                         <th>Status</th>
+                                                        <th><div style="display: flex; justify-content: flex-end;">
+                                                            <a href="{{ route('dashboard.export-assignby-tms-pdf') }}" class="btn btn-primary" style="margin-left: 20px;">Export</a>
+                                                           </div>
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="searchTable">
