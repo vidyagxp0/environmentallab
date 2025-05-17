@@ -166,7 +166,10 @@
                                     <option value="Records">Records Created Today</option> --}}
                                 </select>
                             </div>
-                            <div class="item-btn" onclick="window.print()">Print</div>
+                            <div style="display: flex; justify-content: flex-end;">
+                                <a href="{{ route('dashboard.export-qms-pdf') }}" class="btn btn-primary" style="margin-left: 20px;">Export</a>
+                            </div>
+                            <!-- <div class="item-btn" onclick="window.print()">Hello</div> -->
                         </div>
 
                         <style>

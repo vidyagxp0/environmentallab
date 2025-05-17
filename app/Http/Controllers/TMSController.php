@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Document;
 use App\Models\Department;
 use App\Models\Training;
@@ -24,10 +25,12 @@ use App\Models\TrainingStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Helpers;
+use PDF;
 
 class TMSController extends Controller
 {
     public function index(){
+        
         $all_trainings = Training::get();
 
         if(Helpers::checkRoles(role: 6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
@@ -924,5 +927,120 @@ class TMSController extends Controller
                                          ->get();
 
         return view('frontend.TMS.training-overall-status',compact('trainingStatus','sops','training','trainingUsers'));
+    }
+
+
+    public function exportCreateTrainingByme(){
+
+        $userId = Auth::id();
+
+        $userTrainings = DB::table('trainings')
+            ->where('trainner_id', $userId)
+            ->get()
+            ->map(function ($training) {
+                $trainees = explode(',', $training->trainees);
+                $traineesCount = count($trainees);
+
+                $completedTrainees = DB::table('training_statuses')
+                    ->whereIn('user_id', $trainees)
+                    ->where('training_id', $training->id)
+                    ->where('status', 'Complete')
+                    ->count();
+
+                $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
+
+                $training->completion_percentage = $completionPercentage;
+                $training->status = $completionPercentage >= $training->effective_criteria ? 'Complete' : 'In Progress';
+                $training->trainees_count = $traineesCount;
+                $training->completed_trainees = $completedTrainees;
+
+                return $training;
+            });
+
+        $pdf = Pdf::loadView('frontend.TMS.export-create-trainingBy-me', compact('userTrainings'));
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(1,"Multiply");');
+
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($width, $height) {
+            $text = $pageNumber . " of " . $pageCount;
+            $font = $fontMetrics->getFont("Helvetica", "bold");
+            $size = 12;
+            $color = [0, 0, 0];
+            $canvas->text($width - 120, $height - 38, $text, $font, $size, $color);
+        });
+
+        return $pdf->download('TMS_dashboard_data.pdf');
+
+    }
+
+    public function exportAssignByTrainingByme(){
+        $userId = Auth::id();
+
+        $assignedTrainings = DB::table('trainings')
+            ->whereRaw("FIND_IN_SET(?, trainees)", [$userId])
+            ->get()
+            ->map(function ($training) use ($userId) {
+                $trainees = explode(',', $training->trainees);
+                $traineesCount = count($trainees);
+                $effectiveCriteria = $training->effective_criteria;
+
+                $completedTrainees = DB::table('training_statuses')
+                    ->whereIn('user_id', $trainees)
+                    ->where('training_id', $training->id)
+                    ->where('sop_id', $training->sops)
+                    ->where('status', 'Complete')
+                    ->count();
+
+                $completionPercentage = $traineesCount > 0 ? ($completedTrainees / $traineesCount) * 100 : 0;
+                $training->status = $completionPercentage >= $effectiveCriteria ? 'Complete' : 'In Progress';
+
+                $sopIds = explode(',', $training->sops);
+                $documents = DB::table('documents')->whereIn('id', $sopIds)->get();
+
+                $documentNames = $documents->pluck('document_name')->toArray();
+                $sopNos = $documents->pluck('sop_no')->toArray();
+
+                $training->sop_nos = implode(', ', $sopNos);
+                $training->document_names = implode(', ', $documentNames);
+
+                $trainingStatusCheck = DB::table('training_statuses')
+                    ->where([
+                        'user_id' => $userId,
+                        'sop_id' => $training->sops,
+                        'training_id' => $training->id,
+                        'status' => 'Complete'
+                    ])
+                    ->first();
+
+                $training->is_complete = $trainingStatusCheck ? true : false;
+                $training->completed_at = $trainingStatusCheck ? Carbon::parse($trainingStatusCheck->created_at)->format('d M Y h:i') : null;
+                $training->training_end = Carbon::parse($training->training_end_date)->format('d M Y h:i');
+
+                return $training;
+            });
+
+        $pdf = Pdf::loadView('frontend.TMS.export-assign-trainingBy-me', compact('assignedTrainings'));
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(1,"Multiply");');
+
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($width, $height) {
+            $text = $pageNumber . " of " . $pageCount;
+            $font = $fontMetrics->getFont("Helvetica", "bold");
+            $size = 12;
+            $color = [0, 0, 0];
+            $canvas->text($width - 120, $height - 38, $text, $font, $size, $color);
+        });
+
+        return $pdf->download('TMS_dashboard_data.pdf');
     }
 }

@@ -71,6 +71,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('audit-detail/{id}', [CCController::class, 'auditDetails']);
             Route::get('summary/{id}', [CCController::class, 'summery_pdf']);
             Route::get('audit/{id}', [CCController::class, 'audit_pdf']);
+            Route::get('/dashboard/export-qms-pdf', [DashboardController::class, 'exportqmsPdf'])->name('dashboard.export-qms-pdf');
+
 
 
             Route::get('notification-detail/{slug}/{id}', [NotificationController::class, 'notificationDetail'])->name('notification-detail');
