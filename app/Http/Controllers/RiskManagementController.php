@@ -104,6 +104,7 @@ class RiskManagementController extends Controller
         $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
+        $data->reference_record = $request->reference_record;
 
         $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
         // $data->measurement = json_encode($request->measurement);
@@ -635,7 +636,7 @@ class RiskManagementController extends Controller
         if (!empty($data->source_of_risk)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Source Of Risk';
+            $history->activity_type = 'Source of Risk/Opportunity';
             $history->previous = "Null";
             $history->current = $data->source_of_risk;
             $history->comment = "NA";
@@ -733,7 +734,7 @@ class RiskManagementController extends Controller
         if (!empty($data->description)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Risk/Opportunity Description ';
+            $history->activity_type = 'Risk/Opportunity Description';
             $history->previous = "Null";
             $history->current = $data->description;
             $history->comment = "NA";
@@ -747,7 +748,7 @@ class RiskManagementController extends Controller
         if (!empty($data->comments)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Risk/Opportunity Comments';
+            $history->activity_type = 'Risk/Opportunity Comment';
             $history->previous = "Null";
             $history->current = $data->comments;
             $history->comment = "NA";
@@ -774,7 +775,7 @@ class RiskManagementController extends Controller
         if (!empty($data->source_of_risk2)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Source of Risk';
+            $history->activity_type = 'Source of Risk/Opportunity';
             $history->previous = "Null";
             $history->current = $data->source_of_risk2;
             $history->comment = "NA";
@@ -1699,6 +1700,10 @@ class RiskManagementController extends Controller
         $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
+        // $data->reference_record = $request->reference_record;
+        $data->reference_record = implode(',', $request->input('reference_record', []));
+
+
 
         $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
         //$data->training_require = $request->training_require;
@@ -1734,6 +1739,7 @@ class RiskManagementController extends Controller
         $data->due_date_extension = $request->due_date_extension;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
+        // $data->refrence_record =  implode(',', $request->refrence_record);
         $data->refrence_record =  implode(',', $request->refrence_record);
 
 
@@ -2170,7 +2176,7 @@ class RiskManagementController extends Controller
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Source Of Risk';
+            $history->activity_type = 'Source of Risk/Opportunity';
             $history->previous = $lastDocument->source_of_risk;
             $history->current = $data->source_of_risk;
             $history->comment = $request->source_of_risk_comment;
@@ -2299,6 +2305,20 @@ class RiskManagementController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
+        } 
+        if ($lastDocument->attachment != $data->attachment || !empty($request->attachment)) {
+
+            $history = new RiskAuditTrail();
+            $history->risk_id = $id;
+            $history->activity_type = 'General Attachments';
+            $history->previous = $lastDocument->attachment;
+            $history->current = $data->attachment;
+            $history->comment = $request->attachment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
         }
         if ($lastDocument->mitigation_required != $data->mitigation_required || !empty($request->mitigation_required_comment)) {
 
@@ -2364,7 +2384,7 @@ class RiskManagementController extends Controller
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Source of Risk';
+            $history->activity_type = 'Source of Risk/Opportunity';
             $history->previous = $lastDocument->source_of_risk2;
             $history->current = $data->source_of_risk2;
             $history->comment = $request->source_of_risk2_comment;
