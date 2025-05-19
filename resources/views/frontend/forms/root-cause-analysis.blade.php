@@ -35,20 +35,27 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
-                
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
 
-            <form action="{{ route('root_store')}}" method="POST" enctype="multipart/form-data">
-                @csrf
+             <script>
+                $(document).ready(function() {
 
+                    $('#Mainform').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+            <form id="Mainform" action="{{ route('root_store')}}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div id="step-form">
-                                                    <!--Investigation-->
+                  <!--Investigation-->
 
                     <div id="CCForm1" class="inner-block cctabcontent">
                          <div class="inner-block-content">
-                            <div class="row"> 
-                      
+                            <div class="row">
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -57,8 +64,8 @@
 
                                     </div>
                                 </div>
-                            
-                           
+
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code"><b>Site/Location Code </b></label>
@@ -68,14 +75,14 @@
                                 {{-- <div class="static">QMS-North America</div> --}}
                             </div>
                         </div>
-                        
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input readonly  type="text" name="originator_id" value="{{ Auth::user()->name }}"  />
                                     </div>
                                 </div>
-                              
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date-opened">Date Opened </label>
@@ -140,9 +147,9 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                              value="" > 
+                                              value="" >
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -150,8 +157,8 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
-                                
+                                </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -193,7 +200,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -262,7 +269,7 @@
                                             <option value="5">Harsh Mishra</option>
                                         </select>
                                     </div> --}}
-                                {{-- </div> --}} 
+                                {{-- </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="department">Department(s)</label>
@@ -328,7 +335,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
@@ -713,7 +720,7 @@
                                 </div> --}}
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"  class="text-white"> Exit </a> </button>
@@ -837,7 +844,7 @@
                                 </div>
                             </div> --}}
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -847,7 +854,7 @@
                         </div>
                     </div>
                             </div>
-                    
+
                   <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -861,7 +868,7 @@
                                     <div class="group-input">
                                         <label for="completed_on">Completed On</label>
                                         <div class="Date"></div>
-                                </div>    
+                                </div>
                             </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -925,7 +932,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1146,7 +1153,7 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-        
+
         function setCurrentDate(item){
             if(item == 'yes'){
                 $('#effect_check_date').val('{{ date('d-M-Y')}}');
@@ -1165,12 +1172,12 @@
                  <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                         removeButtons.forEach(button => {
                             button.addEventListener('click', function () {
                                 const fileName = this.getAttribute('data-file-name');
                                 const fileContainer = this.closest('.file-container');
-        
+
                                 // Hide the file container
                                 if (fileContainer) {
                                     fileContainer.style.display = 'none';
@@ -1178,8 +1185,8 @@
                             });
                         });
                     });
-                </script> 
-               
+                </script>
+
      <script>
         var maxLength = 255;
         $('#docname').keyup(function() {

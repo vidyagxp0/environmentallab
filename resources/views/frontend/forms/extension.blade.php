@@ -68,7 +68,16 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')"> QA Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')"> Activity Log</button>
             </div>
-            <form action="{{ route('extension.store') }}" method="POST" enctype="multipart/form-data">
+
+             <script>
+                $(document).ready(function() {
+
+                    $('#Mainform').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+            <form id="Mainform" action="{{ route('extension.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="step-form">
@@ -132,8 +141,8 @@
                                             value="{{ Helpers::getdateFormat($parent_due_date) }}" name="due_date">
                                         <input type="hidden" value="{{ $parent_due_date }}" name="due_date">
 
-                                    </div> --}} 
-                                   
+                                    </div> --}}
+
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Revised Due Date <span class="text-danger"></span></label>
@@ -144,7 +153,7 @@
                                         {{-- <input  type="date" min="{{ $parent_due_date }}"
                                             value="" name="revised_date">
                                     </div> --}}
-                            
+
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Desccription">Short Description <span
@@ -153,7 +162,7 @@
                                     </div>
                                 </div> --}}
 
-                                   
+
 
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -178,7 +187,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -186,7 +195,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Justification of Extention">Justification of Extension</label>
@@ -207,7 +216,7 @@
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/Extension/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                    
+
                                                 </option>
                                             @endforeach
                                         </select>
@@ -270,7 +279,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
@@ -310,7 +319,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -385,7 +394,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>

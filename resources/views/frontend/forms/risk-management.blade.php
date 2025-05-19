@@ -78,47 +78,47 @@
             .w-10 {
                 width: 10%;
             }
-        
+
             .w-20 {
                 width: 20%;
             }
-        
+
             .w-25 {
                 width: 25%;
             }
-        
+
             .w-30 {
                 width: 30%;
             }
-        
+
             .w-40 {
                 width: 40%;
             }
-        
+
             .w-50 {
                 width: 50%;
             }
-        
+
             .w-60 {
                 width: 60%;
             }
-        
+
             .w-70 {
                 width: 70%;
             }
-        
+
             .w-80 {
                 width: 80%;
             }
-        
+
             .w-90 {
                 width: 90%;
             }
-        
+
             .w-100 {
                 width: 100%;
             }
-        
+
         </style>
         <script>
             function addWhyField(con_class, name) {
@@ -222,12 +222,20 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
-   
+                 <script>
+                $(document).ready(function() {
 
-                <form action="{{ route('risk_store') }}" method="post" enctype="multipart/form-data">
+                    $('#Mainform').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+
+                <form id="Mainform" action="{{ route('risk_store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div id="step-form">
-                        
+
 
                         <!-- Risk Management Tab content -->
                         <div id="CCForm1" class="inner-block cctabcontent">
@@ -353,7 +361,7 @@
                                             characters remaining
                                             <input id="docname" type="text" name="short_description" maxlength="255" required>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Severity Level</label>
@@ -371,7 +379,7 @@
                                             <label for="Department(s)">Department(s)</label>
                                             <select name="departments[]" placeholder="Select Departments" data-search="false"
                                                 data-silent-initial-value-set="true" id="departments" multiple>
-                                                
+
                                                 <option value="QA">QA</option>
                                                 <option value="QC">QC</option>
                                                 <option value="R&D">R&D</option>
@@ -488,15 +496,15 @@
                                             <label for="Description">Risk/Opportunity Description</label>
                                             <textarea name="description" id="description"></textarea>
                                         </div>
-                                    </div> 
-                                    
+                                    </div>
+
                                     {{-- <div class="col-6">
                                         <div class="group-input">
                                             <label for="Description"> Opportunity Description</label>
                                             <textarea name=" Opportunity_description" id="Opportunitydescription"></textarea>
                                         </div>
                                     </div> --}}
-                                   
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Risk/Opportunity Comments</label>
@@ -521,7 +529,7 @@
 
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" id="ChangeSaveButton" class="saveButton">Save</button>
+                                    <button type="submit" id="ChangeSaveButton" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                 </div>
@@ -538,7 +546,7 @@
                                             <label for="Department(s)">Department(s)</label>
                                             <select multiple name="departments2[]" placeholder="Select Departments"
                                                 data-search="false" data-silent-initial-value-set="true" id="departments">
-                                                
+
                                                 <option value="QA">QA</option>
                                                 <option value="QC">QC</option>
                                                 <option value="R&D">R&D</option>
@@ -767,7 +775,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -920,7 +928,7 @@
                                                         <div class="input-date "><div
                                                         class="calenderauditee">
                                                         <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline[]" class="hide-input" 
+                                                        <input type="date" name="deadline[]" class="hide-input"
                                                         oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>
                                                     <td><input type="text" name="item_static[]"></td>
                                                 </tbody>
@@ -949,7 +957,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1317,7 +1325,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1387,7 +1395,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1429,10 +1437,10 @@
                                                         <div class="input-date "><div
                                                         class="calenderauditee">
                                                         <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="deadline2[]" class="hide-input" 
+                                                        <input type="date" name="deadline2[]" class="hide-input"
                                                         oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
                                                     {{-- <td><input type="text" name="item_static[]"></td> --}}
-                                                    
+
 
                                                     <td> <select id="select-state" placeholder="Select..." name="responsible_person[]">
                                                         <option value="">Select a value</option>
@@ -1599,7 +1607,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1722,7 +1730,7 @@
 
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="submit">Submit</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
@@ -1904,10 +1912,10 @@
                     '<tr>' +
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                         '<td><input type="text" name="mitigation_steps[]"></td>' +
-                        // '<td><input type="date" name="deadline2[]"></td>' 
+                        // '<td><input type="date" name="deadline2[]"></td>'
                          '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                        
-                        
+
+
                         +
                         '<td><select name="responsible_person[]">' +
                             '<option value="">Select a value</option>';
