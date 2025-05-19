@@ -4,6 +4,7 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\QMSProcess;
+use App\Models\QMSRoles;
 use App\Models\User;
 use App\Models\UserRole;
 use Carbon\Carbon;
@@ -1069,7 +1070,7 @@ public static function getInitiatorGroupFullName($shortName)
         }
     }
 
-    public static function check_roles_documents($role_id, $user_id, $division_id = 6, $process_name = "New Document")
+    public static function check_roles_documents($role_id, $user_id, $division_id = 2, $process_name = "New Document")
     {
 
         $process = QMSProcess::where([
@@ -1086,6 +1087,23 @@ public static function getInitiatorGroupFullName($shortName)
 
         return $roleExists ? true : false;
     }
+
+    public static function check_roles_documents_new($role_id, $user_id, $division_id = 2, $process_name = "New Document")
+    {
+
+        $processIds = QMSProcess::where([
+            'process_name' => $process_name
+        ])->pluck('id');
+
+        $roleExists = DB::table('user_roles')
+                ->where('user_id', $user_id ?: Auth::id())
+                ->whereIn('q_m_s_processes_id', $processIds)
+                ->where('q_m_s_roles_id', $role_id)
+                ->exists();
+
+        return $roleExists ? true : false;
+    }
+
     public static function check_roles_qms($role_id, $user_id = null, $division_id = [1,2,3,4,5,6,7,8], $process_names = ['Effective Check', 'Lab Incident', 'CAPA', 'Audit Program', 'Action Item', 'Internal Audit', 'External Audit', 'Deviation', 'Change Control', 'Risk Assessment', 'Root Cause Analysis', 'Observation', 'Extension'])
     {
         // Get user ID if not passed
