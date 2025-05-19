@@ -18,7 +18,7 @@
         font-family: 'times-roman';
         src: url("{{ asset('fonts/Times New Roman.ttf') }}");
     }
-    
+
     * {
         font-family: times-roman, "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
         font-size: 13px;
@@ -46,7 +46,7 @@
             text-align: center;
 
         }
-      
+
 
         .w-5 {
             width: 5%;
@@ -492,7 +492,7 @@
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                        <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
                     </td>
                     <td class="title w-60"
                     style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
@@ -505,7 +505,7 @@
                         </p>
                     </td>
                     <td class="logo w-20 h-20">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="..." style="max-height: 60px;">
+                        <img src="http://environmentallab.doculife.co.in/user/images/logo1.png" alt="..." style="max-height: 60px;">
                     </td>
                 </tr>
             </tbody>
@@ -865,11 +865,11 @@
                         <div class="w-100">
                           <div class="w-100" style="display:inline-block;">
 
-                 
+
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:auto; width:650px; margin-left: 2.5rem;" class="symbol-support">
                                     @if ($data->document_content && !empty($data->document_content->procedure))
-                                        {!! 
+                                        {!!
                                             str_replace(
                                                 ['<table', '<th', '<td', '<tr'],
                                                 [
@@ -891,7 +891,7 @@
                                     @endif
                                 </div>
                             </div>
-                  
+
 
 
                 </div>
