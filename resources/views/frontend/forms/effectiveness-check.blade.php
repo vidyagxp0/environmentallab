@@ -38,7 +38,16 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
 
-            <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
+              <script>
+                $(document).ready(function() {
+
+                    $('#Mainform').on('submit', function(e) {
+                        $('.on-submit-disable-button').prop('disabled', true);
+                    });
+                })
+            </script>
+
+            <form id="Mainform" action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -181,7 +190,7 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
@@ -268,7 +277,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -336,7 +345,7 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
@@ -518,7 +527,7 @@
                                                                                                                                 </div>
                                                                                                                             </div>  -->
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton on-submit-disable-button">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="submit">Submit</button>
                                     <button type="button"> <a class="text-white" href="#"> Exit </a> </button>
