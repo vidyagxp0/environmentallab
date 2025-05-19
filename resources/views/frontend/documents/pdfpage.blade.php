@@ -1526,7 +1526,7 @@
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 799;
+                    $y = 805;
                     $x = 490;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }

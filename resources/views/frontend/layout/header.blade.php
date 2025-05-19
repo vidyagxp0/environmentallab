@@ -194,12 +194,12 @@ links.forEach(link => {
                     </div>
                     <div><a href="/rcms/qms-dashboard">QMS-Dashboard</a></div>
                     @if (Auth::user())
-                        @if (Helpers::check_roles_documents(3, Auth::user()->id) || Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(2, Auth::user()->id)  || Helpers::check_roles_documents(18, Auth::user()->id))
+                        @if (Helpers::check_roles_documents(3, Auth::user()->id) || Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(2, Auth::user()->id)  || Helpers::check_roles_documents(7, Auth::user()->id) || Helpers::check_roles_documents(18, Auth::user()->id))
                             <div>
                                 <a href="/mydms">My DMS</a>
                             </div>
                         @endif
-                        @if (Helpers::check_roles_documents(3, Auth::user()->id) && Helpers::check_roles_documents(7, Auth::user()->id) && Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(18, Auth::user()->id))
+                        @if (Helpers::check_roles_documents(3, Auth::user()->id) || Helpers::check_roles_documents(7, Auth::user()->id) || Helpers::check_roles_documents(2, Auth::user()->id) || Helpers::check_roles_documents(1, Auth::user()->id) || Helpers::check_roles_documents(18, Auth::user()->id))
                             <div>
                                 <a href="{{ route('documents.index') }}">Documents</a>
                             </div>
