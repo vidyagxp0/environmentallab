@@ -869,7 +869,7 @@ class DocumentController extends Controller
      */
     public function update($id, Request $request)
     {
-      
+
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
             $lastContent = DocumentContent::firstOrNew([
@@ -915,7 +915,7 @@ class DocumentController extends Controller
                         ? implode(',', $request->reference_record)
                         : $request->reference_record;
                 }
-  
+
 
                 if ($request->hasfile('attach_draft_doocument')) {
 
@@ -1090,7 +1090,7 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
-   
+
 
             if ($lastDocument->notify_to != $document->notify_to || ! empty($request->notify_to_comment)) {
                 $history = new DocumentHistory;
@@ -1179,8 +1179,8 @@ class DocumentController extends Controller
                 $history = new DocumentHistory;
                 $history->document_id = $id;
                 $history->activity_type = 'Document Language';
-                $history->previous = DocumentLanguage::where('id', $lastDocument->document_language_id)->value('name');
-                $history->current = DocumentLanguage::where('id', $document->document_language_id)->value('name');
+                $history->previous = DocumentLanguage::where('id', $lastDocument->document_language_id)->value('lname');
+                $history->current = DocumentLanguage::where('id', $document->document_language_id)->value('lname');
                 $history->comment = $request->document_language_id_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1402,7 +1402,7 @@ class DocumentController extends Controller
                 $history->save();
             }
 
-             
+
 
             if ($lastDocument->revision_summary != $document->revision_summary || ! empty($request->revision_summary_comment)) {
                 $history = new DocumentHistory;
