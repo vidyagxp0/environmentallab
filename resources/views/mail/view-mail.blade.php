@@ -231,7 +231,7 @@
                         <img src="https://www.connexo.io/assets/img/logo/logo.png" alt="...">
                     </div>
                     <div class="logo ">
-                    <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="...">
+                    <img src="http://environmentallab.doculife.co.in/user/images/logo1.png" alt="...">
                     </div>
                 </div>
                 <div class="mail-content" style="margin-top: 20px">

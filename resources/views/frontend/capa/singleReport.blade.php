@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
+                        <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -195,7 +195,7 @@
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
                 <td class="w-30">
-                    <strong></strong> 
+                    <strong></strong>
                 </td>
             </tr>
         </table>

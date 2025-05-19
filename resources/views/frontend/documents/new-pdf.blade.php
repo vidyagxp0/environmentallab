@@ -125,9 +125,9 @@
     <header>
         <table class="header-footer-table">
             <tr>
-                <td class="logo"><img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="Logo 1" height="50"></td>
+                <td class="logo"><img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="Logo 1" height="50"></td>
                 <td class="title"><b>Environmental Laboratory</b><br>{{ $data->document_name }}</td>
-                <td class="logo"><img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="Logo 2" height="125"></td>
+                <td class="logo"><img src="http://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="Logo 2" height="125"></td>
             </tr>
         </table>
     </header>
