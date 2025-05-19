@@ -41,4 +41,9 @@ class Document extends Model
         return $this->belongsTo(User::class, 'originator_id');
     }
 
+    public function doc_content()
+    {
+        return $this->hasOne(DocumentContent::class, 'document_id');
+    }
+
 }
