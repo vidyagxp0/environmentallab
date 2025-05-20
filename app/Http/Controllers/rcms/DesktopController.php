@@ -50,7 +50,7 @@ class DesktopController extends Controller
 
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Change-Control";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -60,7 +60,7 @@ class DesktopController extends Controller
         foreach ($action_item as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Action-item";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -69,7 +69,7 @@ class DesktopController extends Controller
         foreach ($extention as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Extention";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -78,7 +78,7 @@ class DesktopController extends Controller
         foreach ($effectiveness_check as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Effectiveness-check";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -87,7 +87,7 @@ class DesktopController extends Controller
         foreach ($internal_audit as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Internal-Audit";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -96,7 +96,7 @@ class DesktopController extends Controller
         foreach ($capa as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Capa";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -105,7 +105,7 @@ class DesktopController extends Controller
         foreach ($risk_management as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Risk-Assesment";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -114,7 +114,7 @@ class DesktopController extends Controller
         foreach ($management_review as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Management-Review";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -123,7 +123,7 @@ class DesktopController extends Controller
         foreach ($labincident as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Lab-Incident";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -132,7 +132,7 @@ class DesktopController extends Controller
         foreach ($external_audit as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "External-Audit";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -141,7 +141,7 @@ class DesktopController extends Controller
         foreach ($audit_pragram as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Audit-Program";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -150,7 +150,7 @@ class DesktopController extends Controller
         foreach ($root_cause_analysis as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Root-Cause-Analysis";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
@@ -159,7 +159,7 @@ class DesktopController extends Controller
         foreach ($observation as $data) {
             $data->record_number = Helpers::recordFormat($data->record);
             $data->process = "Observation";
-            $data->assign_to = "Amit guru";
+            $data->assign_to = Helpers::getInitiatorName($data->assign_to);
             $data->open_date = Helpers::getdateFormat($data->initiation_date);
             $data->due_date = Helpers::getdateFormat($data->due_date);
             $data->division_name = Helpers::divisionNameForQMS($data->division_id);
