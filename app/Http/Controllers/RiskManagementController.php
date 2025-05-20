@@ -2313,7 +2313,7 @@ class RiskManagementController extends Controller
             $history->activity_type = 'General Attachments';
             $history->previous = $lastDocument->attachment;
             $history->current = $data->attachment;
-            $history->comment = $request->attachment;
+            $history->comment = json_encode($request->attachment);
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
