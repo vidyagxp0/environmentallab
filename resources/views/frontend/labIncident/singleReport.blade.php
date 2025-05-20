@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt=""
+                        <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt=""
                             style="width: 200px;">
                     </div>
                 </td>
@@ -197,8 +197,8 @@
                 </td>
                 <td class="w-30">
                     <strong> </strong>
-                
-                </td> 
+
+                </td>
             </tr>
         </table>
     </footer>

@@ -184,7 +184,7 @@ h2{
         <div class="notification-container">
             <div class="inner-block">
                 <div class="logo">
-                    <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="...">
+                    <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="...">
                 </div>
                 <div class="mail-content">
 

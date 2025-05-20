@@ -39,17 +39,17 @@
                     <table style="width: 100%;">
                         <tr>
                             <td style="width: 150px; vertical-align: middle">
-                                <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="..."
+                                <img src="http://environmentallab.doculife.co.in/user/images/logo1.png" alt="..."
                                     style="width: 150px; padding:8px;">
                             </td>
                             <td>&nbsp;</td>
                             <td style="width: 150px; vertical-align: middle">
-                                <img src="https://environmentallab.doculife.co.in/user/images/customer.png" alt="..."
+                                <img src="http://environmentallab.doculife.co.in/user/images/customer.png" alt="..."
                                     style="width: 150px; padding:8px;">
                             </td>
                             <td>&nbsp;</td>
                             <td style="width: 150px; vertical-align: middle">
-                                <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="..."
+                                <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="..."
                                     style="width: 150px; padding:8px;">
                             </td>
                         </tr>
@@ -212,7 +212,7 @@
             </tr>
             <tr>
                 <td class="report-chart">
-                   <img src="https://environmentallab.doculife.co.in/user/reportChart/r2.PNG" width="100%">
+                   <img src="http://environmentallab.doculife.co.in/user/reportChart/r2.PNG" width="100%">
                 </td>
             </tr>
             <tr>
@@ -220,7 +220,7 @@
             </tr>
             <tr>
                 <td class="report-chart">
-                    <img src="https://environmentallab.doculife.co.in/user/reportChart/r1.PNG" width="100%">
+                    <img src="http://environmentallab.doculife.co.in/user/reportChart/r1.PNG" width="100%">
                  </td>
             </tr>
             <tr>
@@ -228,7 +228,7 @@
             </tr>
             <tr>
                 <td class="report-chart">
-                    <img src="https://environmentallab.doculife.co.in/user/reportChart/r3.PNG" width="100%">
+                    <img src="http://environmentallab.doculife.co.in/user/reportChart/r3.PNG" width="100%">
                  </td>
             </tr>
             <tr>
@@ -326,7 +326,7 @@
             </tr>
             <tr>
                 <td class="report-chart">
-                    <img src="https://environmentallab.doculife.co.in/user/reportChart/r4.PNG" width="100%">
+                    <img src="http://environmentallab.doculife.co.in/user/reportChart/r4.PNG" width="100%">
                  </td>
             </tr>
             <tr>
@@ -334,7 +334,7 @@
             </tr>
             <tr>
                 <td class="report-chart">
-                    <img src="https://environmentallab.doculife.co.in/user/reportChart/r5.PNG" width="100%">
+                    <img src="http://environmentallab.doculife.co.in/user/reportChart/r5.PNG" width="100%">
                  </td>
             </tr>
             <tr>
@@ -342,7 +342,7 @@
             </tr>
             <tr>
                 <td class="report-chart">
-                    <img src="https://environmentallab.doculife.co.in/user/reportChart/r6.PNG" width="100%">
+                    <img src="http://environmentallab.doculife.co.in/user/reportChart/r6.PNG" width="100%">
                  </td>
             </tr>
             <tr>
@@ -1815,7 +1815,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo.png" alt="" style="width: 200px;">
+                        <img src="http://environmentallab.doculife.co.in/user/images/logo.png" alt="" style="width: 200px;">
                     </div>
                 </td>
             </tr>
@@ -2642,7 +2642,7 @@
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
                <td class="w-30">
-                    <strong> </strong> 
+                    <strong> </strong>
                 </td>
             </tr>
         </table>
