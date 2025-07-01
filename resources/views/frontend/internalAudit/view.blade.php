@@ -828,99 +828,110 @@
                                                     <tbody>
                                                         @if ($grid_data)
                                                             @if (!empty($grid_data->area_of_audit))
-                                                                @foreach (unserialize($grid_data->area_of_audit) as $key => $temps)
-                                                                    <tr>
-                                                                        <td><input disabled type="text"
-                                                                                name="serial_number[]"
-                                                                                value="{{ $key + 1 }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
+                                                                @php
+    $area_of_audit = @unserialize($grid_data->area_of_audit) ?: [];
+    $start_dates = @unserialize($grid_data->start_date) ?: [];
+    $start_times = @unserialize($grid_data->start_time) ?: [];
+    $end_dates = @unserialize($grid_data->end_date) ?: [];
+    $end_times = @unserialize($grid_data->end_time) ?: [];
+    $auditors = @unserialize($grid_data->auditor) ?: [];
+    $auditees = @unserialize($grid_data->auditee) ?: [];
+    $remarks = @unserialize($grid_data->remark) ?: [];
+@endphp
 
-                                                                        <td><input type="text" name="audit[]"
-                                                                                value="{{ $temps }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        </td>
+@if (is_array($area_of_audit))
+    @foreach ($area_of_audit as $key => $temps)
+        <tr>
+            <td>
+                <input type="text" name="serial_number[]" value="{{ $key + 1 }}"
+                       {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            </td>
 
-                                                                        <td>
-                                                                            <div
-                                                                                class="group-input new-date-data-field mb-0">
-                                                                                <div class="input-date">
-                                                                                    <div class="calenderauditee">
-                                                                                        <input type="text"
-                                                                                            id="scheduled_start_date{{ $key }}"
-                                                                                            readonly
-                                                                                            placeholder="DD-MM-YYYY"
-                                                                                            value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                                                        <input type="date"
-                                                                                            id="scheduled_start_date{{ $key }}_checkdate"
-                                                                                            name="scheduled_start_date[]"
-                                                                                            class="hide-input"
-                                                                                            value="{{ unserialize($grid_data->start_date)[$key] }}"
-                                                                                            oninput="handleDateInput(this, 'scheduled_start_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
+            <td>
+                <input type="text" name="audit[]" value="{{ $temps }}"
+                       {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            </td>
 
-                                                                        <td><input type="time"
-                                                                                name="scheduled_start_time[]"
-                                                                                value="{{ unserialize($grid_data->start_time)[$key] }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        </td>
+            <td>
+                <div class="group-input new-date-data-field mb-0">
+                    <div class="input-date">
+                        <div class="calenderauditee">
+                            <input type="text" id="scheduled_start_date{{ $key }}" readonly
+                                   placeholder="DD-MM-YYYY"
+                                   value="{{ Helpers::getdateFormat($start_dates[$key] ?? '') }}"
+                                   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                            <input type="date" id="scheduled_start_date{{ $key }}_checkdate"
+                                   name="scheduled_start_date[]" class="hide-input"
+                                   value="{{ $start_dates[$key] ?? '' }}"
+                                   oninput="handleDateInput(this, 'scheduled_start_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')"
+                                   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                        </div>
+                    </div>
+                </div>
+            </td>
 
-                                                                        <td>
-                                                                            <div
-                                                                                class="group-input new-date-data-field mb-0">
-                                                                                <div class="input-date">
-                                                                                    <div class="calenderauditee">
-                                                                                        <input type="text"
-                                                                                            id="scheduled_end_date{{ $key }}"
-                                                                                            readonly
-                                                                                            placeholder="DD-MM-YYYY"
-                                                                                            value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                                                        <input type="date"
-                                                                                            id="scheduled_end_date{{ $key }}_checkdate"
-                                                                                            name="scheduled_end_date[]"
-                                                                                            class="hide-input"
-                                                                                            value="{{ unserialize($grid_data->end_date)[$key] }}"
-                                                                                            oninput="handleDateInput(this, 'scheduled_end_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
+            <td>
+                <input type="time" name="scheduled_start_time[]"
+                       value="{{ $start_times[$key] ?? '' }}"
+                       {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            </td>
 
-                                                                        <td><input type="time"
-                                                                                name="scheduled_end_time[]"
-                                                                                value="{{ unserialize($grid_data->end_time)[$key] }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        </td>
+            <td>
+                <div class="group-input new-date-data-field mb-0">
+                    <div class="input-date">
+                        <div class="calenderauditee">
+                            <input type="text" id="scheduled_end_date{{ $key }}" readonly
+                                   placeholder="DD-MM-YYYY"
+                                   value="{{ Helpers::getdateFormat($end_dates[$key] ?? '') }}"
+                                   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                            <input type="date" id="scheduled_end_date{{ $key }}_checkdate"
+                                   name="scheduled_end_date[]" class="hide-input"
+                                   value="{{ $end_dates[$key] ?? '' }}"
+                                   oninput="handleDateInput(this, 'scheduled_end_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')"
+                                   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                        </div>
+                    </div>
+                </div>
+            </td>
 
-                                                                        <td>
-                                                                            <select id="auditor" name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                @foreach ($users as $value)
-                                                                                    <option value="{{ $value->id }}"
-                                                                                        {{ unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : '' }}>
-                                                                                        {{ $value->name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </td>
+            <td>
+                <input type="time" name="scheduled_end_time[]"
+                       value="{{ $end_times[$key] ?? '' }}"
+                       {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            </td>
 
-                                                                        <td>
-                                                                            <select id="auditee" name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                                <option value="">-- Select --
-                                                                                </option>
-                                                                                @foreach ($users as $value)
-                                                                                    <option value="{{ $value->id }}"
-                                                                                        {{ unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : '' }}>
-                                                                                        {{ $value->name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </td>
+            <td>
+                <select id="auditor" name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                    <option value="">-- Select --</option>
+                    @foreach ($users as $value)
+                        <option value="{{ $value->id }}"
+                                {{ ($auditors[$key] ?? '') == $value->id ? 'selected' : '' }}>
+                            {{ $value->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
 
-                                                                        <td><input type="text" name="remark[]"
-                                                                                value="{{ unserialize($grid_data->remark)[$key] }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
+            <td>
+                <select id="auditee" name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                    <option value="">-- Select --</option>
+                    @foreach ($users as $value)
+                        <option value="{{ $value->id }}"
+                                {{ ($auditees[$key] ?? '') == $value->id ? 'selected' : '' }}>
+                            {{ $value->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
+
+            <td>
+                <input type="text" name="remark[]"
+                       value="{{ $remarks[$key] ?? '' }}"
+                       {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+            </td>
+        </tr>
+    @endforeach
+@endif
                                                             @endif
                                                         @endif
                                                     </tbody>

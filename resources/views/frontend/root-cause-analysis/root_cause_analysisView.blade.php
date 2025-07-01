@@ -228,7 +228,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}">
                                     </div>
                                 </div>
 
@@ -236,8 +236,8 @@
                                     <div class="group-input">
                                     <label for="Division Code"><b>Site/Location Code </b></label>
                                     <input readonly type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                    <input type="hidden" name="division_id" value="{{ $data->division_id }}">
                                       </div>
                                 </div>
                                 <div class="col-lg-6">

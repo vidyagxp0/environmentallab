@@ -31,7 +31,7 @@ class QuestionBankController extends Controller
     // }
     public function index()
 {
-    $data = QuestionBank::withTrashed()
+    $data = QuestionBank::withoutTrashed()
         ->orderBy('id') 
         ->paginate(10); 
 
@@ -86,8 +86,8 @@ class QuestionBankController extends Controller
      */
     public function edit($id)
     {
-        $data = Question::where('trainer_id', Auth::user()->id)->paginate('10');
-        $question = QuestionBank::withTrashed()->find($id);
+        $data = Question::paginate('10');
+        $question = QuestionBank::withoutTrashed()->find($id);
         return view('frontend.TMS.manage-question-bank',compact('question','data'));
     }
 

@@ -13,7 +13,7 @@
                     <div class="document-left-block">
                         <div class="inner-block create-block">
                             <div class="head text-right mb-0">
-                            @if(Helpers::check_roles_documents(3,Auth::user()->id))
+                            @if(Helpers::check_roles_documents_new(3,Auth::user()->id, 6))
                                 <a href="#" id="set-division">
                                     <i class="fa-solid fa-plus"></i> Create Document
                                 </a>

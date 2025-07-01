@@ -78,6 +78,7 @@
                         {{ $doc->document_name }}
                     </td>
                     <td class="division">
+                        
                         {{ $doc->sop_no }}
                     </td>
                     <td class="division">

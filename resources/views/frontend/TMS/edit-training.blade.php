@@ -320,12 +320,7 @@
                                     });
                                 });
                             </script>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="effective-criteria">Effective Criteria(in %)</label>
-                                    <input type="number" name="effective_criteria" value="{{ $train->effective_criteria }}" required>
-                                </div>
-                            </div>
+                           
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Status </label>
@@ -354,40 +349,74 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="inner-block">
-                            <div class="main-head">
-                                Selecting SOP's
-                            </div>
-                            <div class="inner-block-content">
-                                <div class="search-bar">
+                    @php
+    $selectedSOPs = explode(',', $train->sops ?? '');
+@endphp
 
-                                    <input type="text" name="search" placeholder="Search SOP's">
-                                    <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+<div class="col-lg-12">
+    <div class="inner-block">
+        <div class="main-head">
+            Selecting SOP's
+        </div>
+        <div class="inner-block-content">
+            <div class="selection-table">
+                <table class="table table-bordered" id="documentTable">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Document Number</th>
+                            <th>Document Title</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Effective Date</th>
+                            <th>Originator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($due as $temp)
+                            @if ($temp->root_document)
+                                @php
+                                    $isTrainer = $temp->trainer == auth()->id();
+                                    $status = $temp->root_document->status;
+                                    $showRow = ($isTrainer && in_array($status, ['Under-Training', 'Effective', 'Training-Complete'])) || $status == 'Effective';
+                                    $isChecked = in_array($temp->document_id, $selectedSOPs);
+                                    $typecode = DB::table('document_types')->where('name', $temp->document_type_name)->value('typecode');
+                                    $docNum = $temp->root_document->document_number ?? $temp->root_document->record;
+                                @endphp
 
-                                </div>
-                                <div class="selection-table">
-                                    <table class="table table-bordered">
-                                        {{--  <thead>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>Document Number</th>
-                                                <th>Document Title</th>
-                                                <th>Originator</th>
-                                            </tr>
-                                        </thead>  --}}
-                                        <tbody >
-                                            <h6 style="color: red">Sorry !! You can not change the SOP group of training plan.</h6>
+                                @if ($showRow)
+                                    <tr>
+                                        <td class="text-center">
+                                            <input
+                                                class="select-sop-js"
+                                                data-id="{{ $temp->root_document->id }}"
+                                                type="checkbox"
+                                                id="sopData"
+                                                name="sops[]"
+                                                value="{{ $temp->document_id }}"
+                                                {{ $isChecked ? 'checked' : '' }}>
+                                        </td>
+                                        <td>{{ $temp->root_document->sop_no }}</td>
+                                        <td>{{ $temp->root_document->document_name ?? '' }}</td>
+                                        <td>{{ $temp->root_document->due_dateDoc }}</td>
+                                        <td>{{ $temp->document_status ?? $temp->root_document->document_status }}</td>
+                                        <td>{{ $temp->root_document->effective_date ?? '-' }}</td>
+                                        <td>{{ $temp->originator }}</td>
+                                    </tr>
+                                @endif
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+                <p id="SOPType" style="color: red">
+                    ** Please Select at least one SOP...
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                        </tbody>
-                                    </table>
-                                    <p id="SOPType" style="color: red">
-                                        ** Please Select atliest one SOP...
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     {{-- <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">

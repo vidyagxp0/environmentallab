@@ -3320,8 +3320,8 @@
         }
     </style>
 
-
-    <script>
+<!-- main old url script -->
+    <!-- <script>
 	let uploadUrl = "{{ route('api.upload.file') }}";
 
 	let uploadFileUrl = uploadUrl.replace('http:', 'https:');
@@ -3340,7 +3340,63 @@
         });
 
 
-    </script>
+    </script> -->
+
+    <!-- ------------------end ----------- -->
+
+
+    <script>
+    let uploadUrl = "{{ route('api.upload.file') }}";
+    let uploadFileUrl = uploadUrl.replace('http:', 'https:');
+
+    var editor = new FroalaEditor('.summernote', {
+        key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+        imageUploadParam: 'image_param',
+        imageUploadMethod: 'POST',
+        imageMaxSize: 20 * 1024 * 1024,
+        imageUploadURL: uploadFileUrl,
+        fileUploadParam: 'image_param',
+        fileUploadURL: uploadFileUrl,
+        videoUploadParam: 'image_param',
+        videoUploadURL: uploadFileUrl,
+        videoMaxSize: 500 * 1024 * 1024,
+
+        imagePaste: true,
+        imagePasteProcess: true,
+
+        events: {
+            'paste.afterCleanup': function (html) {
+               
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                var images = tempDiv.querySelectorAll('img');
+                images.forEach(function(img) {
+                   
+                    img.removeAttribute('data-fr-image-pasted');
+                    img.removeAttribute('class');
+                    
+                    if (img.hasAttribute('data-fr-old-src') && img.getAttribute('data-fr-old-src').startsWith('data:image')) {
+                        img.src = img.getAttribute('data-fr-old-src');
+                        img.removeAttribute('data-fr-old-src');
+                    }
+                });
+
+                return tempDiv.innerHTML;
+            },
+
+            'image.inserted': function ($img, response) {
+                $img.removeAttr('data-fr-image-pasted');
+                $img.removeAttr('data-fr-old-src');
+                $img.removeAttr('class');
+                
+                if (response && response.link) {
+                    $img.attr('src', response.link);
+                }
+            }
+        }
+    });
+</script>
     <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to'

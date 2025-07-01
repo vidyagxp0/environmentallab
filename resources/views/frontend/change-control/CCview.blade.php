@@ -178,7 +178,7 @@
                         @else
                             <div class="">Superviser Review</div>
                         @endif  --}}
-                    {{-- @if ($data->stage >= 2)
+                        {{-- @if ($data->stage >= 2)
                                 <div class="active">Under Superviser Review </div>
                             @else
                                 <div class="">Under Superviser Review </div>

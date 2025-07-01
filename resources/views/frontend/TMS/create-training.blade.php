@@ -388,8 +388,7 @@
                                                                         ->where('name', $temp->document_type_name)
                                                                         ->value('typecode');
                                                                     @endphp
-                                                            <td>{{ $temp->division_name }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
-                                                                000{{ $temp->root_document ? $temp->root_document->record : '' }}/R{{ $temp->major}}.{{$temp->minor}}</td>
+                                                            <td>{{ $temp->root_document->sop_no }}</td>
                                                             <td>
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>

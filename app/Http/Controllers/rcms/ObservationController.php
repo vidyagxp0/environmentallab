@@ -750,7 +750,6 @@ class ObservationController extends Controller
     public function observationupdate(Request $request, $id)
     {
 
-
         $data = Observation::find($id);
         $lastDocument = Observation::find($id);
         $data = Observation::find($id);
@@ -859,7 +858,7 @@ class ObservationController extends Controller
 
         // $data->status = 'Opened';
         // $data->stage = 1;
-        // $data->update();
+        $data->update();
         $data1 = ObservationGrid::find($id);
         $data1->observation_id = $data->id;
         if (!empty($request->action)) {
@@ -1449,6 +1448,7 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
 
         DocumentService::update_qms_numbers();
 

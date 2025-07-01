@@ -514,22 +514,8 @@
             <tbody>
                 <tr>
                     <td class="doc-num w-100">
-                        @php
-                        $temp = DB::table('document_types')
-                            ->where('name', $data->document_type_name)
-                            ->value('typecode');
-                       @endphp
-                        @if($data->revised === 'Yes')
-
-                        {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->record }}/R{{$data->major}}.{{$data->minor}}
-
-                        @else
-                        {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->record }}/R{{$data->major}}.{{$data->minor}}
-                    @endif
+                        {{ $data->sop_no }}
+                        
                 </tr>
             </tbody>
         </table>
@@ -541,21 +527,7 @@
             <tbody>
                 <tr>
                     <td class="text-left w-36">
-                        @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $data->document_type_name)
-                                ->value('typecode');
-                        @endphp
-                        @if($data->revised === 'Yes')
-                            {{ Helpers::getDivisionName($data->division_id) }}
-                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                            /000{{ $data->record }}/R{{$data->major}}.{{$data->minor}}
-
-                            @else
-                            {{ Helpers::getDivisionName($data->division_id) }}
-                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                            /000{{ $data->record }}/R{{$data->major}}.{{$data->minor}}
-                        @endif
+                        {{$data->sop_no}}
 
                     <td class="w-36">Printed On : {{ $time }}</td>
                     <td class="text-right w-20"></td>

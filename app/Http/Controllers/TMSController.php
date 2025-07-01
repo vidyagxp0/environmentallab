@@ -597,11 +597,7 @@ class TMSController extends Controller
     public function update(Request $request, $id){
         $last = Training::find($id);
         if(Helpers::checkRoles(6)){
-            $this->validate($request,[
-                'traning_plan_name' =>'required|unique:trainings,traning_plan_name',
-                'training_plan_type'=>'required',
-                'effective_criteria'=>'required',
-              ]);
+           
             $training = Training::find($id);
             $training->trainner_id = Auth::user()->id;
             $training->traning_plan_name = $request->traning_plan_name;
@@ -812,7 +808,7 @@ class TMSController extends Controller
                     }
                 }
            }
-            toastr()->success('Training Plan created successfully');
+            toastr()->success('Training Plan updated successfully');
             return redirect('TMS/show');
         }
     }

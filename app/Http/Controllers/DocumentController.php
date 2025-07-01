@@ -509,8 +509,10 @@ class DocumentController extends Controller
             }
 
             $document->review_period = $request->review_period;
-            $document->training_required = $request->training_required;
-            $document->trainer = $request->trainer;
+            if($document->stage == 1){
+                $document->training_required = $request->training_required;
+                $document->trainer = $request->trainer;
+            }
             $document->comments = $request->comments;
             $document->revision_type = $request->revision_type;
             $document->major = $request->major;
@@ -779,54 +781,6 @@ class DocumentController extends Controller
 
 	    $approvers = User::where('is_active', 1)->whereIn('id', $approver_ids)->get();
 
-        // $reviewer = DB::table('user_roles')
-        //             ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //             ->select(
-        //                 'user_roles.q_m_s_processes_id',
-        //                 'users.id',
-        //                 'users.role',
-        //                 'users.name'
-        //             )
-        //             ->where('user_roles.q_m_s_processes_id', $document->process_id)
-        //             ->where('user_roles.q_m_s_roles_id', 2) // Include both Reviewer and Full Permission roles
-        //             ->groupBy(
-        //                 'user_roles.q_m_s_processes_id',
-        //                 'users.id',
-        //                 'users.role',
-        //                 'users.name'
-        //             )
-        //             ->get();
-        // $reviewer = DB::table('user_roles')
-        //             ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //             ->select(
-        //                 'user_roles.q_m_s_processes_id',
-        //                 'users.id',
-        //                 'users.role',
-        //                 'users.name'
-        //             )
-        //             ->where('user_roles.q_m_s_processes_id', $document->process_id)
-        //             ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
-        //             ->groupBy(
-        //                 'user_roles.q_m_s_processes_id',
-        //                 'users.id',
-        //                 'users.role',
-        //                 'users.name'
-        //             )
-        //             ->get();
-        // $approvers = DB::table('user_roles')
-        //         ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //         ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-        //         ->where('user_roles.q_m_s_processes_id', $document->process_id)
-        //         ->where('user_roles.q_m_s_roles_id', 1) // Include both Reviewer and Full Permission roles
-        //         ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-        //         ->get();
-        // $approvers = DB::table('user_roles')
-        //         ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //         ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-        //         ->where('user_roles.q_m_s_processes_id', $document->process_id)
-        //         ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
-        //         ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-        //         ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         $user = User::all();
@@ -1581,20 +1535,20 @@ class DocumentController extends Controller
                 $history->save();
             }
 
-            if ($lastContent->procedure != $documentcontet->procedure || ! empty($request->procedure_comment)) {
-                $history = new DocumentHistory;
-                $history->document_id = $id;
-                $history->activity_type = 'Procedure';
-                $history->previous = $lastContent->procedure;
-                $history->current = $documentcontet->procedure;
-                $history->comment = $request->procedure_comment;
+            // if ($lastContent->procedure != $documentcontet->procedure || ! empty($request->procedure_comment)) {
+            //     $history = new DocumentHistory;
+            //     $history->document_id = $id;
+            //     $history->activity_type = 'Procedure';
+            //     $history->previous = $lastContent->procedure;
+            //     $history->current = $documentcontet->procedure;
+            //     $history->comment = $request->procedure_comment;
 
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->save();
-            }
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastDocument->status;
+            //     $history->save();
+            // }
             if ($lastContent->reporting != $documentcontet->reporting || ! empty($request->reporting_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
@@ -1690,7 +1644,7 @@ class DocumentController extends Controller
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
         if ($controls) {
-            set_time_limit(30);
+            set_time_limit(300);
             $document = Document::find($id);
             $data = Document::find($id);
             $data->department = Department::find($data->department_id);
@@ -1737,6 +1691,20 @@ class DocumentController extends Controller
                 $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
                 if ($user + 1 <= $controls->daily) {
                     //Downlad History
+
+                    $downloadCount = DownloadHistory::where(['user_id'=> Auth::user()->id, 'document_id' => $id])->count();
+                    $history = new DocumentHistory;
+                    $history->document_id = $id;
+                    $history->activity_type = 'Downloads';
+                    $history->previous = 'Previous download count by ' . Auth::user()->name . ': ' . $downloadCount;
+                    $history->current = 'Updated download count by ' . Auth::user()->name . ' = ' . ($downloadCount + 1);
+                    $history->comment = '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $document->status;
+                    $history->save();
+
                     $download = new DownloadHistory;
                     $download->document_id = $id;
                     $download->user_id = Auth::user()->id;
@@ -1747,6 +1715,8 @@ class DocumentController extends Controller
                     // download PDF file with download method
 
                     return $pdf->download('SOP'.$id.'.pdf');
+
+                    
                 } else {
                     toastr()->error('You breach your daily download limit.');
 
@@ -1757,6 +1727,19 @@ class DocumentController extends Controller
                 $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
                 if ($user + 1 <= $controls->weekly) {
                     //Downlad History
+                    $downloadCount = DownloadHistory::where(['user_id'=> Auth::user()->id, 'document_id' => $id])->count();
+                    $history = new DocumentHistory;
+                    $history->document_id = $id;
+                    $history->activity_type = 'Downloads';
+                    $history->previous = 'Previous download count by ' . Auth::user()->name . ': ' . $downloadCount;
+                    $history->current = 'Updated download count by ' . Auth::user()->name . ' = ' . ($downloadCount + 1);
+                    $history->comment = '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $document->status;
+                    $history->save();
+
                     $download = new DownloadHistory;
                     $download->document_id = $id;
                     $download->user_id = Auth::user()->id;
@@ -1777,6 +1760,19 @@ class DocumentController extends Controller
                 $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
                 if ($user + 1 <= $controls->monthly) {
                     //Downlad History
+                    $downloadCount = DownloadHistory::where(['user_id'=> Auth::user()->id, 'document_id' => $id])->count();
+                    $history = new DocumentHistory;
+                    $history->document_id = $id;
+                    $history->activity_type = 'Downloads';
+                    $history->previous = 'Previous download count by ' . Auth::user()->name . ': ' . $downloadCount;
+                    $history->current = 'Updated download count by ' . Auth::user()->name . ' = ' . ($downloadCount + 1);
+                    $history->comment = '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $document->status;
+                    $history->save();
+
                     $download = new DownloadHistory;
                     $download->document_id = $id;
                     $download->user_id = Auth::user()->id;
@@ -1797,6 +1793,19 @@ class DocumentController extends Controller
                 $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
                 if ($user + 1 <= $controls->quatarly) {
                     //Downlad History
+                    $downloadCount = DownloadHistory::where(['user_id'=> Auth::user()->id, 'document_id' => $id])->count();
+                    $history = new DocumentHistory;
+                    $history->document_id = $id;
+                    $history->activity_type = 'Downloads';
+                    $history->previous = 'Previous download count by ' . Auth::user()->name . ': ' . $downloadCount;
+                    $history->current = 'Updated download count by ' . Auth::user()->name . ' = ' . ($downloadCount + 1);
+                    $history->comment = '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $document->status;
+                    $history->save();
+
                     $download = new DownloadHistory;
                     $download->document_id = $id;
                     $download->user_id = Auth::user()->id;
@@ -1817,6 +1826,19 @@ class DocumentController extends Controller
                 $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
                 if ($user + 1 <= $controls->yearly) {
                     //Downlad History
+                    $downloadCount = DownloadHistory::where(['user_id'=> Auth::user()->id, 'document_id' => $id])->count();
+                    $history = new DocumentHistory;
+                    $history->document_id = $id;
+                    $history->activity_type = 'Downloads';
+                    $history->previous = 'Previous download count by ' . Auth::user()->name . ': ' . $downloadCount;
+                    $history->current = 'Updated download count by ' . Auth::user()->name . ' = ' . ($downloadCount + 1);
+                    $history->comment = '';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $document->status;
+                    $history->save();
+
                     $download = new DownloadHistory;
                     $download->document_id = $id;
                     $download->user_id = Auth::user()->id;
@@ -1938,164 +1960,124 @@ class DocumentController extends Controller
     }
 
     public function printPDF($id)
-    {
-        $roles = explode(',', Auth::user()->role);
-        $controls = PrintControl::whereIn('role_id', $roles)->first();
+{
+    set_time_limit(0); // removes execution time limit
+    ini_set('memory_limit', '512M'); // increases memory limit if needed
 
-        if ($controls) {
-            set_time_limit(30);
-            $document = Document::find($id);
-            $data = Document::find($id);
-            $data->department = Department::find($data->department_id);
-            $data['originator'] = User::where('id', $data->originator_id)->value('name');
-            $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-            $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-            $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-            $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-            $data['document_division'] = QMSDivision::where('id', $data->division_id)->value('name');
+    $roles = explode(',', Auth::user()->role);
+    $controls = PrintControl::whereIn('role_id', $roles)->first();
 
-            $data['year'] = Carbon::parse($data->created_at)->format('Y');
-            // $document = Document::where('id', $id)->get();
-            // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    if (!$controls) {
+        toastr()->error('There is no control provided for your role.');
+        return back();
+    }
 
-            $pdf = App::make('dompdf.wrapper');
-            $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
-                ->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                ]);
-            $pdf->setPaper('A4');
-            $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
+    $document = Document::find($id);
+    if (!$document) {
+        toastr()->error('Document not found.');
+        return back();
+    }
 
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    $data = clone $document;
+    $data->department = Department::find($data->department_id);
 
-            $canvas->page_text(
-                $width / 4,
-                $height / 2,
-                $data->status,
-                null,
-                25,
-                [0, 0, 0],
-                2,
-                6,
-                -20
-            );
+    $originator = User::find($data->originator_id);
+    $data['originator'] = $originator->name ?? '';
+    $data['originator_email'] = $originator->email ?? '';
 
-            if ($controls->daily != 0) {
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
-                if ($user + 1 <= $controls->daily) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-                    $download->save();
+    $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
-                    // download PDF file with download method
+    $documentType = DocumentType::find($data->document_type_id);
+    $data['document_type_name'] = $documentType->name ?? '';
+    $data['document_type_code'] = $documentType->typecode ?? '';
 
-                    return $pdf->stream('SOP'.$id.'.pdf');
-                } else {
-                    toastr()->error('You breach your daily print limit.');
+    $data['document_division'] = QMSDivision::where('id', $data->division_id)->value('name');
+    $data['year'] = Carbon::parse($data->created_at)->format('Y');
 
-                    return back();
-                }
-            } elseif ($controls->weekly != 0) {
-                $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->weekly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-                    $download->save();
+    $pdf = App::make('dompdf.wrapper');
+    $time = Carbon::now();
 
-                    // download PDF file with download method
-                    return $pdf->stream('SOP'.$id.'.pdf');
-                } else {
-                    toastr()->error('You breach your weekly print limit.');
+    $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data', 'time', 'document'))
+        ->setOptions([
+            'defaultFont' => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'isPhpEnabled' => true,
+        ]);
 
-                    return back();
-                }
-            } elseif ($controls->monthly != 0) {
-                $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->monthly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-                    $download->save();
+    $pdf->setPaper('A4');
+    $pdf->render();
 
-                    // download PDF file with download method
+    $canvas = $pdf->getDomPDF()->getCanvas();
+    $height = $canvas->get_height();
+    $width = $canvas->get_width();
 
-                    return $pdf->download('SOP'.$id.'.pdf');
-                } else {
-                    toastr()->error('You breach your monthly print limit.');
+    $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    $canvas->page_text(
+        $width / 4,
+        $height / 2,
+        $data->status ?? '',
+        null,
+        25,
+        [0, 0, 0],
+        2,
+        6,
+        -20
+    );
 
-                    return back();
-                }
-            } elseif ($controls->quatarly != 0) {
-                $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->quatarly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-                    $download->save();
+    // Print history logic
+    $userId = Auth::user()->id;
+    $today = Carbon::now()->format('d-m-Y');
 
-                    // download PDF file with download method
+    $limits = [
+        'daily' => 1,
+        'weekly' => 7,
+        'monthly' => 30,
+        'quatarly' => 90,
+        'yearly' => 365
+    ];
 
-                    return $pdf->stream('SOP'.$id.'.pdf');
-                } else {
-                    toastr()->error('You breach your quaterly print limit.');
+    foreach ($limits as $period => $days) {
+        if ($controls->$period != 0) {
+            $startDate = Carbon::now()->subDays($days)->format('d-m-Y');
+            $printCount = PrintHistory::where('user_id', $userId)
+                ->where('document_id', $id)
+                ->whereBetween('date', [$startDate, $today])
+                ->count();
 
-                    return back();
-                }
-            } elseif ($controls->yearly != 0) {
-                $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
-                $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-                if ($user + 1 <= $controls->yearly) {
-                    //Downlad History
-                    $download = new PrintHistory;
-                    $download->document_id = $id;
-                    $download->user_id = Auth::user()->id;
-                    $download->role_id = Auth::user()->role;
-                    $download->date = Carbon::now()->format('d-m-Y');
-                    $download->save();
+            if ($printCount + 1 <= $controls->$period) {
+                $downloadCount = PrintHistory::where(['user_id'=> Auth::user()->id, 'document_id' => $id])->count();
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Prints';
+                $history->previous = 'Previous print count by ' . Auth::user()->name . ': ' . $downloadCount;
+                $history->current = 'Updated print count by ' . Auth::user()->name . ' = ' . ($downloadCount + 1);
+                $history->comment = '';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $document->status;
+                $history->save();
 
-                    // download PDF file with download method
+                $download = new PrintHistory;
+                $download->document_id = $id;
+                $download->user_id = $userId;
+                $download->role_id = Auth::user()->role;
+                $download->date = $today;
+                $download->save();
 
-                    return $pdf->stream('SOP'.$id.'.pdf');
-                } else {
-                    toastr()->error('You breach your yearly print limit.');
-
-                    return back();
-                }
+                return $pdf->stream('SOP'.$id.'.pdf');
             } else {
-                toastr()->error('There is no controls provide for your role.');
-
+                toastr()->error("You breach your $period print limit.");
                 return back();
             }
-        } else {
-            toastr()->error('There is no controls provide for your role.');
-
-            return back();
         }
     }
+
+    toastr()->error('There is no print control provided for your role.');
+    return back();
+}
+
 
     public function import(Request $request)
     {
@@ -2284,15 +2266,15 @@ class DocumentController extends Controller
             toastr()->error('A document with this version already exists!');
             return redirect()->back();
         }
-
-        $document->revision = 'Yes';
-        $document->revised = 'Yes';
         $document->revision_policy = $request->revision;
         $document->update();
 
         $newdoc = $document->replicate();
-        $newdoc->revised = 'No';
+        $newdoc->revision = 'Yes';
+        $newdoc->revised = 'Yes';
         $newdoc->revised_doc = $document->id;
+        $newdoc->document_number = $document->document_number;
+        
         $newdoc->originator_id = Auth::user()->id;
         $newdoc->major = $requestedMajor;
         $newdoc->minor = $requestedMinor;
@@ -2300,6 +2282,8 @@ class DocumentController extends Controller
         $newdoc->comments = $request->comment;
         $newdoc->stage = 1;
         $newdoc->status = Stage::where('id', 1)->value('name');
+        $type = DocumentType::find($newdoc->document_type_id);
+        $newdoc->sop_no = Helpers::getDivisionName($newdoc->division_id) . '/' . $type->typecode . '/' . now()->format('Y') . '/' .  $newdoc->document_number . '/ R' . $newdoc->major .'.'. $newdoc->minor;
         $newdoc->save();
 
         $docContent = DocumentContent::where('document_id', $document->id)->first();
@@ -2325,7 +2309,7 @@ class DocumentController extends Controller
             }
         }
 
-        DocumentService::update_document_numbers();
+        // DocumentService::update_document_numbers();
 
         toastr()->success('Document has been revised successfully! You can now edit the content.');
         return redirect()->route('documents.editWithType', ['id' => $newdoc->id, 'type' => 'doc']);

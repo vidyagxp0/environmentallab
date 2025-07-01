@@ -18,7 +18,7 @@ class QuizeController extends Controller
      */
     public function index()
     {
-        $data = Quize::where('trainer_id', Auth::user()->id)->orderbyDesc('id')->paginate(10);
+        $data = Quize::orderbyDesc('id')->paginate(10);
         return view('frontend.TMS.manage-quizzes',compact('data'));
     }
 
@@ -81,7 +81,7 @@ class QuizeController extends Controller
      */
     public function edit($id)
     {
-        $questions = QuestionBank::where('trainer_id', Auth::user()->id)->get();
+        $questions = QuestionBank::withoutTrashed()->get();
         $quize = Quize::find($id);
         $ques = QuestionBank::where('id',$quize->question_bank)->value('questions');
         $data = explode(',',$ques);

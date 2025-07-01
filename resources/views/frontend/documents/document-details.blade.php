@@ -37,7 +37,7 @@
                                         <button onclick="location.href='{{ route('documents.editWithType', ['id' => $document->id, 'type' => 'doc']) }}';">Edit </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif
-                                    <button  onclick="location.href='{{ secure_url('documents/generatePdf', $document->id) }}';">Download
+                                    <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
                                     <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';" target="__blank">
                                             Print
@@ -106,13 +106,13 @@
                                     Record Workflow
                                 </div>
 
-                                @if ($document->stage == 1 && Auth::user()->id == $document->originator_id)
+                                @if ($document->stage == 1 && (Auth::user()->id == $document->originator_id || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                     <input type="hidden" name="stage_id" value="2" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Review<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
-                                @if($document->stage == 2 && in_array(Auth::user()->id, explode(",", $document->reviewers)))
+                                @if($document->stage == 2 && (in_array(Auth::user()->id, explode(",", $document->reviewers)) || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                     <div class="buttons">
                                         @if (empty($review_reject))
                                             @if ($stagereview && empty($stagereview_submit))
@@ -144,17 +144,17 @@
                                         @endif
                                     </div>
                                 @endif
-                                @if ($document->stage == 3 && Auth::user()->id == $document->originator_id)
+                                @if ($document->stage == 3 && (Auth::user()->id == $document->originator_id  || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                     <input type="hidden" name="stage_id" value="4" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Approval<i class="fa-regular fa-paper-plane"></i>
                                     </button>
                                 @endif
-                                @if ($document->stage == 4 && in_array(Auth::user()->id, explode(",", $document->approvers)))
+                                @if ($document->stage == 4 && (in_array(Auth::user()->id, explode(",", $document->approvers)) || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                     @if (empty($stageapprove))
                                         @if (empty($approval_reject))
                                         <div>
-                                            <button style="margin-left: 483px;" class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-sign">
+                                            <button  class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-sign">
                                                 Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                             </button>
                                             <button  class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-cancel">
@@ -169,20 +169,20 @@
                                     @endif
                                 @endif
                                 @if ($document->training_required == 'yes')
-                                    @if ($document->stage == 5 && (Auth::user()->id == $document->trainer ||  Auth::user()->id == $document->originator_id))
+                                    @if ($document->stage == 5 && (Auth::user()->id == $document->trainer ||  Auth::user()->id == $document->originator_id  || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                         <input type="hidden" name="stage_id" value="6" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Training<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
-                                    @if ($document->stage == 7 && Auth::user()->id == $document->originator_id)
+                                    @if ($document->stage == 7 && (Auth::user()->id == $document->originator_id || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
                                 @elseif($document->training_required == 'no')
-                                    @if ($document->stage == 5 && Auth::user()->id == $document->originator_id)
+                                    @if ($document->stage == 5 && (Auth::user()->id == $document->originator_id || Helpers::check_roles($document->division_id, 'New Document', 18)))
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>
@@ -214,12 +214,12 @@
                                     @else
                                         <div class="">Reviewed</div>
                                     @endif
-                                    @if ($document->stage >= 4)
-                                        <div class="active">For-Approval</div>
+                                    {{-- @if ($document->stage >= 4)
+                                        <div class="active">For-Approval</div> --}}
                                         {{-- && $document->stage < 10 --}}
-                                    @else
+                                    {{-- @else
                                         <div class="">For-Approval</div>
-                                    @endif
+                                    @endif --}}
                                     {{-- @if ($document->stage == 10)
                                         <div class="active">Rejected</div>
                                     @endif --}}
