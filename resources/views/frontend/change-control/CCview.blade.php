@@ -617,8 +617,7 @@
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="repeat_nature" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        {{ $data->repeat_nature }}</textarea>
+                                                    <textarea name="repeat_nature" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -639,8 +638,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="others">If Others</label>
-                                                    <textarea name="If_Others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        {{ $data->If_Others }}</textarea>
+                                                    <textarea name="If_Others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->If_Others }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

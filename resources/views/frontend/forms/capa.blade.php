@@ -144,7 +144,7 @@
                                         <label for="RLS Record Number">Record Number</label>
                                         @if(!empty($parent_id))
                                         <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName($parent_division) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
+                                        value="{{ Helpers::getDivisionName($parent_division_id) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
                                         @else
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
