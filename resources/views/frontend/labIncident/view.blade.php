@@ -249,11 +249,11 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "readonly" : "" }}
                                              id="initiator_group">
                                              <option value="">-- Select --</option>
-                                            <option value="Corporate Quality Assurance"
-                                                @if ($data->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
+                                            <option value="CQA"
+                                                @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                 Quality Assurance</option>
                                             <option value="QAB"
                                                 @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
@@ -261,7 +261,7 @@
                                             <option value="CQC"
                                                 @if ($data->Initiator_Group== 'CQC') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="CQC"
+                                            <option value="MANU"
                                                 @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
                                             </option>
                                             <option value="PSG"
@@ -337,13 +337,22 @@
                                         </select>
                                     </div>
                                 </div>
+                             
+
+                                       @php
+                                        $lockSelectstag6 = ($data->stage == 0 || $data->stage == 6);
+                                        @endphp
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related
                                                 information</small></div>
+                                                   
                                         <select name="initiated_through"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            @if ($lockSelectstag6)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
                                             <option @if ($data->initiated_through == 'recall') selected @endif
@@ -371,7 +380,9 @@
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="initiated_through">Others<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
+                                        <textarea name="initiated_through_req" @if ($lockSelectstag6)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif>{{ $data->initiated_through_req }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">

@@ -1325,7 +1325,7 @@ class LabIncidentController extends Controller
     {
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Capa";
+        $parent_type = "Lab-Incident";
         $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $rca_old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -1334,22 +1334,22 @@ class LabIncidentController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
-        $parent_division = LabIncident::where('id',$id)->value('division_id');
-         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','parent_division', 'parent_type','old_record','cft', 'rca_old_record'));
+        $parent_division_id = LabIncident::where('id',$id)->value('division_id');
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','parent_division_id', 'parent_type','old_record','cft', 'rca_old_record'));
     }
 
     public function lab_incident_root_child(Request $request, $id)
     {
         $parent_id = $id;
-        $parent_type = "Capa";
+        $parent_type = "Lab-Incident";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $parent_division = LabIncident::where('id',$id)->value('division_id');
-        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division'));
+        $parent_division_id = LabIncident::where('id',$id)->value('division_id');
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
     }
     public function LabIncidentStateChange(Request $request, $id)
     {
