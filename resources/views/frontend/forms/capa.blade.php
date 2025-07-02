@@ -89,7 +89,7 @@
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
             @if(!empty($parent_id))
-            {{ Helpers::getDivisionName($parent_division) }} / CAPA
+            {{ Helpers::getDivisionName($parent_division_id) }} / CAPA
         @else
         {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
         @endif
@@ -155,8 +155,8 @@
                                     <div class="group-input">
                                         <label for="Division Code">Site/Location Code</label>
                                         @if(!empty($parent_id))
-                                            <input readonly type="text" value="{{ Helpers::getDivisionName($parent_division) }}">
-                                            <input type="hidden" name="division_id" value="{{ $parent_division }}">
+                                            <input readonly type="text" value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
                                         @else
                                             <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">

@@ -3283,8 +3283,10 @@ class InternalauditController extends Controller
 
 
             if ($request->revision == "capa-child") {
+                   $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
+         
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-               return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft', 'parent_division',));
+               return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft', 'parent_division','parent_division_id'));
             }
 
         }
