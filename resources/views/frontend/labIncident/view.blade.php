@@ -340,7 +340,7 @@
                              
 
                                        @php
-                                        $lockSelectstag6 = ($data->stage == 0 || $data->stage == 6);
+                                        $lockSelectstag6 = ($data->stage == 0 || $data->stage == 6 || $data->stage == 8);
                                         @endphp
 
                                 <div class="col-lg-6">
