@@ -245,16 +245,38 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
+                                           {{--
                                             <input readonly type="text" name="record_number"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
+                                            --}}
+                                            @if(!empty($parent_id))
+                                                <input disabled type="text" name="record_number"
+                                                value="{{ Helpers::getDivisionName($parent_division) }}/RA/{{ date('Y') }}/{{ $record_number }}">
+                                                @else
+                                                <input disabled type="text" name="record_number"
+                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
+                                            @endif
+                                        
+                                        
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Site/Location Code</b></label>
+                                         
+                                         {{--   <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                             <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                         --}}
+                                        @if(!empty($parent_id))
+                                            <input readonly type="text" value="{{ Helpers::getDivisionName($parent_division) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division }}">
+                                        @else
                                             <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                             <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif                                        
+                                        
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -374,6 +396,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
@@ -511,12 +534,28 @@
                                             <textarea name="comments" id="comments"></textarea>
                                         </div>
                                     </div>
+                                    {{--
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Attachments">General Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list-new" id="attachment"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myattachments" name="attachment[]"
+                                                        oninput="addMultipleFiles(this, 'attachment')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>--}}
+
+                                      <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="Report Attachments">General Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachment"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myattachments" name="attachment[]"
