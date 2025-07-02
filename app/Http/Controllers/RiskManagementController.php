@@ -2306,20 +2306,39 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         } 
-        if ($lastDocument->attachment != $data->attachment || !empty($request->attachment)) {
+        // if ($lastDocument->attachment != $data->attachment || !empty($request->attachment)) {
+
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'General Attachments';
+        //     $history->previous = $lastDocument->attachment;
+        //     $history->current = $data->attachment;
+        //     $history->comment = $request->attachment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+      if ($lastDocument->attachment != $data->attachment || !empty($request->attachment)) {
 
             $history = new RiskAuditTrail();
+
             $history->risk_id = $id;
             $history->activity_type = 'General Attachments';
-            $history->previous = $lastDocument->attachment;
-            $history->current = $data->attachment;
-            $history->comment = $request->attachment;
+            $history->previous = is_array($lastDocument->attachment) ? json_encode($lastDocument->attachment) : $lastDocument->attachment;
+            $history->current = is_array($data->attachment) ? json_encode($data->attachment) : $data->attachment;
+            $history->comment = is_array($request->attachment) ? json_encode($request->attachment) : $request->attachment;
+
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
+
         }
+
         if ($lastDocument->mitigation_required != $data->mitigation_required || !empty($request->mitigation_required_comment)) {
 
             $history = new RiskAuditTrail();
