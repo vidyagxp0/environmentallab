@@ -2358,7 +2358,7 @@ class CapaController extends Controller
     {
         $cft =[];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "Capa";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();

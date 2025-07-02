@@ -4080,7 +4080,9 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
     public function child(Request $request,$id){
         // return "hiii";
         $cc = CC::find($id);
+        $parent_id =$id;
         $parent_name = "CC";
+        $parent_type = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -4099,11 +4101,11 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
 
         if($request->revision == "Action-Item"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record'));
+            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record','parent_id','parent_type'));
         }
         if($request->revision == "Extension"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.extension',compact('parent_name','record_number','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id', 'parent_record','cc'));
+            return view('frontend.forms.extension',compact('parent_name','record_number','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id', 'parent_record','cc','parent_id','parent_type'));
         }
         if($request->revision == "New Document"){
             $idDivision = $parent_division_id;
@@ -4118,6 +4120,20 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             ->select('users.*')
             ->distinct() // Ensure unique users
             ->get();
+        $reviewer = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 2)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
+         $approvers = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 1)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
             $users = User::all();
             if (! empty($users)) {
                 foreach ($users as $data) {
@@ -4126,7 +4142,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             }
             $idProcess = QMSProcess::where('id', $request->process_id)->pluck('division_id')->first();
 
-            return view('frontend.documents.create',compact('approversgroup','trainer','reviewergroup','documentLanguages','documentTypes','parent_record','users','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record', 'idDivision', 'idProcess'));
+            return view('frontend.documents.create',compact('approversgroup','trainer','reviewergroup','documentLanguages','documentTypes','parent_record','users','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record', 'idDivision', 'idProcess','parent_id','parent_type','reviewer','approvers'));
 
         }
         else{
