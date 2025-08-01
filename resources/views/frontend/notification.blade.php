@@ -1,14 +1,38 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     <section id="manual-notification">
         <div class="container-fluid">
             <div class="inner-block">
+                <style>
+                    .main-select{
+                        width: 285px !important;
+                    }
+                    .main{
+                        display: flex;
+                         /* gap: 20px; */
+                    }
+
+                    @media (max-width:769px) {
+                        .main{
+                        display: block !important;
+                         gap: 40px;
+                    }
+                    }
+                </style>
                 <div class="main-head">
-                    Record {{ $document->id }} - {{ $document->document_name }}
+                    {{--  Record 0000{{ $document->record }}  --}}
                 </div>
                 <div class="inner-block-content">
                     <div class="details">
-                        <div>
+                        {{-- <div>
+                                <strong>Division/Project : </strong>
+                                QMS - North America / Change Control
+                            </div> --}}
+                        {{--  <div>
+                            <strong>Record State : </strong>
+                            {{ $document->status }}
+                        </div>  --}}
+                         <div>
                             <strong>Division/Project : </strong>
                             {{ $document->division->name }} / {{ $document->process ? $document->process->process_name : '' }}
                         </div>
@@ -20,84 +44,107 @@
                             <strong>Assigned To : </strong>
                             {{ $document->oreginator ? $document->oreginator->name : '' }}
                         </div>
+
                         <div>
-                            <strong>Recipents - Add : </strong>
-                            <form action="{{ url('send-notification') }}" method="POST">
+                            <form action="{{ url('send-notification') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="search-input">
-                                    <select name="option" id="my-select">
-                                        <option value="0">-- Select Recipent</option>
+                                <h4 style="font-weight: bold;">Recipents :</h4>
 
-                                        @php
-                                            $rev_data = explode(',', $document->reviewers);
-                                            $i = 0;
-                                        @endphp
-                                        @for ($i = 0; $i < count($rev_data); $i++)
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('id', $rev_data[$i])
-                                                    ->first();
+                                <div class="main" >
+                                    <div class="col-lg-4" style="display: flex; gap: 10px;">
+                                        <div>To :</div>
+                                        <div class="main-select" >
+                                            <select multiple name="option[]" id="to">
+                                                <option value="0">-- Select Recipent --</option>
+                                                @php
+                                                    $user = DB::table('users')->get();
+                                                @endphp
+                                                @foreach ($user as $value)
+                                                    <option value="{{ $value->id }}"> {{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('option')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                            {{-- <label for="recipent">Add</label> --}}
+                                        </div>
+                                    </div>
+                                    <!-- CC Field -->
+                                    <div class="col-lg-4" style="display: flex; gap: 10px;">
+                                      <div>CC :</div>
+                                        <div class="main-select">
 
-                                            @endphp
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endfor
-                                        @php
-                                            $rev_data = explode(',', $document->approvers);
-                                            $i = 0;
-                                        @endphp
-                                        @for ($i = 0; $i < count($rev_data); $i++)
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('id', $rev_data[$i])
-                                                    ->first();
-                                            @endphp
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endfor
+                                            <select multiple name="cc[]" id="cc">
+                                                <option value="0">-- Select Recipent --</option>
+                                                @foreach ($user as $value)
+                                                    <option value="{{ $value->id }}"> {{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-
-
-                                    </select>
-                                 
-                                    {{-- <label for="recipent">Add</label> --}}
+                                    <!-- BCC Field -->
+                                    <div class="col-lg-4" style="display: flex; gap: 10px;">
+                                      <div>BCC :</div>
+                                        <div class="main-select">
+                                            <select multiple name="bcc[]" id="bcc">
+                                                <option value="0">-- Select Recipent --</option>
+                                                @foreach ($user as $value)
+                                                    <option value="{{ $value->id }}"> {{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
+
+
+                                {{-- <div class="recipent-table">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Recipent</th>
+                                                <th>Relationship</th>
+                                                <th>Method</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="my-table-body">
+
+                                        </tbody>
+                                    </table>
+                                </div> --}}
+                                <div class="summary">
+                                    <div class="group-input">
+                                        <label for="summary">Subject</label>
+                                        <input style="width: 100%;" name="subject">
+                                    </div>
+
+                                </div>
+                                <div class="summary">
+                                    <div class="group-input">
+                                        <label for="summary">Notification Summary</label>
+                                        <textarea class="tiny" name="summary"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="summary">
+                                    <div class="group-input">
+                                        <label for="file-attachment">Attachment</label>
+                                        <input style="width: 100%" type="file" name="file_attachment" id="file_attachment">
+                                    </div>
+                                </div>
+                                <div class="noti-btns">
+                                    <button type="submit">Send</button>
+                                    <a href="{{ url('rcms/qms-dashboard') }}"> <button>Cancel</button></a>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="recipent-table">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Recipent</th>
-                                    <th>Relationship</th>
-                                    <th>Method</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="my-table-body">
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="summary">
-                        <div class="group-input">
-                            <label for="summary">Notification Summary</label>
-                            <textarea name="summary"></textarea>
-                        </div>
-                        <div class="group-input">
-                            <label for="summary">Attach file</label>
-                            <input type="file" name="file">
-                        </div>
-                    </div>
-                    <div class="noti-btns">
-                        <button type="submit">Send to</button>
-                        <button>Cancel</button>
-                    </div>
-
-                    </form>
                 </div>
             </div>
         </div>
     </section>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#my-select').change(function() {
                 var selectedOption = $(this).val();
@@ -118,7 +165,7 @@
                                 <th>${response.name}<input type="hidden" value="${response.name}"></th>
                                 <th>${response.role}<input type="hidden" value="${response.role}"></th>
                                 <th>
-                                        <select name="method">
+                                        <select name="method" required>
                                             <option>-- Select --</option>
                                             <option value="email">E-Mail</option>
                                         </select>
@@ -126,12 +173,15 @@
                             </tr>
                         `);
                     },
-                    error: function(xhr, status, error) {
-
-                        // Handle the error if the AJAX request fails
-                    }
+                    error: function(xhr, status, error) {}
                 });
             });
+        });
+    </script> --}}
+
+    <script>
+        VirtualSelect.init({
+            ele: '#to, #cc, #bcc'
         });
     </script>
 @endsection

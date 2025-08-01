@@ -391,7 +391,7 @@ class DocumentDetailsController extends Controller
                 if ($document->reviewers) {
                   if ($reviewersData == 1) {
                     $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
                     try {
                       Mail::send(
                         'mail.approved',
@@ -407,8 +407,8 @@ class DocumentDetailsController extends Controller
                   }
                 } else {
                   $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
-                    
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
+
                   try {
                     Mail::send(
                       'mail.approved',
@@ -428,8 +428,8 @@ class DocumentDetailsController extends Controller
               if ($document->approver_group) {
                 if ($reviewersDataforgroup == 1 && $reviewersData == 1) {
                   $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
-                    
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
+
                   try {
                     Mail::send(
                       'mail.approved',
@@ -446,8 +446,8 @@ class DocumentDetailsController extends Controller
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
-                    
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
+
                   try {
                     Mail::send(
                       'mail.approved',
@@ -766,25 +766,64 @@ class DocumentDetailsController extends Controller
     // Return the data as a response to the AJAX request
     return response()->json(['role' => $data->role, 'name' => $data->name]);
   }
-  public function sendNotification(Request $request)
+ public function sendNotification(Request $request)
   {
-    $user = User::find($request->option);
-    try {
-      Mail::send(
-        'frontend.message',
-        ['request' => $request],
-        function ($message) use ($user) {
-          $message->to($user->email)
-            ->subject('You have receiverd a new notification');
-        }
-      );
-    } catch (\Exception $e) {
-      // logMailError
-    }
-    toastr()->success('Mail sent');
-    return back();
-  }
+      // Validate the request if necessary (you can add validation rules here)
+      $request->validate([
+          'option' => 'required|array', // Ensuring that 'option' is an array
+          'subject' => 'required|string',
+          'summary' => 'required|string',
+          'file_attachment' => 'nullable|file', // Optional file validation
+      ]);
 
+      // Handle file upload if present
+      if ($request->hasFile('file_attachment')) {
+          $file = $request->file('file_attachment');
+          $fileName = 'attachment_' . time() . '.' . $file->getClientOriginalExtension();
+          $file->move(public_path('uploads'), $fileName);
+      } else {
+          $fileName = null; // If no file is uploaded, set it to null
+      }
+
+      // Get the selected "To" users
+      $toUsers = User::whereIn('id', $request->option)->get();
+
+      // Get the selected "CC" and "BCC" users
+      $ccUsers = User::whereIn('id', $request->cc ?? [])->get(); // Using the 'cc' input (optional)
+      $bccUsers = User::whereIn('id', $request->bcc ?? [])->get(); // Using the 'bcc' input (optional)
+
+      // Ensure we have recipients
+      if ($toUsers->isNotEmpty()) {
+          foreach ($toUsers as $user) {
+              Mail::send(
+                  'frontend.message',
+                  ['request' => $request, 'file' => $fileName],  // Passed the necessary variables here
+                  function ($message) use ($user, $ccUsers, $bccUsers, $request, $fileName) { // Use $request and $fileName inside the closure
+                      $message->to($user->email)
+                          ->subject($request->subject);
+
+                      // Add CC recipients
+                      foreach ($ccUsers as $ccUser) {
+                          $message->cc($ccUser->email);
+                      }
+
+                      // Add BCC recipients
+                      foreach ($bccUsers as $bccUser) {
+                          $message->bcc($bccUser->email);
+                      }
+
+                      // Attach the file if present
+                      if ($fileName) {
+                          $message->attach(public_path('uploads/' . $fileName));
+                      }
+                  }
+              );
+          }
+      }
+
+      toastr()->success('Mail sent');
+      return back();
+  }
   public function search(Request $request)
   {
     $count = Document::join('document_contents', 'document_contents.document_id', 'documents.id')
