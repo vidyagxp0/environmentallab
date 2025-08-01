@@ -454,6 +454,8 @@ class OpenStageController extends Controller
         return view('frontend.send-notification', compact('document'));
     }
 
+    
+
     public function auditTrial($id)
     {
         $audit = ChangeControlLog::where('change_control_id', $id)->orderByDESC('id')->get()->unique('activity_type');
