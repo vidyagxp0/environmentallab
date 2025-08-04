@@ -1621,10 +1621,91 @@ use Illuminate\Support\Facades\Hash;
             $history->save();
             toastr()->success('Document Sent');
             return back();
+
+        if ($root->stage == 3) {
+            $root->stage = "0";
+            $root->status = "Closed-Cancelled";
+            $root->cancelled_by = Auth::user()->name;
+            $root->cancelled_on = Carbon::now()->format('d-M-Y');
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Activity Log';
+            // $history->previous = $lastDocument->cancelled_by;
+            $history->current = $root->cancelled_by;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->origin_state = $lastDocument->status;
+            $history->stage='Cancelled ';
+            $history->save();
+
+
+            $list = Helpers::getQAUserList($root->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new RootAuditTrial();
+                    $notification->root_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "Cancelled";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "Audit Manager";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data = ['data' => $root,'site'=>'Root Cause Analysis','history' => 'Cancelled', 'process' => 'Root Cause Analysis', 'comment' =>  $history->comment,'user'=> Auth::user()->name];
+            
+                        SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());       
+                    continue;
+                }
+            }
+
+            $root->update();
+            $history = new RootCauseAnalysisHistory();
+            $history->type = "Root Cause Analysis";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $root->stage;
+            $history->status = $root->status;
+            $history->save();
+            
+            toastr()->success('Document Sent');
+            return back();
+        }
+
+            toastr()->success('Document Sent');
+            return back();
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
+        
     }
 
     public function root_reject(Request $request, $id)

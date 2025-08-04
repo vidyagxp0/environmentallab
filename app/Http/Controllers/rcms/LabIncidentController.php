@@ -2663,6 +2663,138 @@ class LabIncidentController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "0";
+                $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "Pending QA Review";
+                        $history->current = "Closed-Cancelled";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Pending QA Review";
+                        $history->stage = "Cancelled";
+                        $history->save();
+
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Closed-Cancelled";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                       
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
+                            }
+                        }
+
+                    $list = Helpers::getQAUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Closed-Cancelled";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
+                            }
+                        }
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 7) {
+                $changeControl->stage = "0";
+                $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "Pending QA Head Approval";
+                        $history->current = "Closed-Cancelled";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Pending QA Head Approval";
+                        $history->stage = "Cancelled";
+                        $history->save();
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
         } else {
             toastr()->error('E-signature Not match');
             return back();
