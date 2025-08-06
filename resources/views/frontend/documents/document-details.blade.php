@@ -49,9 +49,8 @@
                                         <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Obsolete
                                         </button>
-                                        @if($document->revised == 'No')
                                             <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
-                                        @endif
+                                        
                                     @endif
 
                                 </div>

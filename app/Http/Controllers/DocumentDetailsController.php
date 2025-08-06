@@ -391,7 +391,7 @@ class DocumentDetailsController extends Controller
                 if ($document->reviewers) {
                   if ($reviewersData == 1) {
                     $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
                     try {
                       Mail::send(
                         'mail.approved',
@@ -407,8 +407,8 @@ class DocumentDetailsController extends Controller
                   }
                 } else {
                   $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
-
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
+                    
                   try {
                     Mail::send(
                       'mail.approved',
@@ -428,8 +428,8 @@ class DocumentDetailsController extends Controller
               if ($document->approver_group) {
                 if ($reviewersDataforgroup == 1 && $reviewersData == 1) {
                   $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
-
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
+                    
                   try {
                     Mail::send(
                       'mail.approved',
@@ -446,8 +446,8 @@ class DocumentDetailsController extends Controller
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = $document->training_required == 'yes' ? 5 : 8;
-                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name');
-
+                    $document->status = $document->training_required == 'yes' ? Stage::where('id', 5)->value('name') : Stage::where('id', 8)->value('name'); 
+                    
                   try {
                     Mail::send(
                       'mail.approved',
@@ -766,7 +766,7 @@ class DocumentDetailsController extends Controller
     // Return the data as a response to the AJAX request
     return response()->json(['role' => $data->role, 'name' => $data->name]);
   }
- public function sendNotification(Request $request)
+public function sendNotification(Request $request)
   {
       // Validate the request if necessary (you can add validation rules here)
       $request->validate([

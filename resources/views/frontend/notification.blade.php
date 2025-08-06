@@ -20,6 +20,9 @@
                     }
                 </style>
                 <div class="main-head">
+                     <div class="main-head">
+                    Record {{ $document->id }} - {{ $document->document_name }}
+                </div>
                     {{--  Record 0000{{ $document->record }}  --}}
                 </div>
                 <div class="inner-block-content">
@@ -32,6 +35,8 @@
                             <strong>Record State : </strong>
                             {{ $document->status }}
                         </div>  --}}
+
+                       
                          <div>
                             <strong>Division/Project : </strong>
                             {{ $document->division->name }} / {{ $document->process ? $document->process->process_name : '' }}
