@@ -765,6 +765,12 @@
                     <td class="w-30">{{ $data->qA_review_completed_on }}</td>
                 </tr>
                 <tr>
+                    <th class="w-20">Rejected By</th>
+                    <td class="w-30">{{ $data->rejected_by }}</td>
+                    <th class="w-20">Rejected On</th>
+                    <td class="w-30">{{ $data->rejected_on }}</td>
+                </tr>
+                <tr>
                     <th class="w-20">QA Head Approval Completed By
                     </th>
                     <td class="w-30">{{ $data->qA_head_approval_completed_by }}</td>
@@ -786,8 +792,7 @@
                 <tr>
                     <th class="w-20">Cancelled By</th>
                     <td class="w-30">{{ $data->cancelled_by }}</td>
-                    <th class="w-20">
-                        Cancelled On</th>
+                    <th class="w-20">Cancelled On</th>
                     <td class="w-30">{{ $data->cancelled_on }}</td>
                 </tr>
 
