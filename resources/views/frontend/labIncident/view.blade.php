@@ -115,6 +115,10 @@
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
+                    @elseif ($data->stage == 9)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Reject</div>
+                        </div>    
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
@@ -1021,6 +1025,19 @@
                                     <div class="group-input">
                                         <label for="QA Review Completed On">QA Review Completed On</label>
                                         <div class="Date">{{ $data->qA_review_completed_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Rejected By">Rejected By</label>
+                                        <div class="static">{{ $data->rejected_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Rejected On">Rejected On</label>
+                                        <div class="Date">{{ $data->rejected_on }}</div>
                                     </div>
                                 </div>
 

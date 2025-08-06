@@ -2061,21 +2061,21 @@ class CapaController extends Controller
 
 
             if($capa->stage == 4){
-                $capa->stage = "0";
-                    $capa->status = "Closed-Cancelled";
-                    $capa->cancelled_by = Auth::user()->name;
-                    $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                $capa->stage = "7";
+                    $capa->status = "Closed-Reject";
+                    $capa->rejected_by = Auth::user()->name;
+                    $capa->rejected_on = Carbon::now()->format('d-M-Y');
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous =$lastDocument->status;
-                    $history->current = "Closed-Cancelled";
+                    $history->current = "Closed-Reject";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state =  $capa->status;
-                    $history->stage = 'Cancelled';
+                    $history->stage = 'Reject';
                     $history->save();
             }
 

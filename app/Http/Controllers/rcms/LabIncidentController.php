@@ -2665,21 +2665,21 @@ class LabIncidentController extends Controller
             }
 
             if ($changeControl->stage == 6) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->stage = "9";
+                $changeControl->status = "Closed - Reject";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
                         $history = new LabIncidentAuditTrial();
                         $history->LabIncident_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "Pending QA Review";
-                        $history->current = "Closed-Cancelled";
+                        $history->current = "Closed-Reject";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = "Pending QA Review";
-                        $history->stage = "Cancelled";
+                        $history->stage = "Reject";
                         $history->save();
 
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
@@ -2699,7 +2699,7 @@ class LabIncidentController extends Controller
                                 $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $notification->origin_state = "Not Applicable";
                                 $notification->previous = $lastDocument->status;
-                                $notification->current = "Closed-Cancelled";
+                                $notification->current = "Closed-Reject";
                                 $notification->stage = "";
                                 $notification->action_name = "";
                                 $notification->mailUserId = $userIdNew;
@@ -2742,7 +2742,7 @@ class LabIncidentController extends Controller
                                 $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $notification->origin_state = "Not Applicable";
                                 $notification->previous = $lastDocument->status;
-                                $notification->current = "Closed-Cancelled";
+                                $notification->current = "Closed-Reject";
                                 $notification->stage = "";
                                 $notification->action_name = "";
                                 $notification->mailUserId = $userIdNew;
@@ -2774,21 +2774,21 @@ class LabIncidentController extends Controller
             }
 
             if ($changeControl->stage == 7) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $changeControl->stage = "9";
+                $changeControl->status = "Closed - Reject";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
                         $history = new LabIncidentAuditTrial();
                         $history->LabIncident_id = $id;
                         $history->activity_type = 'Activity Log';
                         $history->previous = "Pending QA Head Approval";
-                        $history->current = "Closed-Cancelled";
+                        $history->current = "Closed-Reject";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = "Pending QA Head Approval";
-                        $history->stage = "Cancelled";
+                        $history->stage = "";
                         $history->save();
 
                 $changeControl->update();
