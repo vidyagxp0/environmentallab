@@ -127,6 +127,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Reject
+                            </button>
                         @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
@@ -162,84 +165,16 @@
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                    {{-- @if ($data->stage == 0)
-                        <div class="progress-bars">
-                            <div class="bg-danger">Closed-Cancelled</div>
-                        </div>
-                    @else
-                        <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
-                            {{--  @if ($data->stage >= 2)
-                            <div class="active">Superviser Review</div>
-                        @else
-                            <div class="">Superviser Review</div>
-                        @endif  --}}
-                        {{-- @if ($data->stage >= 2)
-                                <div class="active">Under Superviser Review </div>
-                            @else
-                                <div class="">Under Superviser Review </div>
-                            @endif
-                            @if ($info->Quality_Approver == 'yes')
-                            @if ($data->stage >= 3)
-                                <div class="active">QA Review</div>
-                            @else
-                                <div class="">QA Review</div>
-                            @endif
-                            @endif
-                            @if ($info->Microbiology == 'yes')
-                            @if ($data->stage >= 4)
-                                <div class="active">Pending CFT Review</div>
-                            @else
-                                <div class="">Pending CFT Review</div>
-                            @endif
-
-
-                            @if ($data->stage >= 5)
-                                <div class="active">CFT Review Completed</div>
-                            @else
-                                <div class="">CFT Review Completed</div>
-                            @endif
-                            @endif
-                            @if ($evaluation->training_required == 'yes')
-                                @if ($data->stage >= 6)
-                                    <div class="active">Pending Training Completion</div>
-                                @else
-                                    <div class="">Pending Training Completion</div>
-                                @endif
-                            @endif
-
-                            @if ($data->stage >= 7)
-                                <div class="active">Pending Change Implementation</div>
-                            @else
-                                <div class="">Pending Change Implementation</div>
-                            @endif
-                            @if ($info->Quality_Approver == 'yes')
-                            @if ($data->stage >= 8)
-                                <div class="active">QA Final Review</div>
-                            @else
-                                <div class="">QA Final Review</div>
-                            @endif
-                            @endif
-
-                            @if ($data->stage >= 9)
-                                <div class="active">Closed - Done</div>
-                            @else
-                                <div class="">Closed - Done</div>
-                            @endif
-
-
-                        </div>
-                    @endif --}}
 
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
+                    @elseif ($data->stage == 7)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Reject</div>
+                        </div>
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
@@ -247,11 +182,7 @@
                             @else
                                 <div class="">Opened</div>
                             @endif
-                            {{--  @if ($data->stage >= 2)
-                        <div class="active">Superviser Review</div>
-                    @else
-                        <div class="">Superviser Review</div>
-                    @endif  --}}
+                            
                             @if ($data->stage >= 2)
                                 <div class="active"> HOD Review </div>
                             @else
@@ -296,8 +227,6 @@
                             @else
                                 <div class="">Closed - Done</div>
                             @endif
-
-
                         </div>
                     @endif
                     {{-- ---------------------------------------------------------------------------------------- --}}
@@ -617,8 +546,7 @@
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="repeat_nature" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        {{ $data->repeat_nature }}</textarea>
+                                                    <textarea name="repeat_nature" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -639,8 +567,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="others">If Others</label>
-                                                    <textarea name="If_Others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                        {{ $data->If_Others }}</textarea>
+                                                    <textarea name="If_Others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->If_Others }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

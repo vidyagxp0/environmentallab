@@ -124,6 +124,9 @@
                                         Child
                                     </button> -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                                More Info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Reject
                             </button>
                             @elseif ($data->stage == 5 && Helpers::check_roles($data->division_id, 'CAPA', 7))
@@ -147,6 +150,10 @@
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @elseif ($data->stage == 7)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Reject</div>
                         </div>
                     @else
                         <div class="progress-bars">

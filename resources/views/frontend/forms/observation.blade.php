@@ -75,15 +75,26 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName($parent_division_id) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        @if(!empty($parent_id))
+                                        <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName($parent_division_id) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                        <input disabled type="text" name="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
-                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName($parent_division_id) }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        @if(!empty($parent_id))
+                                            <input readonly type="text" value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else
+                                            <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -345,7 +356,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="related_observations">Related Obsevations</label>
+                                    <label for="related_observations">Related Observations</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">

@@ -61,7 +61,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         @if(!empty($parent_id))
                                         <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName($parent_division) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
+                                        value="{{ Helpers::getDivisionName($parent_division_id) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
                                         @else
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
@@ -69,20 +69,19 @@
                                     </div>
                                 </div>
 
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Division Code"><b>Site/Location Code </b></label>
-                                    @if(!empty($parent_id))
-                                        <input readonly type="text" value="{{ Helpers::getDivisionName($parent_division) }}">
-                                        <input type="hidden" name="division_id" value="{{ $parent_division }}">
-                                    @else
-                                        <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                    @endif
-                            </div>
-                        </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code"><b>Site/Location Code </b></label>
+                                            @if(!empty($parent_id))
+                                                <input readonly type="text" value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                                <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                            @else
+                                                <input readonly type="text" name="division_code"
+                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                            @endif
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">

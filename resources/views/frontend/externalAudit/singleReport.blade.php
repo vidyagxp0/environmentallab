@@ -196,8 +196,8 @@
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
                 <td class="w-30">
-                    <strong></strong> 
-                </td> 
+                    <strong></strong>
+                </td>
             </tr>
         </table>
     </footer>

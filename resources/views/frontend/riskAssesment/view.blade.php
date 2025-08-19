@@ -1581,7 +1581,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                       
+
                                                                         <!-- <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" disabled readonly> -->
                                                                         <input name="initial_rpn[]" type="text" class="initial-rpn"  value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" readonly />
 

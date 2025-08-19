@@ -2608,6 +2608,41 @@ class ObservationController extends Controller
         }
     }
 
+    public function rejectObservation(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = Observation::find($id);
+            $lastDocument = Observation::find($id);
+
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = "7";
+                $changeControl->status = "Closed-Reject";
+                $changeControl->reject_capa_plan_by = Auth::user()->name;
+                $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed-Reject";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Closed-Reject";
+                $history->save();
+                $changeControl->update();
+
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
     public function boostStage(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {

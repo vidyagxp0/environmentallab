@@ -1348,11 +1348,15 @@ class AuditProgramController extends Controller
         $cc_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
         $rca_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
         $action_items_old_record = InternalAudit::select('id', 'division_id', 'record', 'created_at')->get();
-
-
+      
+        $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
+        $parent_initiator_id = InternalAudit::where('id', $id)->value('initiator_id');
+        
+    //   dd($parent_division_id);
 
         if ($request->child_type == "Internal_Audit") {
-            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type','capa_old_record','cc_old_record','rca_old_record','action_items_old_record'));
+            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type',
+            'capa_old_record','cc_old_record','rca_old_record','action_items_old_record','parent_division_id','parent_initiator_id'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -1367,7 +1371,7 @@ class AuditProgramController extends Controller
             return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
         }
         else {
-            return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id','parent_initiator_id'));
         }
     }
 

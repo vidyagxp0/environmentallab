@@ -1325,7 +1325,7 @@ class LabIncidentController extends Controller
     {
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Capa";
+        $parent_type = "Lab-Incident";
         $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $rca_old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -1334,22 +1334,22 @@ class LabIncidentController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
-        $parent_division = LabIncident::where('id',$id)->value('division_id');
-         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','parent_division', 'parent_type','old_record','cft', 'rca_old_record'));
+        $parent_division_id = LabIncident::where('id',$id)->value('division_id');
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','parent_division_id', 'parent_type','old_record','cft', 'rca_old_record'));
     }
 
     public function lab_incident_root_child(Request $request, $id)
     {
         $parent_id = $id;
-        $parent_type = "Capa";
+        $parent_type = "Lab-Incident";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $parent_division = LabIncident::where('id',$id)->value('division_id');
-        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division'));
+        $parent_division_id = LabIncident::where('id',$id)->value('division_id');
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
     }
     public function LabIncidentStateChange(Request $request, $id)
     {
@@ -2658,6 +2658,138 @@ class LabIncidentController extends Controller
                                 continue;
                             }
                         }
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "9";
+                $changeControl->status = "Closed - Reject";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "Pending QA Review";
+                        $history->current = "Closed-Reject";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Pending QA Review";
+                        $history->stage = "Reject";
+                        $history->save();
+
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Closed-Reject";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                       
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
+                            }
+                        }
+
+                    $list = Helpers::getQAUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Closed-Reject";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        
+                        foreach ($list as $u) {
+                            try {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if ($email !== null) {
+                                    $data = ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                                continue;
+                            }
+                        }
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changeControl->stage == 7) {
+                $changeControl->stage = "9";
+                $changeControl->status = "Closed - Reject";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "Pending QA Head Approval";
+                        $history->current = "Closed-Reject";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = "Pending QA Head Approval";
+                        $history->stage = "";
+                        $history->save();
 
                 $changeControl->update();
                 toastr()->success('Document Sent');

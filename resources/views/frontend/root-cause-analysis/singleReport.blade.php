@@ -922,6 +922,12 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->qA_review_complete_on) }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Rejected By</th>
+                        <td class="w-30">{{ $data->rejected_by }}</td>
+                        <th class="w-20">Rejected On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->rejected_on) }}</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">More Information Required By</th>
                         <td class="w-30">{{ $data->more_info_by }}</td>
                         <th class="w-20">More Information Required On</th>
