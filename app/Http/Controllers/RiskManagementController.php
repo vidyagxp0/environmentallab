@@ -2305,7 +2305,7 @@ class RiskManagementController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
-        } 
+        }
         // if ($lastDocument->attachment != $data->attachment || !empty($request->attachment)) {
 
         //     $history = new RiskAuditTrail();
@@ -4350,14 +4350,14 @@ class RiskManagementController extends Controller
                 $font = $fontMetrics->getFont("Helvetica", "bold");
                 $size = 12;
                 $color = [0, 0, 0];
-            
+
                 $width = $canvas->get_width();
                 $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
-            
+
                 // RIGHT ALIGN (20px from right edge)
                 $x = $width - $textWidth -80;
                 $y = $canvas->get_height() -37;
-            
+
                 $canvas->text($x, $y, $text, $font, $size, $color);
             });
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
