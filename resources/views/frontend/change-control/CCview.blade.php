@@ -181,10 +181,6 @@
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
-                    @elseif ($data->stage == 7)
-                        <div class="progress-bars">
-                            <div class="bg-danger">Closed-Reject</div>
-                        </div>
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)

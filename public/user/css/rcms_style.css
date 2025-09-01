@@ -1247,6 +1247,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 #signature-modal .modal-footer button,
 #rejection-modal .modal-footer button,
 #rejection-modal1 .modal-footer button,
+#rejection-modal2 .modal-footer button,
 #cancel-modal .modal-footer button {
     color: white;
     background: #4274da;
