@@ -138,6 +138,16 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Implemented
                             </button>
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Change Control', 3))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Approved
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal2">
+                                Reject
+                            </button>
                             {{-- @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Change Control', 3))
                             @if ($evaluation->training_required == 'yes')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -292,9 +302,17 @@
                                 <div class="">Pending Change Implementation</div>
                             @endif
                             @if ($data->stage >= 6)
-                                <div class="bg-danger">Closed - Done</div>
+                                <div class="active">Pending QA Approval</div>
                             @else
-                                <div class="">Closed - Done</div>
+                                <div class="">Pending QA Approval</div>
+                            @endif
+                            
+                            @if ($data->stage >= 7 && $data->status == 'Closed-Done')
+                                <div class="bg-danger">Closed - Done</div>
+                            @elseif ($data->stage >= 7 && $data->status == 'Closed-Rejected')
+                                <div class="bg-danger">Closed - Rejected</div>
+                            @else
+                                <div>Closed - Done</div>
                             @endif
 
 
@@ -2208,6 +2226,50 @@
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
                             <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rejection-modal2">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('rcms/closed-rejected', $cc_lid) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input  type="text" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>

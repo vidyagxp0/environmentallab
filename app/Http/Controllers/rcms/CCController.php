@@ -3198,9 +3198,158 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             //         return back();
             // }
 
-
             if ($changeControl->stage == 5) {
-                    $changeControl->stage = "6";
+                $changeControl->stage = "6";
+                $changeControl->status = "Pending QA Approval";
+                    $history = new RcmDocHistory();
+                    $history->cc_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = $lastDocument->status;
+                    $history->current = "Pending QA Approval";
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Implemented';
+                    $history->save();
+
+                    $list = Helpers::getHODUserList($changeControl->division_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userIdNew = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+                    if($userId){
+                        try {
+                            $notification = new RcmDocHistory();
+                            $notification->cc_id = $id;
+                            $notification->activity_type = "Notification";
+                            $notification->action = 'Notification';
+                            $notification->comment = "";
+                            $notification->user_id = Auth::user()->id;
+                            $notification->user_name = Auth::user()->name;
+                            $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $notification->origin_state = "Not Applicable";
+                            $notification->previous = $lastDocument->status;
+                            $notification->current = "Pending QA Approval";
+                            $notification->stage = "";
+                            $notification->action_name = "";
+                            $notification->mailUserId = $userIdNew;
+                            $notification->role_name = "CFT/SME/QA";
+                            $notification->save();
+                            // dd($history);
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                // foreach ($list as $u) {
+                //     $email = Helpers::getAllUserEmail($u->user_id);
+                //     if (!empty($email)) {
+                //         try {
+                //             info('Sending mail to', [$email]);
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl,'site'=>'Change Control','history' => 'Review Complete', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                  $message->to($email)
+                //                  ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Complete Performed"); }
+                //                 );
+
+                //         } catch (\Exception $e) {
+                //             \Log::error('Mail failed to send: ' . $e->getMessage());
+                //         }
+                //     }
+                // }
+
+                foreach ($list as $u) {
+                    try {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if ($email !== null) {
+                            $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'changeControl');
+                        }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                        continue;
+                    }
+                }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending QA Approval";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "CFT/SME/QA";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            // foreach ($list as $u) {
+            //     $email = Helpers::getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $changeControl,'site'=>'Change Control','history' => 'Review Complete', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $changeControl) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Complete Performed"); }
+            //                 );
+
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            // }
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                        SendMail::dispatch($data, $email, $changeControl, 'changeControl');
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                    continue;
+                }
+            }
+                $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Change-Control";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+             }
+
+
+            if ($changeControl->stage == 6) {
+                    $changeControl->stage = "7";
                     $changeControl->status = "Closed-Done";
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
@@ -3212,7 +3361,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = 'Implemented';
+                            $history->stage = 'Approved';
                             $history->save();
 
                             $list = Helpers::getHODUserList($changeControl->division_id);
@@ -3266,7 +3415,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                             try {
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
-                                    $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                                    $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Approved', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
 
                                     SendMail::dispatch($data, $email, $changeControl, 'changeControl');
                                 }
@@ -3327,7 +3476,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                             try {
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
-                                    $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                                    $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Approved', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
 
                                     SendMail::dispatch($data, $email, $changeControl, 'changeControl');
                                 }
@@ -3388,7 +3537,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                             try {
                                 $email = Helpers::getAllUserEmail($u->user_id);
                                 if ($email !== null) {
-                                    $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+                                    $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'Approved', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
 
                                     SendMail::dispatch($data, $email, $changeControl, 'changeControl');
                                 }
@@ -3845,6 +3994,7 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
                 toastr()->success('Document Sent');
                 return back();
             }
+            
             // if ($changeControl->stage == 5) {
             //     $changeControl->stage = "4";
             //     $changeControl->status = "QA Review";
@@ -3860,6 +4010,161 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             //     toastr()->success('Document Sent');
             //     return back();
             // }
+
+            if ($changeControl->stage == 6) {
+                $changeControl->stage = "5";
+                $changeControl->status = "Pending Change Implementation";
+
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending Change Implementation";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Information required';
+                $history->save();
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Change Implementation";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "CFT/SME";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            // foreach ($list as $u) {
+            //     $email = Helpers::getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $changeControl,'site'=>'Change Control','history' => 'Request More Info', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $changeControl) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
+            //                 );
+
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'More Information Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                        SendMail::dispatch($data, $email, $changeControl, 'changeControl');
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                    continue;
+                }
+            }
+
+             $list = Helpers::getHODUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Change Implementation";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "CFT/SME";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            // foreach ($list as $u) {
+            //     $email = Helpers::getAllUserEmail($u->user_id);
+            //     if (!empty($email)) {
+            //         try {
+            //             info('Sending mail to', [$email]);
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $changeControl,'site'=>'Change Control','history' => 'Request More Info', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $changeControl) {
+            //                  $message->to($email)
+            //                  ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
+            //                 );
+
+            //         } catch (\Exception $e) {
+            //             \Log::error('Mail failed to send: ' . $e->getMessage());
+            //         }
+            //     }
+            // }
+
+            foreach ($list as $u) {
+                try {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if ($email !== null) {
+                        $data =  ['data' => $changeControl,'site'=>'Change Control','history' => 'More Information Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name];
+
+                        SendMail::dispatch($data, $email, $changeControl, 'changeControl');
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('Mail sending failed for user_id: ' . $u->user_id . ' - Error: ' . $e->getMessage());
+                    continue;
+                }
+            }
+
+                $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Change-Control";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = "More Information Required";
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -4077,6 +4382,34 @@ if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbio
             return back();
         }
     }
+
+    public function closedReject(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changeControl = CC::find($id);
+            $openState = CC::find($id);
+
+
+            $changeControl->stage = "7";
+            $changeControl->status = "Closed-Rejected";
+            $changeControl->update();
+            $history = new CCStageHistory();
+            $history->type = "Change-Control";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $changeControl->stage;
+            $history->status = $changeControl->status;
+            $history->save();
+            toastr()->success('Document Sent');
+            return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
     public function child(Request $request,$id){
         // return "hiii";
         $cc = CC::find($id);

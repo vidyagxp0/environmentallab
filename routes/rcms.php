@@ -60,7 +60,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-At/{id}', [ActionItemController::class, 'stageChange']);
             Route::post('send-rejection-field/{id}', [CCController::class, 'stagereject']);
             Route::post('send-cft-field/{id}', [CCController::class, 'stageCFTnotReq']);
-
+            Route::post('closed-rejected/{id}', [CCController::class, 'closedReject']);
             Route::post('send-cancel/{id}', [CCController::class, 'stagecancel']);
             Route::post('send-cc/{id}', [CCController::class, 'stageChange']);
             Route::post('child/{id}', [CCController::class, 'child']);

@@ -1217,6 +1217,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 #signature-modal .group-input label,
 #rejection-modal .group-input label,
 #rejection-modal1 .group-input label,
+#rejection-modal2 .group-input label,
 #cancel-modal .group-input label {
     display: block;
     font-size: 0.9rem;
@@ -1225,6 +1226,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 #cft-modal .group-input input,
 #cft-modal .group-input select,
+#rejection-modal2 .group-input input,
+#rejection-modal2 .group-input select,
 #modal1 .group-input input,
 #modal1 .group-input select,
 #signature-modal .group-input input,
