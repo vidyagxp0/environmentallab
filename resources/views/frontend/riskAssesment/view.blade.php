@@ -141,7 +141,7 @@
             var probability = parseInt(row.querySelector('.fieldN').value) || 0;
 
             // Calculate RPN
-            var rpn = severity + detectability + probability;
+            var rpn = severity * detectability * probability;
 
             // Set the RPN value in the input
             row.querySelector('.initial-rpn').value = rpn > 0 ? rpn : '';
@@ -155,7 +155,7 @@
                 const probability = parseInt(row.querySelector('.residual-fieldP')?.value) || 0;
                 const detectability = parseInt(row.querySelector('.residual-fieldN')?.value) || 0;
 
-                const rpn = severity + probability + detectability;
+                const rpn = severity * probability * detectability;
 
                 // Find the corresponding input field in the same row
                 const rpnInput = row.querySelector('input[name="residual_rpn[]"]');
@@ -1581,7 +1581,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                       
+
                                                                         <!-- <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" disabled readonly> -->
                                                                         <input name="initial_rpn[]" type="text" class="initial-rpn"  value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" readonly />
 

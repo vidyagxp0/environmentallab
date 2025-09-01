@@ -139,6 +139,9 @@
                                 More Information
                                 Required
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Reject
+                            </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -153,6 +156,10 @@
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @elseif ($data->stage == 6)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Reject</div>
                         </div>
                     @else
                         <div class="progress-bars">
@@ -1433,6 +1440,20 @@
                                             <div class="static">{{ $data->more_info_on }}</div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="rejected_by">Rejected By</label>
+                                            <div class="static">{{ $data->rejected_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="rejected_on">Rejected On</label>
+                                            <div class="static">{{ $data->rejected_on }}</div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>

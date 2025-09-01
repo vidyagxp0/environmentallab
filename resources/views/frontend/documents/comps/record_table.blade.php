@@ -44,7 +44,7 @@
         <tbody id="searchTable">
             @if (count($documents) > 0)
             {{-- {{dd($documents);}} --}}
-            @foreach ($documents->sortByDesc('id') as $doc)
+            @foreach ($documents->sortByDesc('id') as $key => $doc)
             @php
                                             $userRoles = DB::table('user_roles')
                                             ->where(['user_id' => auth()->id(), 'q_m_s_divisions_id' => $doc->division_id])
@@ -68,7 +68,7 @@
             @if(!$hideRecord || $userHasAllowedRole)
                 <tr>
                     <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.editWithType', ['id' => $doc->id, 'type' => 'doc']) }}">
-                            000{{ $doc->id }}
+                            000{{ $key + 1 }}
                         </a>
                     </td>
                     <td class="division">
@@ -78,7 +78,7 @@
                         {{ $doc->document_name }}
                     </td>
                     <td class="division">
-                        
+
                         {{ $doc->sop_no }}
                     </td>
                     <td class="division">

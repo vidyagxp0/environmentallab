@@ -3088,6 +3088,7 @@ class AuditeeController extends Controller
         $cft = [];
         $parent_id = $id;
         $parent_division_id = $cc->division_id;
+
         $parent_type = "Internal Audit";
         $old_record = Capa::select('id', 'division_id', 'record', 'created_at')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -3099,6 +3100,8 @@ class AuditeeController extends Controller
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
+        // $parent_division_id = Auditee::where('id', $id)->value('division_id');
+
         // $changeControl = OpenStage::find(1);/
         $hod = User::get();
         $pre = CC::all();
@@ -3109,17 +3112,17 @@ class AuditeeController extends Controller
 
         if ($request->revision == "Observation-child") {
             $old_record = ActionItem::all();
-            $parent_division = Auditee::where('id', $id)->value('division_id');
+            $parent_division_id = Auditee::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.observation', compact('record_number','old_record','parent_division','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.observation', compact('record_number','old_record','parent_division_id','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
 
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $parent_division = Auditee::where('id', $id)->value('division_id');
-           return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft', 'parent_division',));
+            $parent_division_id = Auditee::where('id', $id)->value('division_id');
+           return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft', 'parent_division_id',));
         }
 
     }

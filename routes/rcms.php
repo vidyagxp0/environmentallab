@@ -146,6 +146,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
             Route::get('observationsingle_pdf/{id}', [ObservationController::class, 'single_pdf'])->name('observationsingle_pdf');
             Route::get('observationaudit_pdf/{id}', [ObservationController::class, 'auditReport'])->name('observationaudit_pdf');
+            Route::post('observation/reject/{id}', [ObservationController::class, 'rejectObservation'])->name('rejectObservation');
 
 
 
