@@ -1281,7 +1281,7 @@
                                 $submit = DB::table('c_c_stage_histories')
                                     ->where('type', 'Change-Control')
                                     ->where('doc_id', $data->id)
-                                    ->where('stage_id', 7)
+                                    ->where('stage_id', 5)
                                     ->get();
                             @endphp
                             @foreach ($submit as $temp)
@@ -1294,7 +1294,7 @@
                                 $submit = DB::table('c_c_stage_histories')
                                     ->where('type', 'Change-Control')
                                     ->where('doc_id', $data->id)
-                                    ->where('stage_id', 7)
+                                    ->where('stage_id', 5)
                                     ->get();
                             @endphp
                             @foreach ($submit as $temp)
@@ -1309,7 +1309,7 @@
                                 $submit = DB::table('c_c_stage_histories')
                                     ->where('type', 'Change-Control')
                                     ->where('doc_id', $data->id)
-                                    ->where('stage_id', 9)
+                                    ->where('stage_id', 6)
                                     ->get();
                             @endphp
                             @foreach ($submit as $temp)
@@ -1322,7 +1322,7 @@
                                 $submit = DB::table('c_c_stage_histories')
                                     ->where('type', 'Change-Control')
                                     ->where('doc_id', $data->id)
-                                    ->where('stage_id', 9)
+                                    ->where('stage_id', 6)
                                     ->get();
                             @endphp
                             @foreach ($submit as $temp)
@@ -1330,6 +1330,70 @@
                             @endforeach
                         </td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">Approved By</th>
+                        <td class="w-30">
+                            @php
+                                $submit = DB::table('c_c_stage_histories')
+                                    ->where('type', 'Change-Control')
+                                    ->where('doc_id', $data->id)
+                                    ->where('stage_id', 6)
+                                    ->where('status', 'Closed-Done')
+                                    ->get();
+                            @endphp
+                            @foreach ($submit as $temp)
+                                <div class="static">{{ $temp->user_name }}</div>
+                            @endforeach
+                        </td>
+                        <th class="w-20">Approved On</th>
+                        <td class="w-30">
+                            @php
+                                $submit = DB::table('c_c_stage_histories')
+                                    ->where('type', 'Change-Control')
+                                    ->where('doc_id', $data->id)
+                                    ->where('stage_id', 6)
+                                    ->where('status', 'Closed-Done')
+                                    ->get();
+                            @endphp
+                            @foreach ($submit as $temp)
+                                <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                            @endforeach
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Rejected By</th>
+                        <td class="w-30">
+                            @php
+                                $submit = DB::table('c_c_stage_histories')
+                                    ->where('type', 'Change-Control')
+                                    ->where('doc_id', $data->id)
+                                    ->where('stage_id', 6)
+                                    ->where('status', 'Closed-Rejected')
+                                    ->get();
+                            @endphp
+                            @foreach ($submit as $temp)
+                                <div class="static">{{ $temp->user_name }}</div>
+                            @endforeach
+                        </td>
+                        <th class="w-20">Rejected On</th>
+                        <td class="w-30">
+                            @php
+                                $submit = DB::table('c_c_stage_histories')
+                                    ->where('type', 'Change-Control')
+                                    ->where('doc_id', $data->id)
+                                    ->where('stage_id', 6)
+                                    ->where('status', 'Closed-Rejected')
+                                    ->get();
+                            @endphp
+                            @foreach ($submit as $temp)
+                                <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                            @endforeach
+                        </td>
+                    </tr>
+
+
                     {{-- <tr>
                         <th class="w-20">Change Implemented By</th>
                         <td class="w-30">Piyush Sahu</td>
