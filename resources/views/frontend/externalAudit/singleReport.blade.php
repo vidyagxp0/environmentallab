@@ -437,7 +437,7 @@
                 </div>
             </div>
 
-
+{{-- ==================================== --}}
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -897,51 +897,72 @@
                         </tr>
 
                     </table>
-                    <div class="block-head">
-                        <table>
-                            <div class="block">
-                                <div class="block-head">
-                                    Observation Details
-                                </div>
-                                <div class="border-table">
-                                    <table>
-                                        <tr class="table_bg">
-                                            <th>Row#</th>
-                                            <th>Observation Details</th>
-                                            <th>Pre Comments</th>
-                                            <th>CAPA Details if any</th>
-                                            <th>Expected Date To Complete</th>
-                                            <th>Post Comments</th>
-                                        </tr>
-                                        @if ($grid_data1->observation_id)
-                                            @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                <tr style="color: black; font-weight: normal;">
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ $tempData ? $tempData : 'Not Applicable' }}</td>
-                                                    <td>{{ unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key] : 'Not Applicable' }}
-                                                    </td>
-                                                    <td>{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : 'Not Applicable' }}
-                                                    </td>
-                                                    <td>{{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) ? Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) : 'Not Applicable' }}</td>
-                                                    <td>{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : 'Not Applicable' }}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                            </tr>
-                                        @endif
+                   <style>
+.page-break {
+    page-break-after: always;
+}
+.block-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.block-row {
+    display: table-row;
+}
+.block-cell {
+    display: table-cell;
+    border: 1px solid #000;
+    padding: 4px;
+    word-wrap: break-word;
+    vertical-align: top;
+    word-wrap: break-word;
+    word-break: break-all !important; /* force break inside words */
+    white-space: normal;
+}
+.block-header {
+    font-weight: bold;
+    background: #f2f2f2;
+    text-align: center;
+}
+</style>
 
-                                    </table>
-                                </div>
-                            </div>
-                        </table>
-                    </div>
+<div class="block-head">Observation Details</div>
+
+{{-- Header Row --}}
+<div class="block-table">
+    <div class="block-row">
+        <div class="block-cell block-header">Row#</div>
+        <div class="block-cell block-header">Observation Details</div>
+        <div class="block-cell block-header">Pre Comments</div>
+        <div class="block-cell block-header">CAPA Details if any</div>
+        <div class="block-cell block-header">Expected Date To Complete</div>
+        <div class="block-cell block-header">Post Comments</div>
+    </div>
+
+    {{-- Data Rows --}}
+    @if ($grid_data1->observation_id)
+        @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
+            <div class="block-row">
+                <div class="block-cell">{{ $key + 1 }}</div>
+                <div class="block-cell">{{ $tempData ?: 'Not Applicable' }}</div>
+                <div class="block-cell">{{ unserialize($grid_data1->observation_description)[$key] ?? 'Not Applicable' }}</div>
+                <div class="block-cell">{{ unserialize($grid_data1->area)[$key] ?? 'Not Applicable' }}</div>
+                <div class="block-cell">
+                    {{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) ?: 'Not Applicable' }}
+                </div>
+                <div class="block-cell">{{ unserialize($grid_data1->auditee_response)[$key] ?? 'Not Applicable' }}</div>
+            </div>
+        @endforeach
+    @else
+        <div class="block-row">
+            <div class="block-cell" colspan="6" style="text-align:center">
+                Not Applicable
+            </div>
+        </div>
+    @endif
+</div>
+
 
 
                     <div class="border-table">

@@ -159,9 +159,6 @@
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-
                         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
@@ -459,7 +456,7 @@
             <script>
 let chart; // Declare chart variable outside to make it accessible globally
         let currentChartType = 'pie'; // Initially set to pie chart
-        
+
                 function fetchData(selectedValue) {
 document.getElementById("toggleChartTypeText").textContent = currentChartType === 'pie' ? 'Bar Chart' : 'Pie Chart';
                     fetch(`/chart-data?value=${selectedValue}`)

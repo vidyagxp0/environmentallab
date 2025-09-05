@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class AuditeeController extends Controller
 {
@@ -2991,54 +2993,119 @@ class AuditeeController extends Controller
         return view('frontend.externalAudit.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
 
-    public static function singleReport($id)
+    // public static function singleReport($id)
+    // {
+    //     $data = Auditee::find($id);
+    //     if (!empty($data)) {
+    //         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
+    //         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
+    //         $data->originator = User::where('id', $data->initiator_id)->value('name');
+
+    //         $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'AuditAgenda'])->first();
+    //         $auditAgenda = json_decode($auditAgendaData->data, true);
+
+    //         $pdf = App::make('dompdf.wrapper');
+    //         // $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+    //         // $auditeeNamesString = implode(', ', $auditeeNames);
+    //         $time = Carbon::now();
+    //         $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1','auditAgenda'))
+    //             ->setOptions([
+    //                 'defaultFont' => 'sans-serif',
+    //                 'isHtml5ParserEnabled' => true,
+    //                 'isRemoteEnabled' => true,
+    //                 'isPhpEnabled' => true,
+    //             ]);
+    //         $pdf->setPaper('A4');
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+
+
+    //         $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+    //             $text = "Page " . $pageNumber . " of " . $pageCount;
+    //             $font = $fontMetrics->getFont("Helvetica", "bold");
+    //             $size = 12;
+    //             $color = [0, 0, 0];
+
+    //             $width = $canvas->get_width();
+    //             $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
+
+    //             // RIGHT ALIGN (20px from right edge)
+    //             $x = $width - $textWidth -80;
+    //             $y = $canvas->get_height() -37;
+
+    //             $canvas->text($x, $y, $text, $font, $size, $color);
+    //         });
+    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    //         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+    //         return $pdf->stream('External-Audit' . $id . '.pdf');
+    //     }
+    // }
+
+  public function singleReport($id)
     {
-        $data = Auditee::find($id);
-        if (!empty($data)) {
-            $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
+      $data = Auditee::find($id);
+ if (!empty($data)) {
+        $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
             $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
 
             $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'AuditAgenda'])->first();
             $auditAgenda = json_decode($auditAgendaData->data, true);
+        $time = Carbon::now();
 
-            $pdf = App::make('dompdf.wrapper');
-            // $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
-            // $auditeeNamesString = implode(', ', $auditeeNames);
-            $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1','auditAgenda'))
-                ->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
+        $htmlContent = view('frontend.externalAudit.single-report-partial', compact('data','grid_data','grid_data1','auditAgenda'))->render();
+
+        // --- Call Node PDF API ---
+        $pdfApi = "http://138.199.199.36:3001/generate-pdf";
+        $autonumber =  Helpers::divisionNameForQMS($data->division_id) . "/EA/" . Helpers::year($data->created_at) . "/" . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+        try {
+            $response = Http::timeout(seconds: 600)
+                ->accept('application/pdf')           // we expect a PDF back
+                ->asJson()
+                ->post($pdfApi, [
+                    'htmlContent' => $htmlContent,
+                    'autoNumber' => $autonumber,
+                    'recordNumber' =>  str_pad($data->record, 4, '0', STR_PAD_LEFT),
+                    'printedBy' => Auth::user()?->name,
+                    'reportTitle' => 'External Audit Report',
+                    'processTitle' => 'External Audit No.'
                 ]);
-            $pdf->setPaper('A4');
-            $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            
 
-            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
-                $text = "Page " . $pageNumber . " of " . $pageCount;
-                $font = $fontMetrics->getFont("Helvetica", "bold");
-                $size = 12;
-                $color = [0, 0, 0];
-            
-                $width = $canvas->get_width();
-                $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
-            
-                // RIGHT ALIGN (20px from right edge)
-                $x = $width - $textWidth -80;
-                $y = $canvas->get_height() -37;
-            
-                $canvas->text($x, $y, $text, $font, $size, $color);
-            });
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('External-Audit' . $id . '.pdf');
+            if (!$response->ok()) {
+                // Bubble up a readable error
+                return response()->json([
+                    'error' => 'PDF service failed',
+                    'status' => $response->status(),
+                    'message' => Str::limit($response->body(), 500),
+                ], 502);
+            }
+
+            $pdfBinary = $response->body();
+            $filename = 'SOP'.$id.'.pdf';
+
+            // --- Stream inline in browser ---
+            return response($pdfBinary, 200, [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="'.$filename.'"',
+                'Cache-Control'       => 'private, max-age=0, must-revalidate',
+                'Pragma'              => 'public',
+            ]);
+
+            // --- Or to force download instead, use: ---
+            // return response()->streamDownload(function () use ($pdfBinary) {
+            //     echo $pdfBinary;
+            // }, $filename, ['Content-Type' => 'application/pdf']);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'PDF service unreachable',
+                'message' => $e->getMessage(),
+            ], 502);
         }
+        }
+
     }
 
     public static function auditReport($id)
