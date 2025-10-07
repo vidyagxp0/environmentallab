@@ -278,17 +278,13 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button>   
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'External Audit', 12))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -296,20 +292,19 @@
                                 Cancel
                             </button>
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'External Audit', 12))
-                            </button> <button class="button_theme1" data-bs-toggle="modal"
-                                data-bs-target="#rejection-modal">
-                                Reject
-                            </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
+                         
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Issue Report</button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
+                                Issue Report
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal"
+                                data-bs-target="#rejection-modal">
+                                Reject
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
                             </button>
                         @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'External Audit', 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -328,8 +323,8 @@
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
-
+                            </a> 
+                        </button>
 
                     </div>
 

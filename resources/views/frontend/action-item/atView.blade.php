@@ -69,12 +69,13 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
                         @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Action Item', 3))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Submit
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Submit
+                                </button>
+
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    Cancel
+                                </button>
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Action Item', 8))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete

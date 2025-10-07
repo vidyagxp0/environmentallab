@@ -44,17 +44,24 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id,'Lab Incident',4))
+                        @endif    
+                        @if($data->stage == 2 ) 
+                            @if (Helpers::check_roles($data->division_id,'Lab Incident',4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Incident Review Completed
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancellation Request
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Lab Incident',10))
+                            @endif
+                            @if(Helpers::check_roles($data->division_id, 'Lab Incident', 7))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancellation Request
+                            </button>
+                            @endif
+                        @endif    
+
+                        @if($data->stage == 3 && Helpers::check_roles($data->division_id,'Lab Incident',10))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>

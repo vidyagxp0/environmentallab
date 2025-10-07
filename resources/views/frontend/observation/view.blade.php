@@ -68,14 +68,20 @@ $users = DB::table('users')
                         <button class="button_theme1"> <a class="text-white" href="{{ route('ShowObservationAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Observation', 12))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Report Issued
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Cancel
-                            </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Observation', 11))
+                        @if ($data->stage == 1)
+                            @if(Helpers::check_roles($data->division_id, 'Observation', 12))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Report Issued
+                                </button>
+                            @endif
+
+                            @if(Helpers::check_roles($data->division_id, 'Observation', 7))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                    Cancel
+                                </button>
+                            @endif
+                        @endif
+                        @if($data->stage == 2 && Helpers::check_roles($data->division_id, 'Observation', 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>

@@ -57,23 +57,33 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/extension-audit-trial', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id,'Extension',3))
+                        @if ($data->stage == 1) 
+                           @if(Helpers::check_roles($data->division_id,'Extension',3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id,'Extension',1))
+                            @endif
+
+                            @if (Helpers::check_roles($data->division_id, 'Extension', 7))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                    Cancel
+                                </button>
+                            @endif    
+                        @endif       
+                        @if($data->stage == 2 ) 
+                            @if( Helpers::check_roles($data->division_id,'Extension',1))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Reject
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Ext Approve
                             </button>
+                            @endif
+                            @if(Helpers::check_roles($data->division_id, 'Extension', 7))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Reject
+                            </button>
+                            @endif
                         @endif
                         <a class="text-white button_theme1" href="{{ url('rcms/qms-dashboard') }}">
                             Exit

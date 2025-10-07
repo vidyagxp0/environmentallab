@@ -97,14 +97,21 @@
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
                                     Close Done </a> </button>
                         @endif --}}
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Change Control', 3))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Submit
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Cancel
-                            </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Control', 4))
+
+                        @if ($data->stage == 1)
+                            @if (Helpers::check_roles($data->division_id, 'Change Control', 3))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Submit
+                                </button>
+                            @endif
+
+                            @if (Helpers::check_roles($data->division_id, 'Change Control', 7))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                    Cancel
+                                </button>
+                            @endif
+                        @endif
+                        @if($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Control', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
